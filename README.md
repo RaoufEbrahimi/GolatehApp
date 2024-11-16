@@ -59,7 +59,7 @@ While this project was abandoned, I plan to revisit **Golateh** in the future wi
 The repository includes:  
 - Source code for the initial implementation.  
 - Early designs for the UI/UX.  
-- Example data used during development.  
+
 
 ---
 
