@@ -1,0 +1,145 @@
+﻿@using Ship.Model.Extension
+@model List<Ship.Model.ViewModel.Admin.FactorListViewModel>
+
+@{
+    int a = 1;
+}
+
+
+<div class="table-responsive" style="margin-top: 20px;">
+    <table id="TableSafarTamirat" class="table table-bordered mb-0" style="width: 100%">
+        <thead>
+            <tr style="background-color: #dee2e6b3">
+                <th style="text-align: center">#</th>
+                <th style="text-align: center">کالا</th>
+                <th style="text-align: center">فی</th>
+                <th style="text-align: center">تعداد</th>
+                <th style="text-align: center">مبلغ کل</th>
+                @*<th style="text-align: center">وزن</th>*@
+                <th style="text-align: center">توضیحات</th>
+                <th style="text-align: center">تاریخ</th>
+                <th style="text-align: center">عملیات</th>
+            </tr>
+        </thead>
+        @foreach (var cc in Model)
+        {
+            <tr idRow="@cc.Id">
+                <td style="text-align: center">@(a++)</td>
+                <td style="text-align: center">@cc.KalaName</td>
+                <td style="text-align: center">
+                    <input onkeyup="FormatCurrency(this)" style="width: 130px; text-align: center;" type="text" value="@cc.Price.ToString("N0")" /> تومان
+                </td>
+                <td style="text-align: center">
+                    <input onkeyup="FormatCurrency(this)" style="width: 130px; text-align: center;" type="text" value="@Convert.ToDecimal(cc.Tedad).AddCommaToDecimal()" /> @cc.Unitname
+                </td>
+                <td style="text-align: center">@cc.TotoalPrice.ToString("N0") تومان</td>
+                @*<td style="text-align: center">@Convert.ToDecimal(cc.Weight).ParseCommaToDecimal().Replace("/", ".")</td>*@
+                <td style="text-align: center">@cc.Tozihat</td>
+                <td style="text-align: center">
+                    @cc.DateFactor
+                    @if (string.IsNullOrWhiteSpace(cc.UserSabtKonanade) == false)
+                    {
+                        <hr />
+                        @cc.UserSabtKonanade
+                    }
+                </td>
+                <td style="text-align: center">
+                    <button onclick="ToDeleteDeleteFactorTamirat(@cc.Id)" type="button" class="btn btn-outline"><i class="fadeIn animated bx bx-x-circle"></i></button>
+                </td>
+            </tr>
+        }
+
+        <tr>
+            <td style="text-align: center" colspan="3"> <input onclick="onExitTamirat()" type="button" value="بروزرسانی مبالغ فاکتور" /></td>
+            <td style="text-align: center; background-color: #dee2e6b3;">@Model.Sum(v => Convert.ToDecimal(v.Tedad)).AddCommaToDecimal()</td>
+            <td style="text-align: center; background-color: #dee2e6b3;">@Model.Sum(b => b.TotoalPrice).ToString("N0")</td>
+            @*<td style="text-align: center">@Model.Sum(v => Convert.ToDecimal(v.Weight)).ParseCommaToDecimal().Replace("/", ".")</td>*@
+            <td style="text-align: center" colspan="4"></td>
+        </tr>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    function onExitTamirat() {
+
+
+        var Detail = Array();
+
+        var LstTag = $('#TableSafarTamirat tbody tr');
+
+        for (var i = 0; i < LstTag.length; i++) {
+
+            var fi = $(LstTag[i]).closest('tr').find('input').eq(0).val();
+            var tedad = $(LstTag[i]).closest('tr').find('input').eq(1).val();
+            var _id = $(LstTag[i]).closest('tr').attr('idRow');
+
+            if (_id == null) {
+                continue;
+            }
+
+
+            fi = fi.replace(",", "").replace(",", "").replace(",", "");
+            tedad = tedad.replace(",", "").replace(",", "").replace(",", "");
+
+            if (parseFloat(fi) <= 0) {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'قیمت باید بزرگتر از 0 باشد'
+                });
+                return;
+            }
+            if (parseFloat(tedad) <= 0) {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'تعداد باید بزرگتر از 0 باشد'
+                });
+                return;
+            }
+
+            Detail.push({ Fi: parseFloat(fi), Tedad: parseFloat(tedad), Id: _id });
+        }
+
+        $.ajax({
+            url: "/Admin/Safar/SavePriceMachele",
+            method: "POST",
+            data: { model: JSON.stringify(Detail) },
+            success: function (data) {
+                if (parseInt(data) > 0) {
+                    ToShowPage(5);
+                }
+                else {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                }
+            },
+            error: function () {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                });
+            },
+            beforeSend: function () {
+
+            }
+        });
+
+
+    }
+</script>

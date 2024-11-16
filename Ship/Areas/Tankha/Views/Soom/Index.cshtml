@@ -1,0 +1,130 @@
+﻿@using Ship.Model.ViewModel.Admin
+
+@{
+    ViewBag.Title = "صوم";
+
+    int IdUser = int.Parse(User.Identity.Name.Replace("TankhaGardan", ""));
+
+    string referer = Request.ServerVariables["http_referer"];
+
+    if (string.IsNullOrWhiteSpace(referer))
+    {
+        referer = @"/tankha/default";
+    }
+
+    if (Request.QueryString["Id"] != null)
+    {
+
+        try
+        {
+            int.Parse(Request.QueryString["Id"].ToString());
+        }
+        catch (Exception e)
+        {
+            Response.Redirect(referer, false);
+            return;
+        }
+    }
+    else
+    {
+        Response.Redirect(referer, false);
+        return;
+    }
+
+    int IdShip = int.Parse(Request.QueryString["id"].ToString());
+
+    var db = new GolatehEntities();
+    var Ids = db.TankhaGardanToShip.Where(b => b.IdTankhaGardan == IdUser).Select(v => v.IdShip).ToList();
+    if (Ids.Any(b => b == IdShip)==false)
+    {
+        Response.Redirect(referer, false);
+        return;
+    }
+
+
+
+    var itm = new GetListShipViewModel();
+    var vart = SiteSettingBLL.GetListShipByIdShip(IdShip);
+
+    if (vart.Any(v => v.Id == IdShip))
+    {
+        itm = vart.First(v => v.Id == IdShip);
+    }
+    else
+    {
+        Response.Redirect(referer, false);
+        return;
+    }
+}
+
+<input type="hidden" id="IdShip" value="@IdShip" />
+
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/tankha"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">لنج (@itm.Title)</li>
+                <li class="breadcrumb-item active" aria-current="page">صوم</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <div id="DivListSoom"></div>
+    </div>
+</div>
+
+<div id="DivModalIUSoom"></div>
+
+
+@section js_down{
+    <script>
+
+        function GetListSoom() {
+            $.ajax({
+                url: "/tankha/Soom/GetListSoom",
+                method: "POST",
+                data: { IdShip: $('#IdShip').val() },
+                success: function (data) {
+
+                    $('#DivListSoom').html('');
+                    $('#DivListSoom').html(data);
+
+                    var table = $('#TableSoom').DataTable({
+                        lengthChange: false,
+                        "order": [[1, "desc"]]
+                    });
+                },
+                error: function () {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+
+        $(document).ready(function () {
+            GetListSoom();
+        });
+    </script>
+}
+
+
+

@@ -1,0 +1,307 @@
+﻿
+@{
+    ViewBag.Title = "فایل بیمه";
+
+    int IdUser = int.Parse(User.Identity.Name);
+}
+
+<input type="hidden" id="IdShip" value="" />
+
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/admin"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">بیمه</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="col-md-2">
+            <label class="form-label">لنج</label>
+            <select class="multiple-select" id="idshipp" onchange="GetListBimeh(this.value)" data-placeholder=".. انتخاب کنید ..">
+                <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                @foreach (var t in SiteSettingBLL.GetListShip(IdUser))
+                {
+                    <option value="@t.Id">@t.Title</option>
+                }
+            </select>
+        </div>
+
+
+        <div id="DivListSoom"></div>
+    </div>
+</div>
+
+<div id="DivModalIUSoom"></div>
+
+
+<input type="hidden" id="IdShipSelected" value="0" />
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/multiple-select-js/dist/css/multiple-select.css">
+<script src="https://cdn.jsdelivr.net/npm/multiple-select-js/dist/js/multiple-select.js"></script>
+
+
+
+@section js_down{
+    <script>
+        function Open2(Id, IdShip) {
+
+            var _IdShip = 0;
+            if (IdShip == 0) {
+                _IdShip = $('#idshipp').val();
+            }
+            else {
+                _IdShip = IdShip;
+            }
+
+
+            $.ajax({
+                url: "/Admin/Bimeh/_Add",
+                method: "POST",
+                data: { Id: Id, IdShip: _IdShip },
+                success: function (data) {
+                    $('#DivModalIUSoom').html('');
+                    $('#DivModalIUSoom').html(data);
+
+                    $('#ModalIUSoom').modal('show');
+
+                    $('#IdSall,#IdMahh').select2({
+                        theme: 'bootstrap4',
+                        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                        placeholder: $(this).data('placeholder'),
+                        allowClear: Boolean($(this).data('allow-clear'))
+                    });
+
+                    $('#EmpList').select2({ width: '100%' });
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+        function GetListBimeh(id) {
+            $('#IdShipSelected').val(id);
+            $.ajax({
+                url: "/Admin/Bimeh/GetListBimeh",
+                method: "POST",
+                data: { IdShip: $('#IdShipSelected').val() },
+                success: function (data) {
+
+                    $('#DivListSoom').html('');
+                    $('#DivListSoom').html(data);
+
+                    var table = $('#TableSoom').DataTable({
+                        lengthChange: false,
+                        "order": [[1, "desc"]]
+                    });
+                },
+                error: function () {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function DeleteBimeh(itm) {
+
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا از حذف اطمینان دارید ؟',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Bimeh/DeleteBimeh',
+                                data: { Id: itm },
+                                success: function (dataa) {
+
+                                    if (parseInt(dataa) == 1) {
+                                        GetListBimeh($('#IdShipSelected').val());
+                                    } else {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                            });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+
+
+
+        }
+        function ToEdit(Id) {
+            _OpenAdd(Id);
+        }
+        function AddSave22() {
+
+            $($('#IdSall')).siblings(".select2-container").removeClass('inputerror');
+            $($('#IdMahh')).siblings(".select2-container").removeClass('inputerror');
+
+            var eror = false;
+
+            if ($("#IdSall").select2("val") == '0') {
+                $('#IdSall').siblings(".select2-container").addClass('inputerror');
+                eror = true;
+            }
+            if ($("#IdMahh").select2("val") == '0') {
+                $('#IdMahh').siblings(".select2-container").addClass('inputerror');
+                eror = true;
+            }
+
+            if (eror) {
+                return false;
+            }
+
+            if ($('#EmpList').val().length == 0) {
+                return false;
+            }
+
+
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به ثبت هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+
+
+                            var IdIdPersonnel = $('#EmpList').val();
+                            var Y = $("#IdSall").val();
+                            var M = $("#IdMahh").val();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Bimeh/SaveBimeh',
+                                data: {
+                                    IdShip: $('#IdShip2').val(),
+                                    IdIdPersonnel: IdIdPersonnel,
+                                    Y: Y,
+                                    M: M
+                                },
+                                success: function (dataa) {
+
+                                    if (parseInt(dataa) == 1) {
+                                        GetListBimeh($('#IdShipSelected').val());
+                                        $('#ModalIUSoom').modal('hide');
+                                    } else {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                            });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+
+
+
+
+
+        }
+        function ExportBimeh() {
+
+        }
+
+        $(document).ready(function () {
+            $('#idshipp').select2({
+                theme: 'bootstrap4',
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: $(this).data('placeholder'),
+                allowClear: Boolean($(this).data('allow-clear'))
+            });
+        });
+    </script>
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        $('input').keyup(function () {
+            this.value = fixPersianNumber(this.value);
+        });
+    });
+</script>

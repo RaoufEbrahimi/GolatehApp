@@ -1,0 +1,59 @@
+﻿@model List<Ship.Model.ViewModel.Admin.AfradViewModel>
+@{
+    int a = 1;
+}
+
+
+
+
+<div class="table-responsive" style="margin-top: 20px;">
+    <table id="TableSoom" class="table table-bordered mb-0" style="width: 100%">
+        <thead>
+            <tr style="background-color: #dee2e6b3">
+                <th style="text-align: center">#</th>
+                <th style="text-align: center">نام</th>
+                <th style="text-align: center">نام خانوادگی</th>
+                <th style="text-align: center">کد ملی</th>
+                <th style="text-align: center">شماره موبایل</th>
+                <th style="text-align: center">بانک</th>
+                <th style="text-align: center">شماره شبا</th>
+                <th style="text-align: center">شماره 16 رقمی</th>
+                <th style="text-align: center">شماره حساب</th>
+                <th style="text-align: center">عکس</th>
+                <th style="text-align: center">عملیات</th>
+            </tr>
+        </thead>
+        @foreach (var cc in Model)
+        {
+            <tr>
+                <td style="text-align: center">@(a++)</td>
+                <td style="text-align: center">@cc.FirstName</td>
+                <td style="text-align: center">@cc.LastName</td>
+                <td style="text-align: center">@cc.NationalCode</td>
+                <td style="text-align: center">@cc.Phone</td>
+                <td style="text-align: center">@cc.Namebank</td>
+                <td style="text-align: center">@cc.ShebaNumber</td>
+                <td style="text-align: center">@cc.ShomareCart14</td>
+                <td style="text-align: center">@cc.ShomareHesab</td>
+                <td style="text-align: center">
+                    <a target="_blank" href="@cc.Logo">
+                        <img width="50" height="50" @(String.IsNullOrWhiteSpace(cc.Logo) ? "src='https://golateh.com/Content/images.png'" : "") src="@cc.Logo" class="user-img" alt="@cc.NationalCode  @cc.FirstName @cc.LastName" onerror="this.onerror = null;this.src = 'https://golateh.com/Content/images.png';">
+                    </a>
+                </td>
+                <td style="text-align: center">
+                    <button onclick="ToEditAfrad(@cc.Id)" type="button" class="btn btn-outline"><i class="fadeIn animated bx bx-edit"></i></button>
+                    @if (cc.IsActive)
+                    {
+                        <button onclick="ToDeleteAfrad(@cc.Id)" type="button" class="btn btn-outline"><i class="fadeIn animated bx bx-x-circle"></i></button>
+                    }
+                    else
+                    {
+                        <button onclick="ToActiveAfrad(@cc.Id)" type="button" class="btn btn-outline"><i class="fadeIn animated bx bx-user-plus"></i></button>
+                    }
+                </td>
+            </tr>
+        }
+        <tbody>
+        </tbody>
+    </table>
+</div>

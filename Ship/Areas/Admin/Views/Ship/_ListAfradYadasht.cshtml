@@ -1,0 +1,77 @@
+﻿@model int
+@{
+    int IdUser = int.Parse(User.Identity.Name);
+    var rttt = SiteSettingBLL.GetListYadasht(Model);
+
+    int a = 1;
+}
+
+
+<input type="hidden" value="@Model" id="IdHidenYadashtShip" />
+
+<div class="modal fade" id="IdModalListAfradYadasht" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    دفترچه یادداشت بدهی ملوانان
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="alert alert-info border-0 bg-info alert-dismissible fade show py-2">
+                        <div class="d-flex align-items-center">
+                            <div class="font-35 text-dark">
+                                <i class='bx bx-info-square'></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-0 text-dark">راهنمایی</h6>
+                                <div class="text-dark">برای مشاهده بدهی هر صیاد، فرد مورد نظر را از لیست کشویی زیر انتخاب کنید.</div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">صیاد</label>
+                        <select class="multiple-select" id="IdPersonnel33" onchange="Reload(this.value)" data-placeholder=".. انتخاب کنید ..">
+                            <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                            @foreach (var t in SiteSettingBLL.GetListReletionPersenel(Model, IdUser))
+                            {
+                                <option value="@t.Id">@t.Title</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label">یاداشت</label>
+                        <input type="text" id="IdYadasht" style="width: 100%" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">مبلغ - تومان</label>
+                        <input type="text" id="IdYadashtPrice" style="width: 100%" class="form-control" value="" onkeyup="FormatCurrency(this)" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">تاریخ</label>
+                        <input type="text" class="form-control datepicker2" id="Date5" value="">
+                    </div>
+                </div>
+                <div class="col">
+                    <br />
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <button type="button" onclick="AfradYadashtSave()" class="btn btn-success" style="width: 80%; padding: 5px; text-align: center;">ثبت</button>
+                            </center>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <div id="ListAfradRefresh" style="padding: 5px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+

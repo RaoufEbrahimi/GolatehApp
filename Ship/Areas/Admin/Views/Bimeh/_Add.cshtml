@@ -1,0 +1,83 @@
+﻿@model Ship.Model.ViewModel.Admin.BimeViewModel
+
+@{
+    int IdUser = int.Parse(User.Identity.Name);
+}
+
+<div class="modal fade" id="ModalIUSoom" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form class="row g-3">
+
+                    <input type="hidden" id="Id" value="@Model.Id" />
+                    <input type="hidden" id="IdShip2" value="@Model.IdShip" />
+
+                    <div class="col-md-4">
+                        <label for="IdSall" class="form-label">سال</label>
+                        <select class="multiple-select" id="IdSall" data-placeholder=".. انتخاب کنید ..">
+                            <option value="0" @(Model.Sal == "" ? "selected='selected'" : "")>.. انتخاب کنید ..</option>
+                            @if (Model.Sal == "1400")
+                            {
+                                <option selected="selected" value="1400">1400</option>
+                            }
+                            else if (Model.Sal == "1401")
+                            {
+                                <option selected="selected" value="1401">1401</option>
+                            }
+                            else
+                            {
+                                <option value="1400">1400</option>
+                                <option value="1401">1401</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="IdMahh" class="form-label">ماه</label>
+                        <select class="multiple-select" id="IdMahh" data-placeholder=".. انتخاب کنید ..">
+                            <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                            @{
+                                foreach (var item in SiteSettingBLL.GetListOption(7))
+                                {
+                                    if (item.Val2 == Model.Mah)
+                                    {
+                                        <option selected="selected" value="@item.Val2">@item.Val</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Val2">@item.Val</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <select id="EmpList" multiple class="form-control">
+                            @foreach (var item in SiteSettingBLL.GetListReletionPersenel(Model.IdShip, IdUser))
+                            {
+                                if (Model.List.Contains(item.Id))
+                                {
+                                    <option selected="selected" value="@item.Id">@item.Title</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Id">@item.Title</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-primary" onclick="AddSave22()">ذخیره</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

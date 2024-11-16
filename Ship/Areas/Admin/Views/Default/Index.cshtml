@@ -1,0 +1,994 @@
+﻿@using Ship.Model.Extension
+
+@{
+    ViewBag.Title = "داشبورد";
+
+    long Price = SiteSettingBLL.GetPricePackage();
+    int IdUser = int.Parse(User.Identity.Name);
+
+    var dash1 = SiteSettingBLL.Dashboard1(IdUser);
+}
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a title="داشبورد" href="/admin"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">داشبورد</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="card border-top border-0 border-4 border-primary">
+        <div class="card-body" style="padding: 0px !important; margin-top: 20px;">
+            <div class="card-title d-flex align-items-center">
+                <button type="button" onclick="window.location.href='/Admin/Ship'" class="btn btn-primary px-5"><i class="bx bxs-ship mr-1"></i> ثبت لنج</button>
+            </div>
+            <hr>
+
+            <div class="row">
+
+                @{
+                    int a = 1;
+                }
+
+                <div class="table-responsive" style="margin-top: 20px;">
+                    <table id="TableSafar" class="table table-bordered mb-0" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center; background-color: #dee2e6b3">#</th>
+                                <th style="text-align: center; background-color: #dee2e6b3">نام لنج</th>
+                                <th style="text-align: center; background-color: #dee2e6b3">تعداد صوم</th>
+                                <th style="text-align: center; background-color: #dee2e6b3">تعداد سفر</th>
+                                <th style="text-align: center; background-color: #dee2e6b3">اعتبار اشتراک</th>
+                                <th style="text-align: center; background-color: #dee2e6b3">پروفایل</th>
+                            </tr>
+                        </thead>
+                        @foreach (var cc in dash1)
+                        {
+                            <tr>
+                                <td style="text-align: center">@(a++)</td>
+                                <td style="text-align: center">@cc.Name</td>
+                                <td style="text-align: center">@cc.TedadSoom</td>
+                                <td style="text-align: center">@cc.TedadSafar</td>
+                                <td style="text-align: center">
+
+                                    @if (cc.IsEnd)
+                                    {
+                               
+                                    <button type="button" onclick="window.location.href='/admin/buysubscription/buytopay?id=@cc.Id'" class="btn btn-success btn-sm">خرید اشتراک</button>
+                                }
+                                else
+                                {
+                                    @cc.ExpireDate <i class="bx bxs-check-circle" style="color: #2edd03;"></i>
+                                }
+                                </td>
+                                <td style="text-align: center">
+                                    <button onclick="window.location.href = '/admin/ship/myship?id=@cc.Id'" type="button" class="btn btn-outline"><i class="bx bxs-ship me-1 font-22 text-primary"></i></button>
+                                </td>
+                            </tr>
+                        }
+                        @if (dash1.Count > 1)
+                        {
+                            <tr>
+                                <td style="text-align: center" colspan="2"></td>
+                                <td style="text-align: center; background-color: #dee2e6b3;">@dash1.Sum(b => b.TedadSoom.ToInt())</td>
+                                <td style="text-align: center; background-color: #dee2e6b3;">@dash1.Sum(b => b.TedadSafar.ToInt())</td>
+                                <td style="text-align: center" colspan="3"></td>
+                            </tr>
+                        }
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                @if (dash1.Any() == false)
+                {
+                    <br />
+                    <h5 style="text-align: center; margin-top: 20px; font-size: 16px;">موردی یافت نشد</h5>
+                }
+            </div>
+
+
+            <br />
+
+            <div>
+                <div class="col-md-12 p-4 border text-center rounded bg-light">
+                    <div style="margin: auto; direction: ltr;">
+                        <select style="width:150px;" class="contact-form ooo" id="idreload" onchange="ReloadCC5(this.value)">
+                            <option selected="selected" value="20">سالیانه</option>
+                            <option value="23">ماهیانه</option>
+                            @*<option value="21">صوم بسته شده</option>
+                                <option selected="selected" value="22">سفر</option>*@
+                        </select>
+                    </div>
+                    <div id="cc55">
+                        <div id="cc599"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-lg-4" id="c11" style="margin-bottom:10px;">
+                    <div id="c1" class="p-4 border text-center rounded bg-light"></div>
+                </div>
+                <div class="col-lg-4" id="c33" style="margin-bottom:10px;">
+                    <div id="c3" class="p-4 border text-center rounded bg-light"></div>
+                </div>
+                <div class="col-lg-4" id="c22" style="margin-bottom:10px;">
+                    <div id="c2" class="p-4 border text-center rounded bg-light"></div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                @*<div class="col-lg-6">
+                        <div id="cc3" class="p-4 border text-center rounded bg-light"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="cc2" class="p-4 border text-center rounded bg-light"></div>
+                    </div>*@
+                <div class="col-lg-6" style="margin-bottom: 10px;" id="cc11">
+                    <div id="cc1" class="p-4 border text-center rounded bg-light"></div>
+                </div>
+                <div class="col-lg-6" id="cc44" style="margin-bottom: 10px;">
+                    <div id="cc4" class="p-4 border text-center rounded bg-light"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="DivModalIUShip"></div>
+
+
+@section js_down{
+
+    <script>
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        $(document).ready(function () {
+            c1();
+            C2();
+            C3();
+
+            C4(1);
+            //C4(2);
+            //C4(3);
+            C4(4);
+
+            $('.ooo').select2();
+            C5();
+        });
+
+        var colors = ['#ff6666', '#1a0000', '#008000', '#00bfff', '#800080', '#ff0040', '#008080', '#000080', '#6a9aba', '#808000', '#24A19C', '#D22779', '#612897', '#632626', '#876445', '#370665', '#064663', '#519259', '#FEC260', '#7E7474', '#3B5249', '#382933', '#A4B494', '#31112C', '#F4ABC4', '#BC6FF1', '#84142D', '#AD62AA', '#9E579D', '#FF5722', '#5FB9B0', '#04879C', '#DD5B82', '#414141', '#46B5D1'];
+
+        function generateRandomColor() {
+            return colors[Math.floor(Math.random() * 35)];
+        }
+
+        function c1() {
+
+            var total = 0;
+            $('#lblc1').text(total);
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Default/C1',
+                timeout: 1000000,
+                success: function (data) {
+                    console.log(data, 'c1');
+                    if (data.length == 0) {
+                        $("#c11").remove();
+                    }
+                    else {
+                        var _f = 0;
+                        for (var i = 0; i < data.length; i++) {
+                            _f = _f + parseInt(data[i].PriceForosh);
+                        }
+                        if (_f == 0) {
+                            $("#c11").remove();
+                            return;
+                        }
+
+
+
+                        var randomColor = Array();
+                        var series = Array();
+                        var labels = Array();
+
+                        for (var i = 0; i < data.length; i++) {
+                            randomColor.push(generateRandomColor());
+                            series.push(parseInt(data[i].PriceForosh));
+                            labels.push(data[i].Name);
+
+                            total = total + parseInt(data[i].PriceForosh);
+                        }
+
+
+                        var _title = 'فروش ' + numberWithCommas(total) + ' تومان';
+
+                        var options = {
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(parseInt(value)) + ' تومان';
+                                    }
+                                }
+                            },
+                            xaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(parseInt(value)) + ' تومان';
+                                    }
+                                }
+                            },
+                            legend: {
+                                fontSize: "14px"
+                            },
+                            width: "100%",
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: "14px"
+                                }
+                            },
+                            series: series,
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 330,
+                                type: 'pie'
+                            },
+                            colors: randomColor,
+                            labels: labels,
+                            responsive: [{
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        height: 360
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    }
+                                }
+                            }],
+                            title: {
+                                text: _title,
+                                align: 'right',
+                                margin: 10,
+                                offsetX: 0,
+                                offsetY: 0,
+                                floating: false,
+                                style: {
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    color: '#263238'
+                                },
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector("#c1"), options);
+                        chart.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function C3() {
+
+            var total = 0;
+            $('#lblc3').text(total);
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Default/C3',
+                timeout: 1000000,
+                success: function (data) {
+                    console.log(data, 'c3');
+                    if (data.length == 0) {
+                        $("#c33").remove();
+                    }
+                    else {
+                        var _f = 0;
+                        for (var i = 0; i < data.length; i++) {
+                            _f = _f + parseInt(data[i].PriceForosh);
+                        }
+                        if (_f == 0) {
+                            $("#c33").remove();
+                            return;
+                        }
+
+
+
+                        var randomColor = Array();
+                        var series = Array();
+                        var labels = Array();
+
+                        for (var i = 0; i < data.length; i++) {
+                            randomColor.push(generateRandomColor());
+                            series.push(parseInt(data[i].Sood));
+                            labels.push(data[i].Name);
+
+                            total = total + parseInt(data[i].Sood);
+                        }
+
+                        var _title = 'سود ' + numberWithCommas(total) + ' تومان';
+
+                        var options = {
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(parseInt(value)) + ' تومان';
+                                    }
+                                }
+                            },
+                            xaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(parseInt(value)) + ' تومان';
+                                    }
+                                }
+                            },
+                            legend: {
+                                fontSize: "16px"
+                            },
+                            width: "100%",
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: "16px"
+                                }
+                            },
+                            series: series,
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 330,
+                                type: 'pie',
+                            },
+                            colors: randomColor,
+                            labels: labels,
+                            responsive: [{
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        height: 360
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    }
+                                }
+                            }],
+                            title: {
+                                text: _title,
+                                align: 'right',
+                                margin: 10,
+                                offsetX: 0,
+                                offsetY: 0,
+                                floating: false,
+                                style: {
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    color: '#263238'
+                                }
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector("#c3"), options);
+                        chart.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function C2() {
+
+            var total = 0;
+            $('#lblc2').text(total);
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Default/C2',
+                timeout: 1000000,
+                success: function (data) {
+                    console.log(data, 'c2');
+                    if (data.length == 0) {
+                        $("#c22").remove();
+                    }
+                    else {
+
+                        var _f = 0;
+                        for (var i = 0; i < data.length; i++) {
+                            _f = _f + parseInt(data[i].PriceForosh);
+                        }
+                        if (_f == 0) {
+                            $("#c22").remove();
+                            return;
+                        }
+
+
+                        var randomColor = Array();
+                        var series = Array();
+                        var labels = Array();
+
+                        for (var i = 0; i < data.length; i++) {
+                            randomColor.push(generateRandomColor());
+                            series.push(parseInt(data[i].HazineHa));
+                            labels.push(data[i].Name);
+
+                            total = total + parseInt(data[i].HazineHa);
+                        }
+
+                        var _title = 'هزینه ها ' + numberWithCommas(total) + ' تومان';
+
+
+                        var options = {
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(parseInt(value)) + ' تومان';
+                                    }
+                                }
+                            },
+                            xaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(parseInt(value)) + ' تومان';
+                                    }
+                                }
+                            },
+                            legend: {
+                                fontSize: "16px"
+                            },
+                            width: "100%",
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: "16px"
+                                }
+                            },
+                            series: series,
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 330,
+                                type: 'pie'
+                            },
+                            colors: randomColor,
+                            labels: labels,
+                            responsive: [{
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        height: 360
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    }
+                                }
+                            }],
+                            title: {
+                                text: _title,
+                                align: 'right',
+                                margin: 10,
+                                offsetX: 0,
+                                offsetY: 0,
+                                floating: false,
+                                style: {
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    color: '#263238'
+                                }
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector("#c2"), options);
+                        chart.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+        function C4(Type) {
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Default/C4',
+                data: { Type: Type },
+                async: false,
+                timeout: 1000000,
+                success: function (data) {
+                    console.log(data, 'C4');
+                    if (data.length == 0) {
+                        $("#cc" + Type + "" + Type).remove();
+                    }
+                    else {
+
+                        if (Type == 1 || Type == 2) {
+                            var series = Array();
+                            var labels = Array();
+                            var randomColor = Array();
+
+                            var _categories = Array();
+
+                            var _Total = 0;
+
+                            console.log(data);
+
+                            for (var i = 0; i < data.length; i++) {
+
+                                if (Type == 1) {
+                                    series.push(parseFloat(data[i].Val));
+                                    _Total = _Total + parseFloat(data[i].Val);
+                                }
+                                else {
+                                    series.push(parseInt(data[i].Val));
+                                    _Total = _Total + parseInt(data[i].Val);
+                                }
+
+                                labels.push(data[i].Month);
+                                randomColor.push(generateRandomColor());
+
+                                _categories.push([data[i].Month]);
+                            }
+
+
+
+                            var _title = "";
+                            if (Type == 1) {
+                                _title = 'حجم صید ' + _Total + ' تن';
+                            }
+                            if (Type == 2) {
+                                _title = 'سود ' + numberWithCommas(_Total) + ' تومان';
+                            }
+
+                            var options = {
+                                series: [{
+                                    data: series
+                                }],
+                                chart: {
+                                    height: 350,
+                                    type: 'bar',
+                                    toolbar: { show: false }
+                                },
+                                colors: colors,
+                                plotOptions: {
+                                    bar: {
+                                        columnWidth: '45%',
+                                        distributed: true
+                                    }
+                                },
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                legend: {
+                                    show: false
+                                },
+                                xaxis: {
+                                    categories: _categories,
+                                    labels: {
+                                        style: {
+                                            colors: colors,
+                                            fontSize: '12px'
+                                        }
+                                    }
+                                },
+                                title: {
+                                    text: _title,
+                                    align: 'right',
+                                    margin: 10,
+                                    offsetX: 0,
+                                    offsetY: 0,
+                                    floating: false,
+                                    style: {
+                                        fontSize: '16px',
+                                        fontWeight: 'bold',
+                                        color: '#263238'
+                                    }
+                                },
+                                yaxis: {
+                                    labels: {
+                                        formatter: function (value) {
+                                            return (Type == 1 ? value + ' تن' : numberWithCommas(parseInt(value)) + ' تومان');
+                                        }
+                                    }
+                                },
+                            };
+
+
+                            var chart = new ApexCharts(document.querySelector("#cc" + Type), options);
+                            chart.render();
+
+
+
+                        } else if (Type == 3) {
+
+                            var series = Array();
+                            var labels = Array();
+
+                            for (var i = 0; i < data.length; i++) {
+                                series.push(parseInt(data[i].Val));
+                                labels.push(data[i].Month);
+                            }
+
+
+                            var _title = "سود";
+
+                            var options = {
+                                yaxis: {
+                                    labels: {
+                                        formatter: function (value) {
+                                            return numberWithCommas(value);
+                                        }
+                                    },
+                                },
+                                series: [{
+                                    data: series
+                                }],
+                                chart: {
+                                    foreColor: '#9ba7b2',
+                                    height: 360,
+                                    type: 'line',
+                                    zoom: {
+                                        enabled: false
+                                    },
+                                    toolbar: {
+                                        show: false
+                                    },
+                                    dropShadow: {
+                                        enabled: true,
+                                        top: 3,
+                                        left: 14,
+                                        blur: 4,
+                                        opacity: 0.10,
+                                    }
+                                },
+                                stroke: {
+                                    width: 5,
+                                    curve: 'smooth'
+                                },
+                                xaxis: {
+                                    categories: labels
+                                },
+                                fill: {
+                                    type: 'gradient',
+                                    gradient: {
+                                        shade: 'light',
+                                        gradientToColors: ['#8833ff'],
+                                        shadeIntensity: 1,
+                                        type: 'horizontal',
+                                        opacityFrom: 1,
+                                        opacityTo: 1,
+                                        stops: [0, 100, 100, 100]
+                                    },
+                                },
+                                markers: {
+                                    size: 4,
+                                    colors: ["#8833ff"],
+                                    strokeColors: "#fff",
+                                    strokeWidth: 2,
+                                    hover: {
+                                        size: 7,
+                                    }
+                                },
+                                colors: ["#8833ff"],
+                                title: {
+                                    text: _title,
+                                    align: 'right',
+                                    margin: 10,
+                                    offsetX: 0,
+                                    offsetY: 0,
+                                    floating: false,
+                                    style: {
+                                        fontSize: '16px',
+                                        fontWeight: 'bold',
+                                        color: '#263238'
+                                    }
+                                }
+                            };
+                            var chart = new ApexCharts(document.querySelector("#cc" + Type), options);
+                            chart.render();
+
+                        } else {
+
+
+                            var series = Array();
+                            var labels = Array();
+
+                            var _total = 0;
+
+                            for (var i = 0; i < data.length; i++) {
+                                series.push(parseInt(data[i].Val));
+                                labels.push(data[i].Month);
+
+                                _total = _total + parseInt(data[i].Val);
+                            }
+
+                            var _title = "خرید ها " + numberWithCommas(_total) + ' تومان';
+
+                            var options = {
+                                yaxis: {
+                                    labels: {
+                                        formatter: function (value) {
+                                            return numberWithCommas(value) + ' تومان';
+                                        }
+                                    },
+                                },
+                                legend: {
+                                    fontSize: "16px"
+                                },
+                                width: "100%",
+                                dataLabels: {
+                                    enabled: true,
+                                    style: {
+                                        fontSize: "16px"
+                                    }
+                                },
+                                series: series,
+                                chart: {
+                                    foreColor: '#9ba7b2',
+                                    height: 330,
+                                    type: 'pie',
+                                    toolbar: {
+                                        show: false
+                                    },
+                                },
+                                colors: randomColor,
+                                labels: labels,
+                                responsive: [{
+                                    breakpoint: 480,
+                                    options: {
+                                        chart: {
+                                            height: 360
+                                        },
+                                        legend: {
+                                            position: 'bottom'
+                                        }
+                                    }
+                                }],
+                                title: {
+                                    text: _title,
+                                    align: 'right',
+                                    margin: 10,
+                                    offsetX: 0,
+                                    offsetY: 0,
+                                    floating: false,
+                                    style: {
+                                        fontSize: '16px',
+                                        fontWeight: 'bold',
+                                        color: '#263238'
+                                    }
+                                }
+                            };
+                            var chart = new ApexCharts(document.querySelector("#cc" + Type), options);
+                            chart.render();
+                        }
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+
+
+        var options2 = null;
+        var chart2 = null;
+
+
+        function C5() {
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Default/C5',
+                timeout: 1000000,
+                success: function (data) {
+                    console.log(data, 'C5');
+                    if (data.length == 0 || data.A.length == 0) {
+                        $("#cc5").hide();
+                    }
+                    else {
+                        $("#cc5").show();
+
+                        options2 = {
+                            series: [{
+                                name: 'سود - زیان',
+                                type: 'column',
+                                data: data.C
+
+                            }, {
+                                name: 'درآمد',
+                                type: 'area',
+                                data: data.A
+                            }, {
+                                name: 'هزینه',
+                                type: 'line',
+                                data: data.B
+                            }],
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 350,
+                                type: 'line',
+                                stacked: false,
+                                zoom: {
+                                    enabled: false
+                                },
+                                toolbar: {
+                                    show: false
+                                }
+                            },
+                            colors: ["#8833ff", "#17a00e", "#f41127"],
+                            stroke: {
+                                width: [0, 2, 5],
+                                curve: 'smooth'
+                            },
+                            plotOptions: {
+                                bar: {
+                                    columnWidth: '50%'
+                                }
+                            },
+                            fill: {
+                                opacity: [0.85, 0.25, 1],
+                                gradient: {
+                                    inverseColors: false,
+                                    shade: 'light',
+                                    type: "vertical",
+                                    opacityFrom: 0.85,
+                                    opacityTo: 0.55,
+                                    stops: [0, 100, 100, 100]
+                                }
+                            },
+                            labels: data.D,
+                            markers: {
+                                size: 0
+                            },
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(parseInt(value));
+                                    }
+                                },
+                                title: {
+                                    text: 'تومان',
+                                },
+                                min: data.MinPrice
+                            },
+                            tooltip: {
+                                shared: true,
+                                intersect: false,
+                                y: {
+                                    formatter: function (y) {
+                                        if (typeof y !== "undefined") {
+                                            return numberWithCommas(y.toFixed(0)) + " تومان";
+                                        }
+                                        return y;
+                                    }
+                                }
+                            }
+                        };
+
+                        chart2 = new ApexCharts(document.querySelector("#cc599"), options2);
+                        chart2.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+
+
+
+
+        function ReloadCC5(item) {
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Default/ReloadCC5',
+                timeout: 1000000,
+                data: { index: item },
+                success: function (data) {
+                    if (data.length == 0 || data.A.length == 0) {
+                        $("#cc5").hide();
+                    }
+                    else {
+                        $("#cc5").show();
+                        chart2.updateOptions({
+                            yaxis: {
+                                min: data.MinPrice
+                            },
+                            labels: data.D,
+                            series: [{
+                                name: 'سود - زیان',
+                                type: 'column',
+                                data: data.C
+
+                            }, {
+                                name: 'درآمد',
+                                type: 'area',
+                                data: data.A
+                            }, {
+                                name: 'هزینه',
+                                type: 'line',
+                                data: data.B
+                            }],
+                        });
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+
+
+        }
+    </script>
+}

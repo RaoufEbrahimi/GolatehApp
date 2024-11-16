@@ -1,0 +1,44 @@
+﻿@model Ship.Model.ViewModel.Admin.GetListSafarViewModel
+
+<div class="modal-body">
+    <form class="row g-3">
+        <input type="hidden" id="Id5" value="@Model.Id" />
+        <div class="col-md-12">
+            <label for="TxtTitle" class="form-label">عنوان</label>
+            <input type="text" class="form-control" id="TxtTitle" value="@Model.Title">
+        </div>
+        <div class="col-md-6">
+            <label for="TxtFromDate" class="form-label">تاریخ رفت</label>
+            <input type="text" class="form-control datepicker2" id="TxtFromDate" value="@Model.FromDate">
+        </div>
+        <div class="col-md-6">
+            <label for="TxtToDate" class="form-label">تاریخ برگشت</label>
+            <input type="text" class="form-control datepicker2" id="TxtToDate" value="@Model.ToDate">
+        </div>
+
+        <div class="col-md-6">
+            <label for="TxtTabakh" class="form-label">هزینه طباخی</label>
+            <input onkeyup="FormatCurrency(this)" style="text-align: center" type="text" class="form-control" id="TxtTabakh" value="@Model.PriceFood.AddCommaToInt()">
+        </div>
+        <div class="col-md-6">
+            <label for="TxtGolatetamirat" class="form-label">تداد گلاته سهم لنج</label>
+            <input style="text-align: center" type="text" class="form-control" id="TxtGolatetamirat" value="@Model.PriceTamiratGolate.ToString().Replace(".", "/")">
+        </div>
+
+        <div class="col-md-12">
+            <label for="TxtTozihat" class="form-label">توضیحات</label>
+            <textarea id="TxtTozihat" class="form-control" rows="4" cols="50" style="margin: 0px; height: 150px; width: 100%;">@Model.Tozihat</textarea>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" onclick="EditSaveSafarMaster2()">ذخیره تغییرات</button>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('input').keyup(function () {
+            this.value = fixPersianNumber(this.value);
+        });
+    });
+</script>

@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body dir="ltr">
+
+    @Html.Stimulsoft().StiMvcViewer(new StiMvcViewerOptions()
+{
+    Theme = StiTheme.Office2010,
+    Controller = "Soom",
+    ActionGetReportSnapshot = string.Concat("GetReport?id=", Request.QueryString["id"]),
+    ActionViewerEvent = "ViewerEvent",
+    ActionPrintReport = "PrintReport",
+    ActionExportReport = "ExportReport",
+    ActionInteraction = "Interaction",
+
+    MenuViewMode = StiWebViewMode.WholeReport,
+    MenuAnimation = false,
+    ShowButtonBookmarks = false,
+    ShowButtonParameters = false,
+    ShowButtonDesign = false,
+
+
+    ShowExportToDocument = false,
+    ShowExportToPdf = true,
+    ShowExportToXps = false,
+    ShowExportToPowerPoint = false,
+    ShowExportToHtml = false,
+    ShowExportToHtml5 = false,
+    ShowExportToMht = false,
+    ShowExportToText = false,
+    ShowExportToRtf = false,
+    ShowExportToWord2007 = true,
+    ShowExportToOpenDocumentWriter = false,
+    ShowExportToExcel = true,
+    ShowExportToExcelXml = false,
+    ShowExportToExcel2007 = false,
+    ShowExportToOpenDocumentCalc = false,
+    ShowExportToCsv = false,
+    ShowExportToDbf = false,
+    ShowExportToXml = false,
+    ShowExportToDif = false,
+    ShowExportToSylk = false,
+    ShowExportToImageBmp = false,
+    ShowExportToImageGif = false,
+    ShowExportToImageJpeg = false,
+    ShowExportToImagePcx = false,
+    ShowExportToImagePng = true,
+    ShowExportToImageTiff = false,
+    ShowExportToImageMetafile = false,
+    ShowExportToImageSvg = false,
+    ShowExportToImageSvgz = false,
+    ShowButtonPrint = true
+})
+</body>
+</html>

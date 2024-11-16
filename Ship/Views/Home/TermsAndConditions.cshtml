@@ -1,0 +1,691 @@
+﻿
+@using Ship.Model.BLL.Admin
+@using Ship.Model.ViewModel
+@{
+    Layout = null;
+}
+@{
+    var tag = new ContentOptimization(true) { IsUser = true };
+
+    var SiteSe = SiteSettingBLL.GetListSiteSetting().First();
+}
+
+<!doctype html>
+<html lang="fa">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="@SiteSe.Logo" type="image/png" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/css/highcharts.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/pace.min.css" rel="stylesheet" />
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/pace.min.js"></script>
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/app.css" rel="stylesheet">
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/dark-theme.css" />
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/semi-dark.css" />
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/header-colors.css" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/notifications/css/lobibox.min.css" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/select2/css/select2-bootstrap4.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/jquery-confirm.min.css">
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/persian-datepicker.css">
+    <style>
+        * {
+            font-family: 'iransans';
+        }
+
+        .inputerror {
+            border: red 1px solid;
+        }
+    </style>
+    <title>توافقنامه  @SiteSe.Title</title>
+</head>
+<body class="rtl">
+
+    <input type="hidden" id="idmobile" name="idmobile" value="@Request.QueryString["id"]" />
+
+    <div class="wrapper">
+
+        <header class="login-header shadow">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white rounded fixed-top rounded-0 shadow-sm">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">
+                        <img src="@SiteSettings.CDN/Content/theme/site/img/icon/Golateh_Logo.png" width="140" alt="گلاته">
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+
+
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" style="border:solid 1px lightgray;background-color:white;">
+                <div class="justify-content-center my-5 my-lg-4">
+                    <div class="container-fluid">
+                        <br />
+                        <br />                <br />
+                        <br />
+                        <style>
+                            ol {
+                                padding: 0 !important;
+                                line-height: normal;
+                                color: black;
+                            }
+
+                            li {
+                                margin-right: 5pt !important;
+                                line-height: normal;
+                            }
+
+                            p.MsoNormal {
+                              
+                             
+                                margin-bottom: 10.0pt;
+                              
+                               
+                               
+                            }
+
+                    
+                            li.MsoNormal {
+                               
+                                margin-bottom: 10.0pt;
+                             
+                                line-height: 140%;
+                                font-size: 12.0pt;
+                            }
+                        </style>
+                        <h1> <b>  توافقنامه استفاده از سرویس ابری گلاته </b></h1>
+
+                        @*<p class="MsoNormal" dir="RTL" style="   direction: rtl; unicode-bidi: embed;">
+                            <a name="OLE_LINK1">
+                                <b>
+                                    <span lang="AR-SA" style="font-size: 13.5pt;   color: black">
+                                     
+                                    </span>
+                                </b>
+                            </a>
+                        </p>*@
+                        <div class="MsoNormal" align="right" dir="RTL" style="margin-bottom:0cm;text-align:
+                                                                                                      left;line-height:115%;direction:rtl;unicode-bidi:embed">
+                            <span dir="LTR" style="font-size: 12.0pt;  font-family: 'Times New Roman',serif; color: black">
+                               
+                            </span>
+                        </div>
+                        <p class="MsoNormal" dir="RTL" style="       margin-bottom: 15.0pt;">
+                            <span lang="AR-SA" style="font-size: 19.0pt;   color: black">
+                                این توافقنامه مابین گلاته از یک طرف و مشتری سامانه ابری گلاته از طرف دیگر می
+                            باشد.
+                            </span>
+                            
+                        </p>
+                        <hr />
+                        <ol start="1" type="1" style="margin-bottom: 0cm">
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    در زمان تکمیل فرم ثبت نام در سایت، مشتری با علامت زدن گزینه
+                                </span> <b>
+                                    <span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif">&quot;</span><span lang="AR-SA" style="font-size: 12.0pt;   ">
+    من
+    شرایط استفاده و سیاست حفظ حریم خصوصی استفاده از سرویس گلاته را خوانده و با آن موافقم
+</span><span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif">&quot;</span>
+                                </b> <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    ،
+                                    می پذیرد که مفاد این توافقنامه را بصورت کامل مطالعه کرده و تمام موارد آن
+                                    مورد قبول او می باشد. چنانچه مشتری گزینه مذکور را علامت نزند، به هیچ عنوان
+                                    اجازه ثبت نام و استفاده از خدمات ابری وب سایت را نخواهد داشت. بنابراین
+                                    استفاده از خدمات سرویس ابری وب سایت به منزله پذیرش مفاد این توافقنامه می
+                                    باشد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    اشخاص حقیقی یا حقوقی که مشتری به نمایندگی از آنها فرم های عضویت در سامانه
+                                    ابری گلاته را تکمیل کرده، نیز شرایط و توافقات استفاده از سیستم و همچنین
+                                    سیاست های حفظ حریم خصوصی را قبول دارند و پذیرفته اند، و فرض می شود که مشتری
+                                    از طرف آنها مجاز بوده و یا اختیار داشته که این توافق را انجام دهد. به این
+                                    معنا که گلاته در خصوص مشکلات احتمالی بعدی در این خصوص، هیچگونه مسئولیتی
+                                    نداشته و صاحب شماره موبایل ثبت شده در سرورهای گلاته و مشخصات سازنده حساب
+                                    کاربری، تعیین کننده وضعیت آن خواهد بود
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    مشتری، کاربران و نمایندگان مشتری، مسئول حفاظت از امنیت حساب کاربری خود می
+                                    باشند. این افراد موظفند که کلمه عبوری را انتخاب کنند که امنیت لازم را دارا
+                                    بوده و قابل حدس زدن توسط سایرین نباشد. همچنین کاربران موظف هستند تا در مقاطع
+                                    زمانی مناسب نسبت به تغییر کلمه عبور خود اقدام کنند. علاوه بر آن، در صورتی که
+                                    احساس می کنند کلمه عبور آنها در دسترس سایرین قرار گرفته، بایستی بلافاصله
+                                    نسبت به تغییر آن اقدام نمایند، در غیر این صورت کلیه عواقب ناشی از این سهل
+                                    انگاری، بر عهده کاربران خواهد بود و گلاته مسئولیتی در این خصوص نخواهد داشت
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    چنانچه به هر دلیلی امکان دسترسی به شماره تلفن ثبت شده نباشد، گلاته تحت هیچ
+                                    شرایطی رمز را تغییر نداده و برای شخص سوم ارسال نمی کند. بنابراین اگر رمز
+                                    عبور مفقود گردید، فقط از طریق دسترسی به شماره
+                                </span>
+                                <span lang="FA" style="font-size: 12.0pt;   ">
+                                    موبایل
+                                </span><span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    ثبت شده امکان بازیابی رمز وجود دارد و درصورت عدم دسترسی به شماره تلفن ثبت
+                                    شده، گلاته تحت هیچ شرایطی رمز را تغییر نداده و ارسال نمی کند
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    گلاته هیچ مسئولیتی در قبال لو رفتن اطلاعات مشتری در صورتی که منشا آن کوتاهی
+                                    مشتری در حفظ امنیت حساب کاربری خود باشد، نخواهد داشت. مسئول تشخیص این امر
+                                    مدیر سیستم گلاته می باشد. مدیر سیستم با مراجعه به لاگها و گزارش های امنیتی
+                                    موجود در پنل خود، امکان بررسی و تشخیص این امر را خواهد داشت
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    گلاته تعهد می کند که بالاترین ضریب اطمینان را برای دسترسی به سرویس های ابری
+                                    خود فراهم سازد. در مواردی که نیاز به قطع خدمت رسانی می باشد، شرکت متعهد می
+                                    شود که موضوع را حداقل
+                                </span>
+                                <span lang="FA" style="font-size: 12.0pt;   ">
+                                    ۱۲
+                                </span><span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    ساعت قبل به اطلاع مشتری برساند
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    گلاته هیچ مسئولیتی در قبال لو رفتن اطلاعات مشتری در صورتی که منشا آن حملات
+                                    هکری باشد، نخواهد داشت. البته گلاته آخرین پروتکل ها و به روز ترین شیوه های
+                                    امنیتی را برای پیشگیری از وقوع موارد فوق به کار می بندد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    گلاته تعهد می دهد از هر زمان که نتواند به فعالیت خود ادامه دهد، به مدت دو
+                                    سال سرورهای خود را روشن نگه دارد و مشتریان امکان دسترسی به اطلاعات خود را
+                                    خواهند داشت
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    کسب و کارهای آزمایشی، چنانچه پس از گذشت
+                                </span>
+                                <span lang="FA" style="font-size: 12.0pt;   ">
+                                    ۳۰
+                                </span><span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    روز از تاریخ انقضای آنها شارژ و تمدید نگردند، بصورت خودکار از سیستم حذف می
+                                    شوند
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    ارائه خدمات پشتیبانی به وسیله تماس تلفنی رایگان بوده و هزینه ای بابت آن
+                                    دریافت نمی شود. گلاته هیچگونه تعهدی نسبت به ارائه خدمات پشتیبانی به صورت
+                                    حضوری نخواهد داشت. پشتیبانی شامل پاسخگویی به سؤالات و رفع مشکلات احتمالی است
+                                    که در حین استفاده از سیستم برای کاربران بوجود می آید. اضافه کردن ویژگی های
+                                    جدید به نرم افزار و آموزش کاربران، مشمول خدمات پشتیبانی قرار نمی گیرند
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    حساب کاربری به منظور انجام فرآیندهای وابسته به موضوع نرم افزار وب سایت، در
+                                    اختیار مشتری، نمایندگان و کاربران قرار داده شده است. هرگونه تلاش برای هک
+                                    کردن سیستم، انجام مهندسی معکوس، کپی برداری و نیز تلاش به هر نحوی در جهت
+                                    ایجاد خدشه در امنیت و کارکرد خدمت و یا سایر جنبه های خدمات مرتبط با آن،
+                                    پیگرد قانونی داشته، منجر به حذف حساب کاربری شده و هیچ گونه وجهی به مشتری
+                                    مسترد نخواهد شد و امکان پیگیری های قضایی برای تامین حقوق تضییع شده برای
+                                    گلاته فراهم می باشد. مسئول تشخیص این موضوع، مدیر سیستم سامانه گلاته می باشد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    گلاته از طریق به شماره موبایل درج شده در حساب کاربری مشتری، نماینده یا
+                                    کاربر، با این افراد ارتباط برقرار می کند. کلیه اطلاعیه ها و اعلانات از طریق
+                                    این به شماره به افراد اعلام خواهد شد، اشخاص فوق الذکر موظف هستند در هنگام
+                                    ثبت نام، به شماره تلفن معتبر را وارد کنند
+                                </span>.<span style="font-size: 12.0pt;   ">
+                                    <span lang="AR-SA">
+                                        همچنین تغییرات در این توافقنامه از طریق تلفن همراه به
+                                        مشتری اطلاع رسانی می شود
+                                    </span>
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    مشتری باید تمامی قوانین جمهوری اسلامی ایران خصوصا
+                                </span> <b>
+                                    <span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif">&quot;</span><span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                        قانون
+                                        تجارت الکترونیکی&quot;، &quot;قانون جرائم رایانه ای&quot; و &quot;قانون ثبت اختراعات، طرحهای
+                                        صنعتی و علائم تجاری، &quot;قانون حمایت از حقوق پدیدآورندگان نرم افزار های رایانه
+                                        ای
+                                    </span><span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif">&quot;&nbsp;</span>
+                                </b><span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    را
+                                    رعایت نماید و هرگونه مسئولیت ناشی از عدم رعایت این قوانین توسط صاحب حساب و
+                                    یا سایر كاربران وی به عهده مشتری است و گلاته هیچ مسئولیتی در این مورد نخواهد
+                                    داشت
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    در صورت فسخ/خاتمه/لغو این توافقنامه حق دسترسی و استفاده از اطلاعات مشتری
+                                    برای وی فورا متوقف می شود و ضمن نگهداری اطلاعات مشتری تا
+                                </span>
+                                <span lang="FA" style="font-size: 12.0pt;   ">
+                                    ۶۰
+                                </span><span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    روز پس از فسخ، بنا به درخواست و بدون دریافت هزینه جدید در اختیار مشتری قرار
+                                    می گیرد، پس از گذشت
+                                </span>
+                                <span lang="FA" style="font-size: 12.0pt;   ">
+                                    ۶۰
+                                </span><span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    روز اطلاعات مشتری حذف شده و به هیچ عنوان قابل بازگشت نمی باشد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    نام تجاری گلاته ، علامت تجاری، سایت گلاته ، خدمات، هرگونه متن و تصویر و
+                                    ویژگی های ظاهری و محتوایی وب سایت و سایر رسانه ها، منحصر به تیم توسعه گلاته
+                                    بوده و کلیه حقوق مادی و معنوی آن متعلق به گلاته و شرکت هوی موی بوشهر می باشد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    هرگونه سوء استفاده از نام یا علامت تجاری گلاته،وبسایت اینترنتی گلاته ،
+                                    مکاتبه از طرف گلاته و یا استفاده از نام ها و یا علائم تصویری مشابه که تشخیص
+                                    و تمییز آن از گلاته برای کاربر عادی ممکن نبوده، موجب گمراهی آنان شود ممنوع
+                                    بوده از طریق طرح دعوای حقوقی در مراجع قانونی ذیصلاح شامل مراجع رسیدگی به
+                                    جرائم رایانه ای، مراجع رسیدگی به جرائم مالکیت فکری و... در داخل و یا خارج از
+                                    کشور و نیز اطلاع‌رسانی به سرویس دهندگان و سرویس گیرندگان اینترنتی قابل پیگرد
+                                    خواهد بود
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    در صورت احراز هرگونه اقدامی از سوی کاربر که منجر به ورود خسارت به شهرت،
+                                    اعتبار و دارایی‌های گلاته شود گلاته این حق را برای خود محفوظ می‌داند که
+                                    قرارداد با کاربر را فسخ نموده، حساب کاربر را مسدود کند و در صورت نیاز، علیه
+                                    شخص اقدام قانونی لازم را انجام دهد. در این صورت کلیه خسارات و مطالبات قانونی
+                                    در مراجع دارای صلاحیت پیگیری خواهد شد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    در راستای حمایت از حقوق و مالكیت های مادی و معنوی، انجام فعالیت های زیر برای
+                                    مشتری مجاز نیست و گلاته اجازه دارد تا به منظور تامین امنیت سایر کاربران،
+                                    بلافاصله و بدون اطلاع و اخطار قبلی حساب کاربری مشتری را مسدود کرده و کلیه
+                                    اطلاعات مشتری را بایگانی کند و دسترسی مشتری به سامانه را قطع کند. مسئول
+                                    تشخیص این امر مدیر سیستم گلاته می باشد. همچنین در این صورت هیچ وجهی به مشتری
+                                    مسترد نخواهد شد
+                                </span><span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif">:</span>
+                                <ul type="circle" style="margin-bottom: 0cm">
+                                    <li class="MsoNormal" dir="RTL" style="       ">
+                                        <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                            كپی كردن، فروختن، به عنوان واسط در اختیار شخص ثالث قرار دادن یا هر نوع
+                                            استفاده تجاری دیگر از موارد مربوط به نرم افزار یا فایل های
+                                        </span><span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif">
+                                            HTML/CSS/JS
+                                        </span>
+                                        <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                            یا طراحی های بصری عناصر واقع در نرم افزار و یا وب سایت یا هر بخشی در آن
+                                            ها. همچنین مشتری نباید اجازه این استفاده را به دیگر اشخاص ثالث از طریق
+                                            در اختیار قرار دادن حساب كاربری خود بدهد
+                                        </span>.
+                                    </li>
+                                    <li class="MsoNormal" dir="RTL" style="       ">
+                                        <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                            هر گونه مهندسی معكوس روی نرم افزار و خدمات فرا قانونی
+                                        </span>
+                                    </li>
+                                    <li class="MsoNormal" dir="RTL" style="       ">
+                                        <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                            استفاده از نرم افزار، خدمات ارائه شده، سایت یا هر جزء آن بگونه ای كه
+                                            موجب نقض حقوق مالكیت فکری گلاته باشد
+                                        </span>.
+                                    </li>
+                                    <li class="MsoNormal" dir="RTL" style="       ">
+                                        <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                            انتقال هرنوع كرم نرم افزاری یا ویروس یا هر كد نرم‌افزاری مخرب در زمان
+                                            استفاده از وب سایت
+                                        </span>.
+                                    </li>
+                                    <li class="MsoNormal" dir="RTL" style="       ">
+                                        <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                            هر گونه هك كردن نرم افزار و یا وب سایت
+                                        </span>.
+                                    </li>
+                                    <li class="MsoNormal" dir="RTL" style="       ">
+                                        <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                            شبیه سازی نام های تجاری گلاته ، علامت تجاری، سایت گلاته ، خدمات و هر
+                                            گونه متن و تصویر و ویژگی های خدمات گلاته
+                                        </span><span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif">
+                                            .
+                                        </span>
+                                    </li>
+                                    <li class="MsoNormal" dir="RTL" style="       ">
+                                        <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                            هرگونه فعالیت مخالف قوانین جمهوری اسلامی ایران
+                                        </span>.
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    تمامی اطلاعاتی كه توسط كاربران مشتری در حین استفاده از خدمت در وب سایت ثبت
+                                    می شود متعلق به همان مشتری بوده و گلاته هیچگونه مالکیتی نسبت به این اطلاعات
+                                    ندارد. مشتری به تنهایی مسئول دقت، کیفیت، یکپارچگی، قانونی بودن، قابل اتکا
+                                    بودن، مناسب بودن و استفاده مناسب از داده های خود می باشد و گلاته هیچگونه
+                                    مسئولیتی در قبال حذف، تصحیح، صدمه دیدن، خرابی و یا مشکل در ذخیره شدن درست
+                                    داده های سمت مشتری ندارد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    داده‌هایی که هنگام ثبت نام مستقیماً از کاربر متقاضی أخذ می‌شود، شامل مشخصات
+                                    فردی (نام و نام خانوادگی)، پست الکترونیک و شماره تلفن همراه، صرفاً در جهت
+                                    احراز هویت کاربر و امکان برخورداری از خدمات استفاده قرار می‌گیرد. شرکت متعهد
+                                    می‌گردد داده‌های مذکور را صرفا در محدوده ارائه خدمات مذکور مورد استفاده قرار
+                                    دهد. شرکت متعهد می‌گردد، داده‌ها و اطلاعات کاربران متقاضی را به اشخاص ثالث
+                                    اعم از حقیقی و یا حقوقی با مقاصد تجاری و غیرتجاری خارج از حیطه خدمات
+                                    فوق‌الذکر، بدون کسب رضایت صاحبان آن افشا ننماید. گلاته به حفظ اسرار تجاری،
+                                    حقوق مالكیت فکری و نیز اطلاعات شخصی و خصوصی مشتریان خود که اطلاعات آن در
+                                    وبسایت و برنامه گلاته بارگذاری و ثبت شده متعهد و ملتزم بوده و به صورت
+                                    پیشگیرانه کلیه اقدامات مورد نیاز جهت حفاظت از محرمانگی این اطلاعات و جلوگیری
+                                    از افشای آنها را انجام می دهد
+                                </span><span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif">
+                                    .<br>
+                                </span>
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    تبصره- اطلاعات فوق محرمانه می باشد و در اختیار هیچ شخصیت حقیقی و یا حقوقی
+                                    ثالثی قرار نمیگیرد، مگر به دستور مراجع ذیصلاح قضایی
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    اطلاعات مذکور در بند قبل حتی پس از انحلال این قرارداد و حساب کاربری مربوطه،
+                                    به طور دائم محرمانه تلقی می گردد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    در صورت وجود مشكل در صورتحساب، مشتری می تواند تا
+                                </span>
+                                <span lang="FA" style="font-size: 12.0pt;   ">
+                                    ۳۰
+                                </span><span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    روز از طریق ایمیل
+                                </span> <b><span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif">(info@golateh.com)</span></b> <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    یا
+                                    با نامه رسمی مراتب را برای رسیدگی اعلام كند
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    گلاته هیچ مسئولیتی در قبال ضرر و زیان های غیر مستقیم یا مستقیم مشتری درباره
+                                    سود، شهرت، اطلاعات و دیگر زیان هایی که صرفا در نتیجه مطلق استفاده از خدمات
+                                    وب سایت می شود را ندارد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    برای بستن حساب لازم است مشتری درخواست مربوطه را از طریق ایمیل به آدرس
+                                </span> <b>
+                                    <span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif">
+                                        info@golateh.com
+                                    </span>
+                                    <span style="font-size: 12.0pt;   ">&nbsp;</span>
+                                </b> <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    اعلام
+                                    کند
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    پس از بستن یا قطع حساب به درخواست مشتری، تمامی محتوا و اطلاعات مشتری پس از
+                                </span>
+                                <span lang="FA" style="font-size: 12.0pt;   ">
+                                    ۶۰
+                                </span><span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    روز حذف می شود. این اطلاعات پس از این مرحله قابل بازگشت نیست
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    در صورت عدم رعایت تمام و یا بخشی از شرایط این توافق نامه از طرف مشتری و یا
+                                    در صورتی که محرز شود مشتری هویت یا اطلاعات تماس خود را ناصحیح اعلام نموده یا
+                                    تغییر هرکدام از آنها را به گلاته اطلاع نداده است، گلاته حق فسخ این قرارداد و
+                                    مسدود نمودن حساب مشتری بدون اعلام قبلی را داراست. در این حالت هیچ گونه وجهی
+                                    به مشتری مسترد نخواهد شد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    گلاته نسبت به مشكلاتی كه برای ارائه سرویس به علت وجود مشكل در اینترنت و یا
+                                    دیگر بسترهای ارتباطی الكترونیك بوجود می آید، مسئولیتی ندارد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    در صورت بروز هرگونه حوادث غیر مترقبه و سایر عوامل خارج از اختیار گلاته ، از
+                                    قبیل اعتصاب، اغتشاش عمومی، صاعقه، آتش سوزی، سیل و زلزله یا حوادث موثر در
+                                    محیط و مانند اینها، به نحوی که انجام تعهدات و خدمات این توافقنامه را برای
+                                    گلاته غیرممكن سازد و یا با اشكال مواجه نماید، هیچگونه مسئولیتی در قبال عدم
+                                    انجام تعهدات متوجه گلاته نمی باشد و مشتری حق هرگونه ادعایی نسبت به گلاته را
+                                    از خود سلب می نماید. با این حال در صورت بروز چنین مواردی گلاته تلاش خود برای
+                                    کاهش اثرات این موارد را می نماید
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    برخی از خدمات گلاته با مشارکت خدمات شرکتهای دیگری ارائه شود که گلاته کنترلی
+                                    بر روی آنها ندارد. در چنین شرایطی کاربران می‌پذیرند که این خدمات، قوانین
+                                    استفاده و مقررات مختص خود را دارند و گلاته مسئولیتی در خصوص آن ندارد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    گلاته به صورت مستمر خدمات خود را توسعه و بهبود می بخشد. به همین علت در طول
+                                    زمان امكاناتی به خدمات و نرم افزار اضافه و امكانات متناظر با آنها تغییر
+                                    یافته، جایگزین و یا حذف می شوند
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    قیمت های اعلامی در سایت به روز بوده و گلاته می‌تواند در صورت نیاز تعرفه های
+                                    استفاده از نرم افزار را تغییر دهد. هزینه های ادامه استفاده از سیستم بر اساس
+                                    مبالغ جدید اعلام شده در سایت محاسبه می شود. بدیهی است تغییر تعرفه ها عطف به
+                                    ماسبق نشده، مشمول خدماتی که مشتری آنها را قبل از تغییر تعرفه خریداری کرده
+                                    است نمی گردد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    گلاته حق اصلاح و تغییر شرایط و مقررات ذكر شده در این سند و قیمت خدمات و
+                                    سرویس های ارائه شده را در هر زمان برای خود محفوظ می داند
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    همواره آخرین نسخه این توافقنامه در آدرس اینترنتی
+                                </span> <a style="color: #0563C1; text-decoration: underline; text-underline: single" href="https://www.golateh.com/home/TermsAndConditions"><b><span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif; color: black">https://www.golateh.com/home/TermsAndConditions</span></b></a><b>
+                                    <span style="font-size: 12.0pt;   ">
+                                    </span>
+                                </b>
+                                <span dir="LTR" style="font-size: 12.0pt;  font-family: yekanbakh,serif">
+                                    &nbsp;
+                                </span><span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    قرار
+                                    دارد
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    هر گونه خودداری گلاته در پیگیری و اجرای حقوق خود در این توافقنامه، به معنی
+                                    چشم پوشی و اعراض از این حقوق نبوده، همواره فرصت و امکان پیگیری این حقوق و
+                                    مطالبات برای گلاته برقرار است
+                                </span>.
+                            </li>
+                            <li class="MsoNormal" dir="RTL" style="       ">
+                                <span lang="AR-SA" style="font-size: 12.0pt;   ">
+                                    قوانین و مقررات ذكر شده در این توافقنامه بر هر نوع توافق قبلی بین گلاته و
+                                    مشتری اولویت و ترجیح خواهد داشت
+                                </span>.
+                            </li>
+                        </ol>
+                        <p class="MsoNormal" dir="RTL" style="text-align:justify;line-height:115%;
+                                                          direction:rtl;unicode-bidi:embed"><span dir="LTR" style="color: black">&nbsp;</span></p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+
+            
+        </div>
+
+
+
+
+        <footer class="bg-white shadow-sm border-top p-2 text-center fixed-bottom">
+            <p class="mb-0">
+                کلیه حقوق مادی و معنوی این وب سایت متعلق به شرکت هوی موی بوشهر است. (© 1401)
+            </p>
+        </footer>
+    </div>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/jquery.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/simplebar/js/simplebar.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/metismenu/js/metisMenu.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/highcharts.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/highcharts-more.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/variable-pie.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/solid-gauge.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/highcharts-3d.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/cylinder.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/funnel3d.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/exporting.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/export-data.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/accessibility.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/index4.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/app.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/notifications/js/lobibox.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/notifications/js/notifications.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/notifications/js/notification-custom-script.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/jquery-confirm.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/persian-date.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/persian-datepicker.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/select2/js/select2.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/apexcharts-bundle/js/apexcharts.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#show_hide_password a").on('click',
+                function (event) {
+                    event.preventDefault();
+                    if ($('#show_hide_password input').attr("type") == "text") {
+                        $('#show_hide_password input').attr('type', 'password');
+                        $('#show_hide_password i').addClass("bx-hide");
+                        $('#show_hide_password i').removeClass("bx-show");
+                    } else if ($('#show_hide_password input').attr("type") == "password") {
+                        $('#show_hide_password input').attr('type', 'text');
+                        $('#show_hide_password i').removeClass("bx-hide");
+                        $('#show_hide_password i').addClass("bx-show");
+                    }
+                });
+        });
+    </script>
+    <!--app JS-->
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/app.js"></script>
+    <script>
+        function LoginActive() {
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/LoginAdmin/LoginActive',
+                data: { username: $('#username').val(), id: $('#idmobile').val() },
+                success: function (dataa) {
+
+                    if (dataa == 1) {
+                        window.location.href = '/Admin/Default';
+                    } else {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'کد وارد شده اشتباه است'
+                            });
+                    }
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+            });
+
+
+        }
+
+    </script>
+
+
+    <script>
+        (() => {
+            'use strict';
+
+            const
+                root = (() => {
+                    if (typeof self == 'object' && self.self === self) return self;
+                    else if (typeof global == 'object' && global.global === global) return global;
+                    else return this;
+                })(),
+
+                persianNumberArr = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+                arabicNumberArr = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+                fixPersianNumber = str => {
+                    if (typeof str === 'string') {
+                        let i = 0;
+                        for (; i < 10; i++) {
+                            str = str.replace(persianNumberArr[i], i).replace(arabicNumberArr[i], i);
+                        }
+                    }
+                    return str;
+                };
+
+            root.fixPersianNumber = fixPersianNumber;
+        })();
+
+
+        $(document).ready(function () {
+            $('input').keyup(function () {
+                this.value = fixPersianNumber(this.value);
+            });
+        });
+    </script>
+
+
+</body>
+</html>

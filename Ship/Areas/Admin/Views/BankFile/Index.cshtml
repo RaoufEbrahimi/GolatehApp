@@ -1,0 +1,333 @@
+﻿@{
+    ViewBag.Title = "فایل بانک";
+    int IdUser = int.Parse(User.Identity.Name);
+}
+
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/admin"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-lg-3" style="margin-bottom: 10px">
+                <label class="form-label">بانک</label>
+                <select id="IdBank" data-placeholder=".. انتخاب کنید .." class="form-control">
+                    <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                    @foreach (var t in SiteSettingBLL.GetListBank())
+                    {
+                        <option value="@t.Id">@t.Title</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-lg-3" style="margin-bottom: 10px">
+                <label class="form-label">لنج</label>
+                <select id="IdShip" data-placeholder=".. انتخاب کنید .." onchange="GetListSoomByIdShip(this.value)" class="form-control">
+                    <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                    @foreach (var t in SiteSettingBLL.GetListShip(IdUser))
+                    {
+                        <option value="@t.Id">@t.Title</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-lg-3" style="margin-bottom: 10px">
+                <label class="form-label">صوم</label>
+                <select id="IdSoom" data-placeholder=".. انتخاب کنید .." onchange="GetListSafarByIdSoom();" class="form-control">
+                    <option value="0">.. انتخاب کنید ..</option>
+                </select>
+            </div>
+
+            <div class="col-lg-3" style="margin-bottom: 10px">
+                <label class="form-label">سفر</label>
+                <select id="IdSafar" data-placeholder=".. انتخاب کنید .." class="form-control" onchange="GetListAftadToSafar(this.value);">
+                    <option value="0">.. انتخاب کنید ..</option>
+                </select>
+            </div>
+        </div>
+
+        <br />
+        <div id="DivList55"></div>
+    </div>
+</div>
+
+@section js_down
+{
+    <script>
+        function GetListAftadToSafar(Id) {
+
+
+            if (Id == 0) {
+                $('#DivList55').html('');
+                return;
+            }
+
+            $.ajax({
+                url: "/Admin/BankFile/GetListAftadToSafar",
+                data: { IdSafar: Id },
+                method: "POST",
+                success: function (data) {
+                    $('#DivList55').html('');
+                    $('#DivList55').html(data);
+                },
+                error: function () {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+
+                    return false;
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function GetListSafarByIdSoom() {
+
+            $('#DivList55').html('');
+
+            if ($('#IdSoom').val().length == 0) {
+                $('#IdSafar').find('option').remove().end();
+                return;
+            }
+
+            $.ajax({
+                url: "/Admin/BankFile/GetListSafarByIdSoom",
+                data: { IdSoom: $('#IdSoom').val() },
+                method: "POST",
+                success: function (data) {
+                    console.log(data);
+
+                    $('#IdSafar').find('option').remove().end();
+                    $('#IdSafar').append('<option value="0"> -- انتخاب کنید --</option>');
+                    for (var i = 0; i < data.length; i++) {
+                        $('#IdSafar').append('<option value="' + data[i].Id + '">' + data[i].Title + '</option>');
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+
+                    return false;
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function GetListSoomByIdShip(Id) {
+
+            $('#DivList55').html('');
+            if (parseInt(Id) == 0) {
+                $('#IdSoom').find('option').remove().end();
+                $('#IdSafar').find('option').remove().end();
+                return;
+            }
+
+            $.ajax({
+                url: "/Admin/BankFile/GetListSoomByIdShip",
+                data: { IdShip: Id },
+                method: "POST",
+                success: function (data) {
+
+                    $('#IdSoom').find('option').remove().end();
+                    $('#IdSafar').find('option').remove().end();
+
+                    $('#IdSoom').append('<option value="0"> -- انتخاب کنید --</option>');
+                    $('#IdSafar').append('<option value="0"> -- انتخاب کنید --</option>');
+                    for (var i = 0; i < data.length; i++) {
+                        $('#IdSoom').append('<option value="' + data[i].Id + '">' + data[i].Title + '</option>');
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+
+                    return false;
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+
+
+        function Save() {
+
+            if (parseInt($('#IdBank').val()) == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'بانک را انتخاب کنید'
+                    });
+                return;
+            }
+
+            if (parseFloat($('#IdSoom').val()) == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'صوم را انتخاب کنید'
+                    });
+                return;
+            }
+
+            if (parseFloat($('#IdSafar').val()) == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'سفر را انتخاب کنید'
+                    });
+                return;
+            }
+
+            if (parseFloat($('#IdBank').val()) == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'بانک را انتخاب کنید'
+                    });
+                return;
+            }
+            
+
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به دریافت فایل بانک هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+
+                            var model = [];
+                            for (var i = 0; i < $("#Tablefilebank tbody tr").length; i++) {
+
+                                var _Row = $("#Tablefilebank tbody tr")[i];
+
+                                model.push({ TotalPrice: $(_Row).attr('TotalPrice'), AttrId: $(_Row).attr('AttrId') })
+                            }
+
+
+
+                            $.ajax({
+                                url: "/Admin/BankFile/SaveFile",
+                                data: { model: model, IdBank: $('#IdBank').val()},
+                                method: "POST",
+                                success: function (data) {
+                                    if (parseInt(data.ok) == 1) {
+                                        GoToPage2(data.url);
+                                    }
+                                    else {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                            });
+                                    }                                    
+                                },
+                                error: function () {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+
+                                    return false;
+                                },
+                                beforeSend: function () {
+
+                                }
+                            });
+
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+
+
+
+
+        }
+
+        function GoToPage2(url) {
+            var a = document.createElement('a');
+            $(a).attr("href", url);
+            a.click()
+        }
+ 
+
+        $(document).ready(function () {
+            $('input').keyup(function () {
+                this.value = fixPersianNumber(this.value);
+            });
+
+            $('#IdBank').select2({
+                theme: 'bootstrap4',
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: $(this).data('placeholder'),
+                allowClear: Boolean($(this).data('allow-clear'))
+                //closeOnSelect: false
+            });
+        });
+
+    </script>
+}
+

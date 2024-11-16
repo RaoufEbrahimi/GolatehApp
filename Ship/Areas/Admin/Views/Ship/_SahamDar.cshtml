@@ -1,0 +1,72 @@
+﻿@model Ship.Model.ViewModel.Admin.ShipViewModel
+@{
+    int IdUser = int.Parse(User.Identity.Name);
+}
+<div class="modal fade" id="ModalIUOpenSahamDar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    سهام دار لنج : @Model.Title
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3">
+                    <input type="hidden" id="Id3" value="@Model.Id" />
+
+                    <div class="col-md-6">
+                        <label class="form-label">فرد</label>
+                        <select class="multiple-select" id="IdHandMoneyList2" data-placeholder=".. انتخاب کنید ..">
+                            <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                            @foreach (var t in SiteSettingBLL.GetListReletionPersenel(Model.Id, IdUser))
+                            {
+                                <option value="@t.Id">@t.Title</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">نوع سهم</label>
+                        <select class="multiple-select" id="IdDong" data-placeholder=".. انتخاب کنید ..">
+                            <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                            <option value="1">دانگ</option>
+                            <option value="2">درصد</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="TxtNumber3" class="form-label">مقدار</label>
+                        <input style="text-align: center" type="number" class="form-control" id="TxtNumber3" value="">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="AddSave3()">ثبت</button>
+                </form>
+            </div>
+            <div id="ListSahamDarRefresh"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#IdHandMoneyList2,#IdDong').select2({
+            theme: 'bootstrap4',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear'))
+        });
+    });
+</script>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('input').keyup(function () {
+            this.value = fixPersianNumber(this.value);
+        });
+    });
+</script>

@@ -1,0 +1,93 @@
+﻿@model List<Ship.Model.ViewModel.Admin.PersonnelManagementViewModel>
+
+@{
+    string Direction = "rtl";
+}
+
+<form dir="@Direction">
+
+    <div class="form-group">
+        <label>نام</label>
+        <input type="text" class="form-control" value="" id="FirstName" name="FirstName" />
+    </div>
+
+    <div class="form-group">
+        <label>نام خانوادگی</label>
+        <input type="text" class="form-control" value="" id="LastName" name="LastName" />
+    </div>
+
+    <div class="form-group">
+        <label>نام کاربری</label>
+        <input type="text" class="form-control" value="" id="UserName" name="UserName" />
+    </div>
+
+    <div class="form-group">
+        <label>روز عبور</label>
+        <input type="text" class="form-control" value="" id="Password" name="Password" />
+    </div>
+
+    <center>
+        <button type="button" class="btn btn-blue" onclick="PersonnelManagementSubmit()">ثبت</button>
+    </center>
+
+</form>
+
+<hr />
+
+<div dir="rtl">
+    <table class="table table-hover">
+        <thead class="bordered-darkorange">
+            <tr>
+                <th>
+                    نام
+                </th>
+                <th>
+                    نام خانوادگی
+                </th>
+                <th>
+                    نام کاربری
+                </th>
+                <th>
+                    رمز عبور
+                </th>
+                <th>
+                    وضعیت فعالیت
+                </th>
+                <th>
+                    حذف
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Where(b => b.UserName != "admin").ToList())
+            {
+                <tr>
+                    <td dir="@Direction">
+                        @item.FirstName
+                    </td>
+                    <td dir="@Direction">
+                        @item.LastName
+                    </td>
+                    <td dir="@Direction">
+                        @item.UserName
+                    </td>
+                    <td dir="@Direction">
+                        @item.Password
+                    </td>
+                    <td>
+                        <div class="checkbox">
+                            <label>
+                                <input onchange="ChangeStatusPersonnel(this)" ArtId="@item.Id" type="checkbox" @(item.IsActive ? "checked" : "")>
+                                <span class="text"></span>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-pol-delete" value="حذف" onclick="PersonnelManagementDelete(@item.Id)" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

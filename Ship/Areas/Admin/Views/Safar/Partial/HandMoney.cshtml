@@ -1,0 +1,442 @@
+﻿@model string
+@{
+    int IdUser = int.Parse(User.Identity.Name);
+}
+
+<div class="row">
+
+    <div class="form-check form-check-inline" style="cursor: pointer">
+        <input onchange="ShowState(0)" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+        <label class="form-check-label" for="flexRadioDefault1">صید</label>
+    </div>
+    <div class="form-check form-check-inline" style="cursor: pointer">
+        <input onchange="ShowState(1)" checked="checked" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+        <label class="form-check-label" for="flexRadioDefault2">مساعده</label>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-3" style="margin-bottom: 10px">
+            <label class="form-label">فرد</label>
+            <select onchange="RefreshNote(this.value)" class="multiple-select" id="IdHandMoneyList2" data-placeholder=".. انتخاب کنید ..">
+                <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                @foreach (var t in SiteSettingBLL.GetListReletionPersenel3(long.Parse(Model), IdUser))
+                {
+                    <option value="@t.Id">@t.Title</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2" style="margin-bottom: 10px">
+            <label for="TxtFromDate2" class="form-label">تاریخ</label>
+            <input type="text" class="form-control datepicker2" id="TxtFromDate2" value="">
+        </div>
+
+        <div class="col-lg-3" style="margin-bottom: 10px" id="DivNote">
+            <label class="form-label">بدهی یاداشت شده</label>
+            <select onchange="TotalMosaede(this.value)" class="multiple-select" id="IdRefreshNote" data-placeholder=".. انتخاب کنید ..">
+                <option value="0" selected="selected">.. انتخاب کنید ..</option>
+            </select>
+        </div>
+
+        <div class="col-md-2" id="DivPrice" style="margin-bottom: 10px">
+            <label for="TxtPrice2" class="form-label">فی (تومان)</label>
+            <input type="text" style="text-align: center" class="form-control" min="0" id="TxtPrice2" value="" onkeyup="FormatCurrency(this)">
+        </div>
+
+        <div class="col-lg-3 IdType" style="display: none; margin-bottom: 10px">
+            <label class="form-label">صید</label>
+            <select class="multiple-select" id="IdHandMoneykalaList2" data-placeholder=".. انتخاب کنید .." onchange="SetUnit(this)">
+                <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                @foreach (var t in SiteSettingBLL.GetListKala2(long.Parse(Model), new long[] { 9 }))
+                {
+                    <option Id2="@t.Id2" value="@t.Id">@t.Title</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-lg-2 IdType" style="display: none; margin-bottom: 10px">
+            <label class="form-label">واحد اندازه کیری</label>
+            <select class="multiple-select" id="Idunit2" data-placeholder=".. انتخاب کنید .." onchange="SetUnit2()">
+                <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                @foreach (var t in SiteSettingBLL.GetListUnit())
+                {
+                    <option value="@t.Id">@t.Title</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-2 IdType" style="display: none; margin-bottom: 10px">
+            <label for="TxtVazn" class="form-label" id="LblTedad2">مقدار</label>
+            <input type="text" style="text-align: center" class="form-control" min="0" id="TxtVazn" value="" onkeyup="FormatCurrency(this)">
+        </div>
+
+        <div class="col-md-12" style="margin-bottom: 10px">
+            <label for="Tozihat2" class="form-label">توضیحات</label>
+            <input type="text" class="form-control" id="Tozihat2" value="">
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-lg-2">
+            <button type="button" onclick="AddHandMoneyToSafar()" class="btn btn-primary">تخصیص مساعده</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div id="DivListHandMoney"></div>
+</div>
+
+<script>
+    function RefreshNote() {
+        var itm = $('#IdRefreshNote');
+
+        itm.find('option').remove().end();
+        itm.append('<option value="0">انتخاب کنید</option>');
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/Safar/RefreshNote',
+            data: {
+                IdSoom: $('#IdSoom').val(),
+                IdAfrad: $('#IdHandMoneyList2').select2("val")
+            },
+            success: function (dataa) {
+
+                for (var i = 0; i < dataa.length; i++) {
+                    itm.append('<option value="' + dataa[i].IdYadasht + '">' + dataa[i].Name + '</option>');
+                }
+
+
+                $('#IdRefreshNote').val(0).trigger('change');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+            }
+        });
+    }
+    function SetUnit(itm) {
+        var idval = $("#IdHandMoneykalaList2").find(":selected").attr("Id2");
+        $("#Idunit2").select2('val', idval);
+        $('#LblTedad2').text('مقدار ' + $("#Idunit2").find(":selected").text());
+    }
+
+    function SetUnit2() {
+        $('#LblTedad2').text('مقدار ' + $("#Idunit2").find(":selected").text());
+    }
+
+    $(document).ready(function () {
+        $('#IdHandMoneyList2,#IdHandMoneykalaList2,#IdRefreshNote').select2({
+            theme: 'bootstrap4',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
+            dropdownParent: $('#ModalIUEditDeteilSafar')
+            //closeOnSelect: false
+        });
+        $('#Idunit2').select2({
+            theme: 'bootstrap4',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
+            dropdownParent: $('#ModalIUEditDeteilSafar')
+        });
+
+        $('.datepicker2').persianDatepicker({
+            observer: true,
+            format: 'YYYY/MM/DD',
+            initialValueType: 'persian'
+        });
+
+        ListHandMoneyRefresh();
+    });
+    function ShowState(Id) {
+        if (Id == 0) {
+            $('.IdType').show();
+            $('#DivPrice').hide();
+            $('#DivNote').hide();
+        } else {
+            $('.IdType').hide();
+            $('#DivPrice').show();
+            $('#DivNote').show();
+        }
+    }
+    function AddHandMoneyToSafar() {
+
+        var Weight = null;
+        var IdKala = null;
+        var Price = null;
+        var Idunit2 = null;
+
+        if ($('.IdType').is(":visible") == false) {
+            Weight = null;
+            IdKala = null;
+            Price = $("#TxtPrice2").val();
+        } else {
+            Weight = $("#TxtVazn").val();
+            IdKala = $('#IdHandMoneykalaList2').select2("val");
+            Price = null;
+            Idunit2 = $('#Idunit2').select2("val");
+        }
+
+
+        $('#TxtPrice2,#TxtFromDate2,#TxtVazn').removeClass('inputerror');
+        $($('#IdHandMoneyList2')).siblings(".select2-container").removeClass('inputerror');
+        $($('#IdHandMoneykalaList2')).siblings(".select2-container").removeClass('inputerror');
+        $($('#Idunit2')).siblings(".select2-container").removeClass('inputerror');
+
+        var eror = false;
+
+        if ($('.IdType').is(":visible") == false) {
+            if ($('#TxtPrice2').val().trim().length === 0) {
+                $('#TxtPrice2').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtFromDate2').val().trim().length !== 10) {
+                $('#TxtFromDate2').addClass('inputerror');
+                eror = true;
+            }
+            if ($("#IdHandMoneyList2").select2("val") == '0') {
+                $('#IdHandMoneyList2').siblings(".select2-container").addClass('inputerror');
+                eror = true;
+            }
+        } else {
+            if ($("#IdHandMoneyList2").select2("val") == '0') {
+                $('#IdHandMoneyList2').siblings(".select2-container").addClass('inputerror');
+                eror = true;
+            }
+            if ($("#IdHandMoneykalaList2").select2("val") == '0') {
+                $('#IdHandMoneykalaList2').siblings(".select2-container").addClass('inputerror');
+                eror = true;
+            }
+            if ($("#Idunit2").select2("val") == '0') {
+                $('#Idunit2').siblings(".select2-container").addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtFromDate2').val().trim().length !== 10) {
+                $('#TxtFromDate2').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtVazn').val().trim().length === 0) {
+                $('#TxtVazn').addClass('inputerror');
+                eror = true;
+            }
+        }
+
+        if (eror) {
+            return false;
+        }
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/Safar/HandMoneyToSafar',
+            data: {
+                IdSoom: $('#IdSoom').val(),
+                IdSafar: $('#IdSafar').val(),
+                IdAfrad: $('#IdHandMoneyList2').select2("val"),
+                IdUnit: Idunit2,
+                IdKala: IdKala,
+                Weight: Weight,
+                Tozihat: $("#Tozihat2").val(),
+                Price: Price,
+                CreateDateMoney: $("#TxtFromDate2").val(),
+                IdNote: $('#IdRefreshNote').select2("val")
+            },
+            success: function (dataa) {
+
+                if (-11 == dataa) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'اشتراک تهیه کنید'
+                        });
+                    return;
+                }
+
+
+                if (-22 == dataa) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'مبلغ وارده از یادداشت بیشتر است'
+                        });
+                    return;
+                }
+
+
+
+                if (Boolean(dataa) == true) {
+                    $('#TxtPrice2').val('');
+                    $('#Tozihat2').val('');
+                    ListHandMoneyRefresh();
+                    $("#IdHandMoneykalaList2,#IdHandMoneyList2").select2('val', '0');
+                } else {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+            }
+        });
+    }
+    function ListHandMoneyRefresh() {
+        $.ajax({
+            url: "/Admin/Safar/GetListSafarToHandMoney",
+            method: "POST",
+            data: { IdSoom: $('#IdSoom').val(), IdSafar: $('#IdSafar').val() },
+            success: function (data) {
+                $('#DivListHandMoney').html('');
+                $('#DivListHandMoney').html(data);
+
+                GetListSafar();
+            },
+            error: function () {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                });
+            },
+            beforeSend: function () {
+
+            }
+        });
+    }
+    function ToDeleteSafarToHandMoney(Id) {
+        $.alert({
+            title: 'توجه!',
+            content: 'آیا مایل به حذف مساعده از فرد هستید !',
+            rtl: true,
+            closeIcon: true,
+            buttons: {
+                confirm: {
+                    text: 'تایید',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Admin/Safar/DeleteSafarToHandMoney',
+                            data: {
+                                IdSoom: $('#IdSoom').val(),
+                                IdSafar: $('#IdSafar').val(),
+                                Id: Id
+                            },
+                            success: function (dataa) {
+
+                                if (Boolean(dataa) == true) {
+                                    ListHandMoneyRefresh();
+                                } else {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                }
+
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                Lobibox.notify('error',
+                                    {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'انصراف',
+                    action: function () { }
+                }
+            }
+        });
+    }
+
+    function numberWithCommas(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    function TotalMosaede(IdNote) {
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/Safar/TotalMosaede',
+            data: {
+                IdNote: IdNote,
+                IdPersonnel: $('#IdHandMoneyList2').select2("val")
+            },
+            success: function (dataa) {
+                if (parseFloat(dataa) >= 0) {
+                    $('#TxtPrice2').val(numberWithCommas(dataa));
+                } else {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+            }
+        });
+    }
+
+</script>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('input').keyup(function () {
+            this.value = fixPersianNumber(this.value);
+        });
+    });
+</script>

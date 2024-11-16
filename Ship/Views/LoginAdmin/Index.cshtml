@@ -1,0 +1,226 @@
+﻿
+@using Ship.Model.BLL.Admin
+@using Ship.Model.ViewModel
+@{
+    Layout = null;
+}
+@{
+    var tag = new ContentOptimization(true) { IsUser = true };
+
+    var SiteSe = SiteSettingBLL.GetListSiteSetting().First();
+}
+
+<!doctype html>
+<html lang="fa">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="@SiteSe.Logo" type="image/png" />
+    @Styles.Render("~/bundles/css/AdminGolatehCSS")
+    <style>
+        * {
+            font-family: 'iransans';
+        }
+
+        .inputerror {
+            border: red 1px solid;
+        }
+    </style>
+    <title>ورود به @SiteSe.Title</title>
+</head>
+<body class="rtl">
+    <!--wrapper-->
+    <div class="wrapper">
+        <div class="authentication-header"></div>
+        <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
+            <div class="container-fluid">
+                <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+                    <div class="col mx-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="p-4 rounded">
+                                    <div class="text-center">
+
+                                        <div class="mb-4 text-center">
+                                            <img onclick="window.location.href='/'" src="@SiteSettings.CDN/Content/theme/site/img/icon/Golateh_Logo.png" style="width: 290px; cursor: pointer" />
+                                        </div>
+
+                                        <h3 class="">ورود</h3>
+                                        <p>
+                                            حساب کاربری ندارید؟
+                                            <a href="/home/register">ثبت نام</a>
+                                        </p>
+                                    </div>
+                                    <div class="form-body">
+                                        <form class="row g-3">
+                                            <div class="col-12">
+                                                <label for="username" class="form-label">کد ملی</label>
+                                                <input type="text" class="form-control" id="username" placeholder="کد ملی خود را وارد کنید">
+                                            </div>
+
+                                            <div class="col-12">
+                                                <label for="inputChoosePassword" class="form-label">رمز عبور</label>
+                                                <div class="input-group" id="show_hide_password">
+                                                    <input type="password" class="form-control border-end-0"
+                                                           id="inputChoosePassword" value="12345678"
+                                                           placeholder="رمز عبور خود را وارد کنید">
+                                                    <a href="javascript:;"
+                                                       class="input-group-text bg-transparent">
+                                                        <i class='bx bx-hide'></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <select id="IdType" class="form-control">
+                                                    <option selected="selected" value="0">لنج دار</option>
+                                                    <option value="1">تنخوا گردان</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           id="flexSwitchCheckChecked" checked>
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                        مرا به
+                                                        خاطر بسپار
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-end">
+                                                <a href="/home/forgotpassword">فراموشی رمز عبور؟</a>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="d-grid">
+                                                    <button type="button" class="btn btn-primary" onclick="Login()">
+                                                        <i class="bx bxs-lock-open"></i>ورود
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end row-->
+            </div>
+        </div>
+    </div>
+    <!--end wrapper-->
+    @Scripts.Render("~/bundles/js/AdminGolatehJS")
+    <script>
+        $(document).ready(function () {
+            $("#show_hide_password a").on('click', function (event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("bx-hide");
+                    $('#show_hide_password i').removeClass("bx-show");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("bx-hide");
+                    $('#show_hide_password i').addClass("bx-show");
+                }
+            });
+        });
+    </script>
+    <script>
+        function Login() {
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/LoginAdmin/Login',
+                data: {
+                    username: $('#username').val(),
+                    password: $('#inputChoosePassword').val(),
+                    Captcha: $('#Captcha').val(),
+                    IdType: $('#IdType').val()
+                },
+                success: function (dataa) {
+
+                    if (dataa == 1) {
+                        if ($('#IdType').val() == '0') {
+                            window.location.href = '/Admin/Default';
+                        }
+                        else {
+                            window.location.href = '/Tankha/Default';
+                        }
+                    }
+                    else if (dataa == 0) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'کد امنیتی اشتباه است'
+                            });
+                    }
+                    else {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'نام کاربری یا رمز عبور شما اشتباه است'
+                            });
+                    }
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+            });
+
+
+        }
+
+    </script>
+    <script>
+        (() => {
+            'use strict';
+
+            const
+                root = (() => {
+                    if (typeof self == 'object' && self.self === self) return self;
+                    else if (typeof global == 'object' && global.global === global) return global;
+                    else return this;
+                })(),
+
+                persianNumberArr = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+                arabicNumberArr = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+                fixPersianNumber = str => {
+                    if (typeof str === 'string') {
+                        let i = 0;
+                        for (; i < 10; i++) {
+                            str = str.replace(persianNumberArr[i], i).replace(arabicNumberArr[i], i);
+                        }
+                    }
+                    return str;
+                };
+
+            root.fixPersianNumber = fixPersianNumber;
+        })();
+
+
+
+        $(document).ready(function () {
+            $('input').keyup(function () {
+                this.value = fixPersianNumber(this.value);
+            });
+        });
+    </script>
+</body>
+</html>

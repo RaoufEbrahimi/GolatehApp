@@ -1,0 +1,378 @@
+﻿
+@{
+    ViewBag.Title = "مدیریت لنج ها";
+}
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/admin"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">افزودن لنج</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-body">
+
+        <button onclick="_OpenAdd(0)" type="button" class="btn btn-outline-success position-relative">
+            <i class="lni lni-circle-plus"></i> @ViewBag.Title <span class="position-absolute top-0 start-100">
+            </span>
+        </button>
+        <br />
+        <br />
+        <div id="DivListShip"></div>
+    </div>
+</div>
+
+<div id="DivModalIUShip"></div>
+
+
+@section js_down{
+    <script>
+        function _OpenAdd(Id) {
+            $.ajax({
+                url: "/Admin/Ship/_Add",
+                method: "POST",
+                data: { Id: Id },
+                success: function (data) {
+                    $('#DivModalIUShip').html('');
+                    $('#DivModalIUShip').html(data);
+
+                    $('#ModalIUShip').modal('show');
+
+                    $('.datepicker2').persianDatepicker({
+                        observer: true,
+                        format: 'YYYY/MM/DD'
+                    });
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function GetListShip() {
+            $.ajax({
+                url: "/Admin/Ship/GetListShip",
+                method: "POST",
+                success: function (data) {
+
+                    $('#DivListShip').html('');
+                    $('#DivListShip').html(data);
+
+                    var table = $('#TableShip').DataTable({
+                        lengthChange: false,
+                        buttons: ['copy', 'excel', 'print']
+                    });
+                    table.buttons().container().appendTo('#TableShip_wrapper .col-md-6:eq(0)');
+
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function ToDelete(Id) {
+            $.alert({
+                title: 'حذف',
+                content: 'آیا مایل به حذف لنج هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/Delete',
+                                data: { Id: Id },
+                                success: function (dataa) {
+
+                                    if (Boolean(dataa) == true) {
+                                        GetListShip();
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function ToEdit(Id) {
+            _OpenAdd(Id);
+        }
+        function AddSave() {
+
+            $.alert({
+                title: 'ثبت',
+                content: 'آیا مایل به ثبت لنج هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/AddSave',
+                                data: {
+                                    Id: $('#Id').val(), Title: $('#TxtTitle').val(), Number: $('#TxtNumber').val(), YearProduction: $('#TxtYearProduction').val(),
+                                    Tul: $('#TxtTul').val(), Arz: $('#TxtArz').val(), NameMotor: $('#TxtNameMotor').val(), HajMotor: $('#TxtHajMotor').val()
+                                },
+                                success: function (dataa) {
+
+                                    if (Boolean(dataa.status) == true) {
+                                        GetListShip();
+                                        $('#ModalIUShip').modal('hide');
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: dataa.msg
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function AddSave2() {
+
+
+            $('#TxtTitle2,#TxtNumber2,#TxtYearProduction2,#TxtTul2,#TxtArz2,#TxtNameMotor2,#TxtHajMotor2,#TxtShomareBime').removeClass('inputerror');
+
+            var eror = false;
+
+            if ($('#TxtTitle2').val().trim().length === 0) {
+                $('#TxtTitle2').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtNumber2').val().trim().length === 0) {
+                $('#TxtNumber2').addClass('inputerror');
+                eror = true;
+            }
+            //if ($('#TxtYearProduction2').val().trim().length !== 10) {
+            //    $('#TxtYearProduction2').addClass('inputerror');
+            //    eror = true;
+            //}
+            //if ($('#TxtTul2').val().trim().length === 0) {
+            //    $('#TxtTul2').addClass('inputerror');
+            //    eror = true;
+            //}
+            //if ($('#TxtArz2').val().trim().length === 0) {
+            //    $('#TxtArz2').addClass('inputerror');
+            //    eror = true;
+            //}
+            //if ($('#TxtNameMotor2').val().trim().length === 0) {
+            //    $('#TxtNameMotor2').addClass('inputerror');
+            //    eror = true;
+            //}
+            //if ($('#TxtHajMotor2').val().trim().length === 0) {
+            //    $('#TxtHajMotor2').addClass('inputerror');
+            //    eror = true;
+            //}
+            //if ($('#TxtShomareBime').val().trim().length === 0) {
+            //    $('#TxtShomareBime').addClass('inputerror');
+            //    eror = true;
+            //}
+
+            if (eror) {
+                return false;
+            }
+
+
+            //$.ajax({
+            //    type: 'POST',
+            //    url: '/Admin/Ship/AddSave',
+            //    data: {
+            //        Id: $('#Id2').val(), Title: $('#TxtTitle2').val(), Number: $('#TxtNumber2').val(), YearProduction: $('#TxtYearProduction2').val(),
+            //        Tul: $('#TxtTul2').val(), Arz: $('#TxtArz2').val(), NameMotor: $('#TxtNameMotor2').val(), HajMotor: $('#TxtHajMotor2').val(),
+            //        ShomareBime: $('#TxtShomareBime').val()
+            //    },
+            //    success: function (dataa) {
+
+            //        if (Boolean(dataa) == true) {
+            //            GetListShip();
+            //            $('#F1')[0].reset();
+            //            $('#ModalIUShip').modal('hide');
+            //        }
+            //        else {
+            //            Lobibox.notify('error', {
+            //                pauseDelayOnHover: true,
+            //                continueDelayOnInactiveTab: false,
+            //                position: 'top right',
+            //                icon: 'bx bx-x-circle',
+            //                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+            //            });
+            //        }
+
+            //    },
+            //    error: function (jqXHR, textStatus, errorThrown) {
+            //        Lobibox.notify('error', {
+            //            pauseDelayOnHover: true,
+            //            continueDelayOnInactiveTab: false,
+            //            position: 'top right',
+            //            icon: 'bx bx-x-circle',
+            //            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+            //        });
+            //    }
+            //});
+
+
+
+
+
+            var formData = new FormData();
+            var totalFiles = document.getElementById("imageUploadForm").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("imageUploadForm").files[i];
+                formData.append("imageUploadForm", file);
+
+                const fileType = file['type'];
+                const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+                if (!validImageTypes.includes(fileType)) {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'پسوند فایل معتبر نیست'
+                    });
+                    return;
+                }
+            }
+
+            formData.append("imageUploadForm", file);
+            formData.append("Id", $('#Id2').val());
+            formData.append("Title", $('#TxtTitle2').val());
+            formData.append("Number", $('#TxtNumber2').val());
+            formData.append("YearProduction", $('#TxtYearProduction2').val());
+            formData.append("Tul", $('#TxtTul2').val());
+            formData.append("Arz", $('#TxtArz2').val());
+            formData.append("NameMotor", $('#TxtNameMotor2').val());
+            formData.append("HajMotor", $('#TxtHajMotor2').val());
+            formData.append("ShomareBime", $('#TxtShomareBime').val());
+
+            $.ajax({
+                type: "POST",
+                url: '/Admin/Ship/AddSave',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false
+            }).done(function (dataa) {
+
+                if (Boolean(dataa.status) == true) {
+                    GetListShip();
+                    $('#F1')[0].reset();
+                    $('#ModalIUShip').modal('hide');
+                }
+                else {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: dataa.msg
+                    });
+                }
+
+            }).fail(function (xhr, status, errorThrown) {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                });
+            });
+        }
+        $(document).ready(function () {
+            GetListShip();
+        });
+
+
+
+
+
+
+    </script>
+}
+
+
+<script>
+    $(document).ready(function () {
+        $('input').keyup(function () {
+            this.value = fixPersianNumber(this.value);
+        });
+    });
+</script>

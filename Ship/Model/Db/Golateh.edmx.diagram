@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3479aade882a4532b448187114872e5f" Name="Diagram1" ZoomLevel="60">
+        <EntityTypeShape EntityType="GolatehModel.Bank" Width="1.5" PointX="0.75" PointY="27.375" />
+        <EntityTypeShape EntityType="GolatehModel.BankFileDeteil" Width="1.5" PointX="8" PointY="1.125" />
+        <EntityTypeShape EntityType="GolatehModel.BankFileMster" Width="1.5" PointX="5.75" PointY="1" />
+        <EntityTypeShape EntityType="GolatehModel.Bimeh" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="GolatehModel.BimehAfrad" Width="1.5" PointX="7.5" PointY="41.875" />
+        <EntityTypeShape EntityType="GolatehModel.BimehDeteil" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="GolatehModel.BimehMaster" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="GolatehModel.Contact" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="GolatehModel.ContactUs" Width="1.5" PointX="5.75" PointY="7.75" />
+        <EntityTypeShape EntityType="GolatehModel.DebtHistory" Width="1.5" PointX="7.5" PointY="45.375" />
+        <EntityTypeShape EntityType="GolatehModel.JoinIt" Width="1.5" PointX="7.75" PointY="7.75" />
+        <EntityTypeShape EntityType="GolatehModel.Kala" Width="1.5" PointX="5.25" PointY="26.375" />
+        <EntityTypeShape EntityType="GolatehModel.Note" Width="1.5" PointX="7.5" PointY="37.625" />
+        <EntityTypeShape EntityType="GolatehModel.Option" Width="1.5" PointX="0.75" PointY="36.75" />
+        <EntityTypeShape EntityType="GolatehModel.OptionParameter" Width="1.5" PointX="3" PointY="36.375" />
+        <EntityTypeShape EntityType="GolatehModel.Order" Width="1.5" PointX="10.5" PointY="41.125" />
+        <EntityTypeShape EntityType="GolatehModel.Package" Width="1.5" PointX="8.25" PointY="33.25" />
+        <EntityTypeShape EntityType="GolatehModel.PackageToShip" Width="1.5" PointX="12.75" PointY="50" />
+        <EntityTypeShape EntityType="GolatehModel.Personnel" Width="1.5" PointX="3" PointY="23.875" />
+        <EntityTypeShape EntityType="GolatehModel.Role" Width="1.5" PointX="3" PointY="20" />
+        <EntityTypeShape EntityType="GolatehModel.RolePernonnel" Width="1.5" PointX="5.25" PointY="23.25" />
+        <EntityTypeShape EntityType="GolatehModel.Safar" Width="1.5" PointX="8.25" PointY="24.875" />
+        <EntityTypeShape EntityType="GolatehModel.SafarToAfrad" Width="1.5" PointX="10.5" PointY="26.375" />
+        <EntityTypeShape EntityType="GolatehModel.SafarToFactor" Width="1.5" PointX="10.5" PointY="31.875" />
+        <EntityTypeShape EntityType="GolatehModel.SafarToHandMoney" Width="1.5" PointX="13.5" PointY="31.125" />
+        <EntityTypeShape EntityType="GolatehModel.SafarToSahamDar" Width="1.5" PointX="13.5" PointY="27" />
+        <EntityTypeShape EntityType="GolatehModel.Semat" Width="1.5" PointX="8.25" PointY="22.25" />
+        <EntityTypeShape EntityType="GolatehModel.Ship" Width="1.5" PointX="5.25" PointY="56.75" />
+        <EntityTypeShape EntityType="GolatehModel.ShipToPay" Width="1.5" PointX="7.5" PointY="57.625" />
+        <EntityTypeShape EntityType="GolatehModel.ShipToSahamDar" Width="1.5" PointX="10.5" PointY="37.75" />
+        <EntityTypeShape EntityType="GolatehModel.ShomareOrder" Width="1.5" PointX="8.25" PointY="54" />
+        <EntityTypeShape EntityType="GolatehModel.SiteSetting" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="GolatehModel.Soom" Width="1.5" PointX="10.5" PointY="46.125" />
+        <EntityTypeShape EntityType="GolatehModel.Subscribe" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="GolatehModel.TankhaGardan" Width="1.5" PointX="5.25" PointY="41.125" />
+        <EntityTypeShape EntityType="GolatehModel.TankhaGardanToShip" Width="1.5" PointX="7.5" PointY="50.625" />
+        <EntityTypeShape EntityType="GolatehModel.Unit" Width="1.5" PointX="3" PointY="33.625" />
+        <AssociationConnector Association="GolatehModel.FK_Personnel_IdBank" />
+        <AssociationConnector Association="GolatehModel.FK_BankFileDeteil_IdBankFile" />
+        <AssociationConnector Association="GolatehModel.FK_BimehAfrad_IdShip" />
+        <AssociationConnector Association="GolatehModel.FK_Personnel_IdPersonnel" />
+        <AssociationConnector Association="GolatehModel.FK_BimehDeteil_IdBimehMaster" />
+        <AssociationConnector Association="GolatehModel.FK_DebtHistory_IdNote" />
+        <AssociationConnector Association="GolatehModel.FK_DebtHistory_IdPersonnel" />
+        <AssociationConnector Association="GolatehModel.FK_DebtHistory_IdShip" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToHandMoney_IdDebtHistory" />
+        <AssociationConnector Association="GolatehModel.FK_Kala_IdPersonnel" />
+        <AssociationConnector Association="GolatehModel.FK_Kala_OptionParameter" />
+        <AssociationConnector Association="GolatehModel.FK_Kala_Unit" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToHandMoney_Kala" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToMachele_Kala" />
+        <AssociationConnector Association="GolatehModel.FK_HandMoneyIsPay_Personnel" />
+        <AssociationConnector Association="GolatehModel.FK_HandMoneyIsPay_Ship" />
+        <AssociationConnector Association="GolatehModel.FK_OptionParameter_Option" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToFactor_OptionParameter" />
+        <AssociationConnector Association="GolatehModel.FK_Order_Package" />
+        <AssociationConnector Association="GolatehModel.FK_Order_Personnel" />
+        <AssociationConnector Association="GolatehModel.FK_Order_Ship" />
+        <AssociationConnector Association="GolatehModel.FK_Order_ShomareOrder" />
+        <AssociationConnector Association="GolatehModel.FK_PackageToShip_Order" />
+        <AssociationConnector Association="GolatehModel.FK_PackageToShip_IdPackage" />
+        <AssociationConnector Association="GolatehModel.FK_Ship_IdPackage" />
+        <AssociationConnector Association="GolatehModel.FK_PackageToShip_IdShip" />
+        <AssociationConnector Association="GolatehModel.FK_Personnel_IdShip" />
+        <AssociationConnector Association="GolatehModel.FK_RolePernonnel_Personnel" />
+        <AssociationConnector Association="GolatehModel.FK_Safar_Personnel" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToAfrad_Personnel" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToHandMoney_Personnel" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToSahamDar_Personnel" />
+        <AssociationConnector Association="GolatehModel.FK_Ship_Personnel" />
+        <AssociationConnector Association="GolatehModel.FK_ShipToSahamDar_Personnel" />
+        <AssociationConnector Association="GolatehModel.FK_Soom_Personnel" />
+        <AssociationConnector Association="GolatehModel.FK_TankhaGardan_IdUser" />
+        <AssociationConnector Association="GolatehModel.FK_Role_Role" />
+        <AssociationConnector Association="GolatehModel.FK_RolePernonnel_Role" />
+        <AssociationConnector Association="GolatehModel.FK_Safar2_IdSoom" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToAfrad_Safar" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToHandMoney_Safar" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToMachele_Safar" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToSahamDar_Safar" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToAfrad_Semat" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToFactor_IdTankhaGardan" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToFactor_IdUnit" />
+        <AssociationConnector Association="GolatehModel.FK_SafarToHandMoney_IdUnit" />
+        <AssociationConnector Association="GolatehModel.FK_Ship_IdShip" />
+        <AssociationConnector Association="GolatehModel.FK_ShipToSahamDar_IdShip" />
+        <AssociationConnector Association="GolatehModel.FK_Soom_Ship" />
+        <AssociationConnector Association="GolatehModel.FK_TankhaGardanToShip_IdShip" />
+        <AssociationConnector Association="GolatehModel.FK_Ship_IdShomareOrder" />
+        <AssociationConnector Association="GolatehModel.FK_TankhaGardanToShip_IdTankhaGardan" />
+        <AssociationConnector Association="GolatehModel.FK_Note_Safar" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,583 @@
+﻿@using Ship.Model.ViewModel.Admin
+
+@{
+    ViewBag.Title = "صوم";
+
+    int IdUser = int.Parse(User.Identity.Name);
+
+    string referer = Request.ServerVariables["http_referer"];
+
+    if (string.IsNullOrWhiteSpace(referer))
+    {
+        referer = @"/Admin/Default";
+    }
+
+    if (Request.QueryString["Id"] != null)
+    {
+
+        try
+        {
+            int.Parse(Request.QueryString["Id"].ToString());
+        }
+        catch (Exception e)
+        {
+            Response.Redirect(referer, false);
+            return;
+        }
+    }
+    else
+    {
+        Response.Redirect(referer, false);
+        return;
+    }
+
+
+    int IdShip = int.Parse(Request.QueryString["id"].ToString());
+
+    var itm = new GetListShipViewModel();
+    var vart = SiteSettingBLL.GetListShip(IdUser);
+
+    if (vart.Any(v => v.Id == IdShip))
+    {
+        itm = vart.First(v => v.Id == IdShip);
+    }
+    else
+    {
+        Response.Redirect(referer, false);
+        return;
+    }
+}
+
+<input type="hidden" id="IdShip" value="@IdShip" />
+
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a title="داشبورد" href="/admin"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page"><a title="لنج (@itm.Title)" href="/admin/ship/myship?id=@itm.Id">لنج (@itm.Title)</a></li>
+                <li class="breadcrumb-item active" aria-current="page">صوم</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <button onclick="_OpenAdd(0)" type="button" class="btn btn-outline-success position-relative">
+            <i class="lni lni-circle-plus"></i> افزودن صوم <span class="position-absolute top-0 start-100">
+            </span>
+        </button>
+
+        <div id="DivListSoom"></div>
+    </div>
+</div>
+
+<div id="DivModalIUSoom"></div>
+
+
+@section js_down{
+    <script>
+
+        function ToPrintSoomGolate(Id) {
+            $.ajax({
+                url: "/Admin/Soom/ChekerOpenSafarInSoom",
+                method: "POST",
+                data: { Id: Id },
+                success: function (data) {
+                    if (Boolean(data.status) === true) {
+                        window.location.href = '/admin/soom/PrintPdf2?id=' + Id;
+                    } else {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: data.msg
+                        });
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+        function ToPrintSoom(Id) {
+            $.ajax({
+                url: "/Admin/Soom/ChekerOpenSafarInSoom",
+                method: "POST",
+                data: { Id: Id },
+                success: function (data) {
+                    if (Boolean(data.status) === true) {
+                        window.location.href = '/admin/soom/PrintPdf?id=' + Id;
+                    } else {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: data.msg
+                        });
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function ToPrintSoom2(Id) {
+            $.ajax({
+                url: "/Admin/Soom/ChekerOpenSafarInSoom",
+                method: "POST",
+                data: { Id: Id },
+                success: function (data) {
+                    if (Boolean(data.status) === true) {
+                        window.location.href = '/admin/soom/PrintPdf2?id=' + Id;
+                    } else {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: data.msg
+                        });
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function _OpenAdd(Id) {
+
+            if (Id == 0) {
+                $.ajax({
+                    url: "/Admin/Soom/SoomIsOpen",
+                    method: "POST",
+                    data: { IdShip: $('#IdShip').val() },
+                    success: function (data) {
+                        if (Boolean(data) == false) {
+                            Open2(Id);
+                        } else {
+                            Lobibox.notify('error',
+                                {
+                                    pauseDelayOnHover: true,
+                                    continueDelayOnInactiveTab: false,
+                                    position: 'top right',
+                                    icon: 'bx bx-x-circle',
+                                    msg: 'برای ایجاد صوم باید صوم قبل بسته شود'
+                                });
+
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                            });
+
+                        return false;
+                    },
+                    beforeSend: function () {
+
+                    }
+                });
+            } else {
+
+
+                $.ajax({
+                    url: "/Admin/Soom/ChekerOpenSoom",
+                    method: "POST",
+                    data: { Id: Id },
+                    success: function (data) {
+                        if (Boolean(data) === true) {
+                            Open2(Id);
+                        } else {
+                            Lobibox.notify('error', {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'برای ویرایش صوم را باز کنید'
+                            });
+                        }
+                    },
+                    error: function () {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                    },
+                    beforeSend: function () {
+
+                    }
+                });
+
+
+            }
+        }
+
+
+
+
+        function Open2(Id) {
+            $.ajax({
+                url: "/Admin/Soom/_Add",
+                method: "POST",
+                data: { Id: Id },
+                success: function (data) {
+                    $('#DivModalIUSoom').html('');
+                    $('#DivModalIUSoom').html(data);
+
+                    $('#ModalIUSoom').modal('show');
+
+                    $('.datepicker2').persianDatepicker({
+                        observer: true,
+                        format: 'YYYY/MM/DD',
+                        initialValueType: 'persian'
+                    });
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+
+        function GetListSoom() {
+            $.ajax({
+                url: "/Admin/Soom/GetListSoom",
+                method: "POST",
+                data: { IdShip: $('#IdShip').val() },
+                success: function (data) {
+
+                    $('#DivListSoom').html('');
+                    $('#DivListSoom').html(data);
+
+                    var table = $('#TableSoom').DataTable({
+                        lengthChange: false,
+                        "order": [[1, "desc"]]
+                    });
+                },
+                error: function () {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+        function ToDelete(Id) {
+
+            $.ajax({
+                url: "/Admin/Soom/ChekerOpenSoom",
+                method: "POST",
+                data: { Id: Id },
+                success: function (data) {
+                    if (Boolean(data) === true) {
+
+
+                        $.alert({
+                            title: 'توجه!',
+                            content: 'آیا مایل به حذف صوم هستید !',
+                            rtl: true,
+                            closeIcon: true,
+                            buttons: {
+                                confirm: {
+                                    text: 'تایید',
+                                    btnClass: 'btn-danger',
+                                    action: function () {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/Admin/Soom/Delete',
+                                            data: { Id: Id },
+                                            success: function (dataa) {
+
+                                                if (Boolean(dataa) == true) {
+                                                    GetListSoom();
+                                                } else {
+                                                    Lobibox.notify('error',
+                                                        {
+                                                            pauseDelayOnHover: true,
+                                                            continueDelayOnInactiveTab: false,
+                                                            position: 'top right',
+                                                            icon: 'bx bx-x-circle',
+                                                            msg: 'این صوم به دلیل داشتن سفر قابل حذف نمی باشد.'
+                                                        });
+                                                }
+
+                                            },
+                                            error: function (jqXHR, textStatus, errorThrown) {
+                                                Lobibox.notify('error',
+                                                    {
+                                                        pauseDelayOnHover: true,
+                                                        continueDelayOnInactiveTab: false,
+                                                        position: 'top right',
+                                                        icon: 'bx bx-x-circle',
+                                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                                    });
+                                            }
+                                        });
+                                    }
+                                },
+                                cancel: {
+                                    text: 'انصراف',
+                                    action: function () { }
+                                }
+                            }
+                        });
+
+
+                    } else {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'برای حذف صوم آن را باز کنید'
+                        });
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+
+
+
+        }
+
+        function ToEdit(Id) {
+            _OpenAdd(Id);
+        }
+
+        function AddSave() {
+
+            $('#TxtFromDate,#TxtToDate,#TxtSoomName').removeClass('inputerror');
+
+            var eror = false;
+
+            if ($('#TxtFromDate').val().trim().length !== 10) {
+                $('#TxtFromDate').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtToDate').val().trim().length !== 10) {
+                $('#TxtToDate').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtSoomName').val().trim().length === 0) {
+                $('#TxtSoomName').addClass('inputerror');
+                eror = true;
+            }
+
+            if (eror) {
+                return false;
+            }
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Soom/AddSave',
+                data: {
+                    Id: $('#Id').val(),
+                    IdShip: $('#IdShip').val(),
+                    IsActive: true,
+                    SoomName: $('#TxtSoomName').val().trim(),
+                    FromDate: $('#TxtFromDate').val(),
+                    ToDate: $('#TxtToDate').val(),
+                    Tozihat: $('#TxtTozihat').val()
+                },
+                success: function (dataa) {
+
+                    if (parseInt(dataa) == 1) {
+                        GetListSoom();
+                        $('#ModalIUSoom').modal('hide');
+                    } else if (parseInt(dataa) == -1) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'تاریخ پایان نمی تواند بزرگتر از تاریخ شروع باشد'
+                            });
+                    }
+                    else if (parseInt(dataa) == -5) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'تاریخ های وارد شده برای این صوم با دیگر صوم های این لنج تداخل دارد.'
+                            });
+                    }
+                    else {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                            });
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+            });
+
+        }
+
+        function CloseSoom(Itm, Id) {
+
+            var OldStatus = $(Itm).data('openclose');
+
+            var content = '';
+            if (OldStatus == false) {
+                content = 'آیا مایل به بستن صوم هستید !';
+            } else {
+                content = 'آیا مایل به بازکردن صوم هستید !';
+            }
+
+            $.alert({
+                title: 'توجه!',
+                content: content,
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                url: "/Admin/Soom/CloseSoom",
+                                method: "POST",
+                                data: { Id: Id, Status: OldStatus },
+                                success: function (data) {
+                                    if (Boolean(data.status) == true) {
+                                        GetListSoom();
+                                    } else {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: data.msg
+                                            });
+                                    }
+                                },
+                                error: function () {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                },
+                                beforeSend: function () {
+
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () {
+                            $(Itm).prop("checked", !OldStatus);
+                        }
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            GetListSoom();
+
+            $('input').keyup(function () {
+                this.value = fixPersianNumber(this.value);
+            });
+        });
+    </script>
+}
+
+
+

@@ -1,0 +1,63 @@
+﻿@model string
+
+
+<div class="modal fade" id="ModalIUSafar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    افزودن سفر  به صوم : @Model
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning border-0 bg-warning alert-dismissible fade show py-2">
+                    <div class="d-flex align-items-center">
+                        <div class="font-35 text-dark">
+                            <i class='bx bx-info-circle'></i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0 text-dark">توجه!</h6>
+                            <div class="text-dark">تمامی اعداد را با کیبرد انگلیسی وارد نمایید !</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                </div>
+                <form class="row g-3">
+                    <input type="hidden" id="Id" value="0" />
+                    <div class="col-md-12">
+                        <label for="TxtTitle" class="form-label">عنوان</label>
+                        <input type="text" class="form-control" id="TxtTitle" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="TxtFromDate" class="form-label">تاریخ رفت</label>
+                        <input type="text" class="form-control datepicker2" id="TxtFromDate" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="TxtToDate" class="form-label">تاریخ برگشت</label>
+                        <input type="text" class="form-control datepicker2" id="TxtToDate" value="">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="TxtTabakh" class="form-label">هزینه تباخ</label>
+                        <input style="text-align: center" type="number" class="form-control" id="TxtTabakh" value="0">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="TxtGolatetamirat" class="form-label">گلاته تعمیرات</label>
+                        <input style="text-align: center" type="number" class="form-control" id="TxtGolatetamirat" value="0">
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="TxtTozihat" class="form-label">توضیحات</label>
+                        <textarea id="TxtTozihat" class="form-control" rows="2" cols="50" style="margin: 0px; height: 150px; width: 100%;"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-primary" onclick="AddSaveSafar()">ذخیره تغییرات</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "تنظیمات";
+}
+
+
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div id="DivReadSiteSetting"></div>
+    </div>
+</div>
+
+
+
+<script>
+    function ReadSiteSettingTable() {
+        $.ajax({
+            url: "/Admin/SiteSetting/ReadSiteSetting",
+            method: "POST",
+            success: function (data) {
+
+                $('#DivReadSiteSetting').html('');
+                $('#DivReadSiteSetting').html(data);
+
+            },
+            error: function () {
+                toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+            },
+            beforeSend: function () {
+
+            }
+        });
+    }
+
+
+    function SiteSettingSubmit() {
+
+        var model = {
+            Id: $('#Id').val(),
+            Title: $('#Title').val(),
+            Keywords: $('#Keywords').val(),
+            Description: $('#Description').val(),
+            Author: $('#Author').val(),
+            ContactUs: $('#ContactUs').val(),
+            Logo: $('#Logo').val(),
+            Phone: $('#Phone').val(),
+            Email: $('#Email').val(),
+            Dribbble: $('#Dribbble').val(),
+            Facebook: $('#Facebook').val(),
+            Linkedin: $('#Linkedin').val(),
+            Twitter: $('#Twitter').val(),
+            Inestagram: $('#Inestagram').val()
+        };
+        
+        var fileUpload = $("#Logo2").get(0);
+        var files = fileUpload.files;
+
+        var fileData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+        fileData.append('model', JSON.stringify(model));
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/SiteSetting/SiteSettingSubmit',
+            data: fileData,
+            processData: false,
+            contentType: false,
+            success: function (dataa) {
+
+                if (dataa == 1) {
+                    toastr.success('این عملیات موفقیت آمیز بود');
+                    ReadSiteSettingTable($('#Id').val());
+                }
+                else {
+                    toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+            }
+        });
+
+    }
+
+
+    $(document).ready(function () {
+        ReadSiteSettingTable();
+    });
+</script>

@@ -1,0 +1,31 @@
+﻿@model List<Ship.Model.ViewModel.Admin.TankhaGardanToShipViewModel>
+
+
+<div class="table-responsive" style="margin-top: 20px;">
+    <table id="TableSafar" class="table table-bordered mb-0" style="width: 100%">
+        <thead>
+            <tr style="background-color: #dee2e6b3">
+                <th style="text-align: center">نام و نام خانوادگی</th>
+                <th style="text-align: center">نام کاربری</th>
+                <th style="text-align: center">روز عبور</th>
+                <th style="text-align: center">لنج ها</th>
+                <th style="text-align: center">عملیات</th>
+            </tr>
+        </thead>
+        @foreach (var cc in Model)
+        {
+            <tr>
+                <td style="text-align: center">@cc.FullName</td>
+                <td style="text-align: center">@cc.UserName</td>
+                <td style="text-align: center">@cc.Password</td>
+                <td style="text-align: center">@cc.ShipList</td>
+                <td style="text-align: center">
+                    <a class="btn btn-warning radius-30" style="cursor: pointer" onclick="ToEdit(@cc.Id)"><i class="lni lni-save"></i>ویرایش</a>
+                    <a class="btn btn-danger radius-30" style="cursor: pointer" onclick="DeleteBimeh(@cc.Id)"><i class="lni lni-trash"></i> حذف</a>
+                </td>
+            </tr>
+        }
+        <tbody>
+        </tbody>
+    </table>
+</div>

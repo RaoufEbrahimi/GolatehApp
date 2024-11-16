@@ -1,0 +1,41 @@
+﻿@model List<Ship.Model.ViewModel.Admin.ListHandMoneyViewModel>
+
+<div class="modal fade" id="IdModalHandMoneyAfrad" tabindex="-1" style="z-index: 2000!important" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="table-responsive" style="margin-top: 20px;">
+                    <table id="TableSoom" class="table table-bordered mb-0" style="width: 100%">
+                        <thead>
+                            <tr style="background-color: #dee2e6b3">
+                                <th style="text-align: center">#</th>
+                                <th style="text-align: center">نام و نام خانوادگی</th>
+                                <th style="text-align: center">مبلغ بدهی</th>
+                                <th style="text-align: center">عملیات</th>
+                            </tr>
+                        </thead>
+                        @foreach (var cc in Model)
+                        {
+                            <tr id="DivPerson_@cc.IdPersonnel">
+                                <td style="text-align: center">@cc.I</td>
+                                <td style="text-align: center">@cc.FullName</td>
+                                <td style="text-align: center">@cc.TotalPrice تومان</td>
+                                <td style="text-align: center">
+                                    <button onclick="DeleteAfradhand(@cc.IdPersonnel,@cc.IdShip)" type="button" class="btn btn-outline"><i class="fadeIn animated bx bx-trash"></i></button>
+                                </td>
+                            </tr>
+                        }
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="ListAfradRefresh" style="padding: 5px;"></div>
+        </div>
+    </div>
+</div>

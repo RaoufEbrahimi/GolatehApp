@@ -1,0 +1,334 @@
+﻿
+
+@using Ship.Model.BLL.Admin
+@using Ship.Model.ViewModel
+@{
+    Layout = null;
+}
+
+@{
+    var tag = new ContentOptimization(true) { IsUser = true };
+
+    var SiteSe = SiteSettingBLL.GetListSiteSetting().First();
+}
+<!doctype html>
+<html lang="fa">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="@SiteSe.Logo" type="image/png" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/css/highcharts.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/pace.min.css" rel="stylesheet" />
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/pace.min.js"></script>
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/app.css" rel="stylesheet">
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/dark-theme.css" />
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/semi-dark.css" />
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/css/header-colors.css" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/notifications/css/lobibox.min.css" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/select2/css/select2-bootstrap4.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <link href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/jquery-confirm.min.css">
+    <link rel="stylesheet" href="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/persian-datepicker.css">
+    <style>
+        * {
+            font-family: 'iransans';
+        }
+
+        .inputerror {
+            border: red 1px solid;
+        }
+    </style>
+    <title>ورود به @SiteSe.Title</title>
+</head>
+
+<body class="rtl">
+    <!--wrapper-->
+    <div class="wrapper">
+        <div class="authentication-header"></div>
+        <div class="d-flex align-items-center justify-content-center my-5 my-lg-0">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2">
+                    <div class="col mx-auto">
+                        <div class="my-4 text-center">
+                            <img src="assets/images/logo-img.png" width="180" alt="" />
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="p-4 rounded">
+
+                                    <div class="mb-4 text-center">
+                                        <img onclick="window.location.href='/'" src="@SiteSettings.CDN/Content/theme/site/img/icon/Golateh_Logo.png" style="width: 290px; cursor:pointer" />
+                                    </div>
+
+                                    <div class="text-center">
+                                        <h3 class="">ثبت نام</h3>
+                                        <p>
+                                            حساب کاربری دارید؟
+                                            <a href="/loginadmin">وارد شوید</a>
+                                        </p>
+                                    </div>
+
+                                    <div class="form-body">
+                                        <form class="row g-3">
+                                            <div class="col-sm-6">
+                                                <label for="inputFirstName" class="form-label">نام</label>
+                                                <input type="text" style="text-align: center" class="form-control" id="inputFirstName" placeholder="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="inputLastName" class="form-label">نام خانوادگی</label>
+                                                <input type="text" style="text-align: center" class="form-control" id="inputLastName" placeholder="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="nationalcode" class="form-label">کد ملی</label>
+                                                <input type="number" style="text-align: center" id="nationalcode" class="form-control" placeholder="" autocomplete="off">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="mobile" class="form-label">شماره موبایل</label>
+                                                <input type="number" style="text-align: center" id="mobile" class="form-control" placeholder="" autocomplete="off">
+                                            </div>
+
+
+                                            <div class="col-sm-6">
+                                                <label for="mobile" class="form-label">رمز عبور</label>
+                                                <input type="password" style="text-align: center" id="password" class="form-control" placeholder="" autocomplete="off">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="mobile" class="form-label">تکرار رمز عبور</label>
+                                                <input type="password" style="text-align: center" id="password2" class="form-control" placeholder="" autocomplete="off">
+                                            </div>
+
+
+                                            <div class="col-md-12">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="checked">
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                        من <a href="/home/TermsAndConditions" target="_blank">شرایط استفاده و سیاست حفظ حریم خصوصی</a> استفاده از سرویس گلاته را خوانده و با آن موافقم.
+                                                    </label>
+                                                </div>
+                                            </div>
+                                          
+
+
+                                            <div class="col-12">
+                                                <div class="d-grid">
+                                                    <button type="button" class="btn btn-primary" onclick="register2()">
+                                                        <i class='bx bx-user'></i>ثبت نام
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end row-->
+            </div>
+        </div>
+    </div>
+    <!--end wrapper-->
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/jquery.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/simplebar/js/simplebar.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/metismenu/js/metisMenu.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/highcharts.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/highcharts-more.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/variable-pie.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/solid-gauge.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/highcharts-3d.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/cylinder.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/funnel3d.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/exporting.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/export-data.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/highcharts/js/accessibility.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/index4.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/app.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/notifications/js/lobibox.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/notifications/js/notifications.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/notifications/js/notification-custom-script.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/jquery-confirm.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/persian-date.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/persian-datepicker.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/select2/js/select2.min.js"></script>
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/plugins/apexcharts-bundle/js/apexcharts.min.js"></script>
+    <!--app JS-->
+    <script src="@SiteSettings.CDN/Content/theme/admin/Syn/vertical/assets/js/app.js"></script>
+
+    <script>
+        function register2() {
+
+            $('#inputFirstName').removeClass('inputerror');
+            $('#inputLastName').removeClass('inputerror');
+            $('#nationalcode').removeClass('inputerror');
+            $('#password2').removeClass('inputerror');
+            $('#password').removeClass('inputerror');
+            $('#mobile').removeClass('inputerror');
+
+
+            var status = false;
+            if ($('#inputFirstName').val().trim().length === 0) {
+                $('#inputFirstName').addClass('inputerror');
+                status = true;
+            }
+            if ($('#inputLastName').val().trim().length === 0) {
+                $('#inputLastName').addClass('inputerror');
+                status = true;
+            }
+            if ($('#nationalcode').val().trim().length !== 10) {
+                $('#nationalcode').addClass('inputerror');
+                status = true;
+            }
+            if ($('#password').val().trim().length === 0) {
+                $('#password').addClass('inputerror');
+                status = true;
+            }
+            if ($('#password2').val().trim().length === 0) {
+                $('#password2').addClass('inputerror');
+                status = true;
+            }
+            if ($('#password2').val().trim() !== $('#password').val().trim()) {
+                $('#password2').addClass('inputerror');
+                $('#password').addClass('inputerror');
+                status = true;
+            }
+
+
+            var lenphon = $('#mobile').val().trim().length;
+            var statusphon = false;
+            if (lenphon == 11 || lenphon == 10) {
+                statusphon = true;
+            }
+
+            if (statusphon === false) {
+                $('#mobile').addClass('inputerror');
+                status = true;
+            }
+
+            if (status) {
+                return false;
+            }
+
+            if ($('#flexSwitchCheckChecked').is(':checked') == false) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'توافقنامه استفاده از سرویس ابری گلاته را تایید کنید'
+                    });
+                return false;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/home/Register2',
+                data: {
+                    firstname: $('#inputFirstName').val(),
+                    lastname: $('#inputLastName').val(),
+                    nationalcode: $('#nationalcode').val(),
+                    password: $('#password').val(),
+                    mobile: $('#mobile').val()
+                },
+                success: function (dataa) {
+
+                    if (dataa.status) {
+                        // window.location.href = '/Admin/Default';
+                        window.location.href = '/home/activate?id=' + $('#mobile').val();
+                    }
+                    else {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: dataa.msg
+                            });
+                    }
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+            });
+
+
+        }
+    </script>
+    <script>
+
+
+        function clear() {
+            $('#inputFirstName').val('');
+            $('#inputLastName').val('');
+            $('#nationalcode').val('');
+            $('#password').val('');
+            $('#mobile').val('');
+        }
+        $(document).ready(function () {
+            clear();
+        });
+    </script>
+
+
+
+
+    <script>
+        (() => {
+            'use strict';
+
+            const
+                root = (() => {
+                    if (typeof self == 'object' && self.self === self) return self;
+                    else if (typeof global == 'object' && global.global === global) return global;
+                    else return this;
+                })(),
+
+                persianNumberArr = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+                arabicNumberArr = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+                fixPersianNumber = str => {
+                    if (typeof str === 'string') {
+                        let i = 0;
+                        for (; i < 10; i++) {
+                            str = str.replace(persianNumberArr[i], i).replace(arabicNumberArr[i], i);
+                        }
+                    }
+                    return str;
+                };
+
+            root.fixPersianNumber = fixPersianNumber;
+        })();
+
+
+
+        $(document).ready(function () {
+            $('input').keyup(function () {
+                this.value = fixPersianNumber(this.value);
+            });
+        });
+
+    </script>
+
+</body>
+</html>

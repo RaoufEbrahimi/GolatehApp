@@ -1,0 +1,1404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="golatehModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bank">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="350" />
+  </EntityType>
+  <EntityType Name="BankFileDeteil">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="30" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdBankFile" Type="numeric" Precision="30" Scale="0" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" />
+    <Property Name="TotalCost" Type="bigint" />
+  </EntityType>
+  <EntityType Name="BankFileMster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="30" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="IdShip" Type="int" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" />
+    <Property Name="TotalCost" Type="bigint" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Bimeh">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="Year" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BimehAfrad">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdShip" Type="int" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="Year" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="Month" Type="varchar" MaxLength="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BimehDeteil">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="30" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdBimehMaster" Type="numeric" Precision="30" Scale="0" Nullable="false" />
+    <Property Name="DSW_ID" Type="nvarchar" MaxLength="10" />
+    <Property Name="DSW_YY" Type="numeric" Precision="2" Scale="0" />
+    <Property Name="DSW_MM" Type="numeric" Precision="2" Scale="0" />
+    <Property Name="DSW_LISTNO" Type="nvarchar" MaxLength="12" />
+    <Property Name="DSW_ID1" Type="nvarchar" MaxLength="10" />
+    <Property Name="DSW_FNAME" Type="nvarchar" MaxLength="100" />
+    <Property Name="DSW_LNAME" Type="nvarchar" MaxLength="100" />
+    <Property Name="DSW_DNAME" Type="nvarchar" MaxLength="100" />
+    <Property Name="DSW_IDNO" Type="nvarchar" MaxLength="15" />
+    <Property Name="DSW_IDPLC" Type="nvarchar" MaxLength="100" />
+    <Property Name="DSW_IDATE" Type="nvarchar" MaxLength="8" />
+    <Property Name="DSW_BDATE" Type="nvarchar" MaxLength="8" />
+    <Property Name="DSW_SEX" Type="nvarchar" MaxLength="3" />
+    <Property Name="DSW_NAT" Type="nvarchar" MaxLength="10" />
+    <Property Name="DSW_OCP" Type="nvarchar" MaxLength="100" />
+    <Property Name="DSW_SDATE" Type="nvarchar" MaxLength="8" />
+    <Property Name="DSW_EDATE" Type="nvarchar" MaxLength="8" />
+    <Property Name="DSW_DD" Type="numeric" Precision="2" Scale="0" />
+    <Property Name="DSW_ROOZ" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSW_MAH" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSW_MAZ" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSW_MASH" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSW_TOTL" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSW_BIME" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSW_PRATE" Type="numeric" Precision="2" Scale="0" />
+    <Property Name="DSW_JOB" Type="nvarchar" MaxLength="6" />
+    <Property Name="PER_NATCOD" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="BimehMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="30" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DSK_ID" Type="nvarchar" MaxLength="10" />
+    <Property Name="DSK_NAME" Type="nvarchar" MaxLength="100" />
+    <Property Name="DSK_FARM" Type="nvarchar" MaxLength="100" />
+    <Property Name="DSK_ADRS" Type="nvarchar" MaxLength="100" />
+    <Property Name="DSK_KIND" Type="numeric" Precision="1" Scale="0" />
+    <Property Name="DSK_YY" Type="numeric" Precision="2" Scale="0" />
+    <Property Name="DSK_MM" Type="numeric" Precision="2" Scale="0" />
+    <Property Name="DSK_LISTNO" Type="nvarchar" MaxLength="12" />
+    <Property Name="DSK_DISC" Type="nvarchar" MaxLength="100" />
+    <Property Name="DSK_NUM" Type="numeric" Precision="5" Scale="0" />
+    <Property Name="DSK_TDD" Type="numeric" Precision="6" Scale="0" />
+    <Property Name="DSK_TROOZ" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSK_TMAH" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSK_TMAZ" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSK_TMASH" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSK_TTOTL" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSK_TBIME" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSK_TKOSO" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSK_BIC" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="DSK_RATE" Type="numeric" Precision="5" Scale="0" />
+    <Property Name="DSK_PRATE" Type="numeric" Precision="2" Scale="0" />
+    <Property Name="DSK_BIMH" Type="numeric" Precision="12" Scale="0" />
+    <Property Name="MON_PYM" Type="nvarchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="300" />
+    <Property Name="Subject" Type="nvarchar" MaxLength="300" />
+    <Property Name="Email" Type="nvarchar" MaxLength="300" />
+    <Property Name="Body" Type="nvarchar" MaxLength="300" />
+    <Property Name="See" Type="bit" />
+  </EntityType>
+  <EntityType Name="ContactUs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsSee" Type="bit" />
+  </EntityType>
+  <EntityType Name="DebtHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="IdShip" Type="int" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Price" Type="bigint" Nullable="false" />
+    <Property Name="IdNote" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="JoinIt">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="Kala">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="IdTypeKala" Type="bigint" Nullable="false" />
+    <Property Name="IdUnit" Type="int" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="Sort" Type="int" />
+  </EntityType>
+  <EntityType Name="Note">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="IdShip" Type="int" Nullable="false" />
+    <Property Name="CreateDate" Type="date" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="bigint" Nullable="false" />
+    <Property Name="IdSafar" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Option">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OptionParameter">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdOption" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Val" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="Price" Type="bigint" Nullable="false" />
+    <Property Name="IdPackage" Type="int" Nullable="false" />
+    <Property Name="IdShip" Type="int" Nullable="false" />
+    <Property Name="IdShomareOrder" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Ref" Type="nvarchar" MaxLength="300" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Package">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Tozihat" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="DayActive" Type="int" Nullable="false" />
+    <Property Name="Price" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PackageToShip">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdPackage" Type="int" />
+    <Property Name="IdShip" Type="int" Nullable="false" />
+    <Property Name="TotalPrice" Type="bigint" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="IsPay" Type="bit" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="ExpireDate" Type="date" Nullable="false" />
+    <Property Name="IdOrder" Type="numeric" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="Personnel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="200" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="200" />
+    <Property Name="NationalCode" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="200" />
+    <Property Name="Email" Type="nvarchar" MaxLength="200" />
+    <Property Name="ShebaNumber" Type="nvarchar" MaxLength="200" />
+    <Property Name="ShomareCart14" Type="nvarchar" MaxLength="200" />
+    <Property Name="Image" Type="nvarchar" MaxLength="200" />
+    <Property Name="IdParent" Type="bigint" />
+    <Property Name="IdShip" Type="int" />
+    <Property Name="FatherName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Adress" Type="nvarchar(max)" />
+    <Property Name="BimehNumber" Type="nvarchar" MaxLength="200" />
+    <Property Name="EstekhdamDate" Type="nvarchar" MaxLength="10" />
+    <Property Name="CompanyName" Type="nvarchar" MaxLength="200" />
+    <Property Name="CompanyAdress" Type="nvarchar(max)" />
+    <Property Name="SmsActive" Type="nvarchar" MaxLength="100" />
+    <Property Name="IdBank" Type="int" />
+    <Property Name="ShomareHesab" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdParent" Type="int" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TitleEn" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RolePernonnel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdRole" Type="int" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Safar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="IdSoom" Type="bigint" Nullable="false" />
+    <Property Name="FromDate" Type="datetime" Nullable="false" />
+    <Property Name="ToDate" Type="datetime" Nullable="false" />
+    <Property Name="PriceKharid" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="PriceMahtaiaj" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="PriceForosh" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="PriceTamirat" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="FactorMosaede" Type="bigint" Nullable="false" />
+    <Property Name="Tozihat" Type="nvarchar(max)" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="400" />
+    <Property Name="PriceFood" Type="int" Nullable="false" />
+    <Property Name="TamiratGolate" Type="decimal" Precision="18" Scale="1" Nullable="false" />
+    <Property Name="GolateBase" Type="bigint" Nullable="false" />
+    <Property Name="GolateTedadKol" Type="decimal" Precision="18" Scale="1" Nullable="false" />
+    <Property Name="SafarCount" Type="int" Nullable="false" />
+    <Property Name="JamKolSoodAzSafar" Type="bigint" Nullable="false" />
+    <Property Name="DaramadSafarFrosh_Machele" Type="bigint" />
+    <Property Name="IsCheckout" Type="bit" Nullable="false" />
+    <Property Name="IsOne" Type="bit" />
+  </EntityType>
+  <EntityType Name="SafarToAfrad">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdSafar" Type="bigint" Nullable="false" />
+    <Property Name="IdPernonnel" Type="bigint" Nullable="false" />
+    <Property Name="IdSemat" Type="int" Nullable="false" />
+    <Property Name="Ratio" Type="decimal" Precision="10" Scale="1" Nullable="false" />
+    <Property Name="TotalPrice" Type="bigint" />
+    <Property Name="IsBimeh" Type="bit" Nullable="false" />
+    <Property Name="PriceBimeh" Type="int" Nullable="false" />
+    <Property Name="Nakhales" Type="bigint" />
+    <Property Name="KasriTabakhi" Type="bigint" />
+  </EntityType>
+  <EntityType Name="SafarToFactor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdSafar" Type="bigint" Nullable="false" />
+    <Property Name="IdKala" Type="int" Nullable="false" />
+    <Property Name="IdTypeFactor" Type="bigint" Nullable="false" />
+    <Property Name="Tedad" Type="decimal" Precision="18" Scale="3" />
+    <Property Name="Price" Type="bigint" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="ShomareFactor" Type="nvarchar" MaxLength="50" />
+    <Property Name="DateFactor" Type="date" />
+    <Property Name="TaminKhonanade" Type="nvarchar" MaxLength="200" />
+    <Property Name="Moshtari" Type="nvarchar" MaxLength="200" />
+    <Property Name="Tozihat" Type="nvarchar(max)" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="3" />
+    <Property Name="TotalPrice" Type="bigint" Nullable="false" />
+    <Property Name="IdUnit" Type="int" />
+    <Property Name="IdTankhaGardan" Type="bigint" />
+  </EntityType>
+  <EntityType Name="SafarToHandMoney">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdSafar" Type="bigint" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="IdKala" Type="int" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="3" />
+    <Property Name="Price" Type="bigint" />
+    <Property Name="CreateDateMoney" Type="date" Nullable="false" />
+    <Property Name="Tozihat" Type="nvarchar(max)" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="TotalPrice" Type="bigint" />
+    <Property Name="IdUnit" Type="int" />
+    <Property Name="IsPay" Type="bit" Nullable="false" />
+    <Property Name="IdDebtHistory" Type="bigint" />
+  </EntityType>
+  <EntityType Name="SafarToSahamDar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdSafar" Type="bigint" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="Rate" Type="int" Nullable="false" />
+    <Property Name="TotalPrice" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Semat">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Ratio" Type="decimal" Precision="10" Scale="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Ship">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="YearProduction" Type="date" Nullable="false" />
+    <Property Name="Tul" Type="int" />
+    <Property Name="Arz" Type="int" />
+    <Property Name="NameMotor" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="HajMotor" Type="int" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="ShomareBime" Type="nvarchar" MaxLength="100" />
+    <Property Name="Image" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="ShipToPay">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdShip" Type="int" Nullable="false" />
+    <Property Name="IdPackage" Type="int" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="IdShomareOrder" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="IsPay" Type="bit" Nullable="false" />
+    <Property Name="BankReferenceKey" Type="nvarchar" MaxLength="255" />
+    <Property Name="BankReceiptNumber" Type="nvarchar" MaxLength="255" />
+    <Property Name="ExpiryDatePackage" Type="date" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShipToSahamDar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdShip" Type="int" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="Rate" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="Dong" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShomareOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SiteSetting">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Keywords" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Author" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ContactUs" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Logo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Facebook" Type="nvarchar" MaxLength="50" />
+    <Property Name="Twitter" Type="nvarchar" MaxLength="50" />
+    <Property Name="Linkedin" Type="nvarchar" MaxLength="50" />
+    <Property Name="Dribbble" Type="nvarchar" MaxLength="50" />
+    <Property Name="Inestagram" Type="nvarchar" MaxLength="50" />
+    <Property Name="PlacementPrice" Type="int" />
+  </EntityType>
+  <EntityType Name="Soom">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdPersonnel" Type="bigint" Nullable="false" />
+    <Property Name="IdShip" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="FromDate" Type="datetime" Nullable="false" />
+    <Property Name="ToDate" Type="datetime" Nullable="false" />
+    <Property Name="Tozihat" Type="nvarchar(max)" />
+    <Property Name="SommConter" Type="int" Nullable="false" />
+    <Property Name="SafarCounter" Type="int" Nullable="false" />
+    <Property Name="TiTle" Type="nvarchar" MaxLength="200" />
+    <Property Name="IsCheckout" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Subscribe">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TankhaGardan">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="PassWord" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IdUser" Type="bigint" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="350" />
+  </EntityType>
+  <EntityType Name="TankhaGardanToShip">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdTankhaGardan" Type="bigint" Nullable="false" />
+    <Property Name="IdShip" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Unit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_BankFileDeteil_IdBankFile">
+    <End Role="BankFileMster" Type="Self.BankFileMster" Multiplicity="1" />
+    <End Role="BankFileDeteil" Type="Self.BankFileDeteil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BankFileMster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BankFileDeteil">
+        <PropertyRef Name="IdBankFile" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BimehAfrad_IdShip">
+    <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+    <End Role="BimehAfrad" Type="Self.BimehAfrad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BimehAfrad">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BimehDeteil_IdBimehMaster">
+    <End Role="BimehMaster" Type="Self.BimehMaster" Multiplicity="1" />
+    <End Role="BimehDeteil" Type="Self.BimehDeteil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BimehMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BimehDeteil">
+        <PropertyRef Name="IdBimehMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebtHistory_IdNote">
+    <End Role="Note" Type="Self.Note" Multiplicity="0..1" />
+    <End Role="DebtHistory" Type="Self.DebtHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Note">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DebtHistory">
+        <PropertyRef Name="IdNote" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebtHistory_IdPersonnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="DebtHistory" Type="Self.DebtHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DebtHistory">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebtHistory_IdShip">
+    <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+    <End Role="DebtHistory" Type="Self.DebtHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DebtHistory">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HandMoneyIsPay_Personnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="Note" Type="Self.Note" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Note">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HandMoneyIsPay_Ship">
+    <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+    <End Role="Note" Type="Self.Note" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Note">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kala_IdPersonnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="Kala" Type="Self.Kala" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Kala">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kala_OptionParameter">
+    <End Role="OptionParameter" Type="Self.OptionParameter" Multiplicity="1" />
+    <End Role="Kala" Type="Self.Kala" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OptionParameter">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Kala">
+        <PropertyRef Name="IdTypeKala" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kala_Unit">
+    <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+    <End Role="Kala" Type="Self.Kala" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Kala">
+        <PropertyRef Name="IdUnit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Note_Safar">
+    <End Role="Safar" Type="Self.Safar" Multiplicity="0..1" />
+    <End Role="Note" Type="Self.Note" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Safar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Note">
+        <PropertyRef Name="IdSafar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OptionParameter_Option">
+    <End Role="Option" Type="Self.Option" Multiplicity="1" />
+    <End Role="OptionParameter" Type="Self.OptionParameter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Option">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OptionParameter">
+        <PropertyRef Name="IdOption" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Package">
+    <End Role="Package" Type="Self.Package" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="IdPackage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Personnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Ship">
+    <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_ShomareOrder">
+    <End Role="ShomareOrder" Type="Self.ShomareOrder" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShomareOrder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="IdShomareOrder" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PackageToShip_IdPackage">
+    <End Role="Package" Type="Self.Package" Multiplicity="0..1" />
+    <End Role="PackageToShip" Type="Self.PackageToShip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PackageToShip">
+        <PropertyRef Name="IdPackage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PackageToShip_IdShip">
+    <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+    <End Role="PackageToShip" Type="Self.PackageToShip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PackageToShip">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PackageToShip_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="PackageToShip" Type="Self.PackageToShip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PackageToShip">
+        <PropertyRef Name="IdOrder" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Personnel_IdBank">
+    <End Role="Bank" Type="Self.Bank" Multiplicity="0..1" />
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bank">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Personnel">
+        <PropertyRef Name="IdBank" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Personnel_IdPersonnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="BimehAfrad" Type="Self.BimehAfrad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BimehAfrad">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Personnel_IdShip">
+    <End Role="Ship" Type="Self.Ship" Multiplicity="0..1" />
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Personnel">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="Role1" Type="Self.Role" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Role1">
+        <PropertyRef Name="IdParent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolePernonnel_Personnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="RolePernonnel" Type="Self.RolePernonnel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RolePernonnel">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolePernonnel_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="RolePernonnel" Type="Self.RolePernonnel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RolePernonnel">
+        <PropertyRef Name="IdRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Safar_Personnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="Safar" Type="Self.Safar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Safar">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Safar2_IdSoom">
+    <End Role="Soom" Type="Self.Soom" Multiplicity="1" />
+    <End Role="Safar" Type="Self.Safar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Soom">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Safar">
+        <PropertyRef Name="IdSoom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToAfrad_Personnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="SafarToAfrad" Type="Self.SafarToAfrad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToAfrad">
+        <PropertyRef Name="IdPernonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToAfrad_Safar">
+    <End Role="Safar" Type="Self.Safar" Multiplicity="1" />
+    <End Role="SafarToAfrad" Type="Self.SafarToAfrad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Safar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToAfrad">
+        <PropertyRef Name="IdSafar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToAfrad_Semat">
+    <End Role="Semat" Type="Self.Semat" Multiplicity="1" />
+    <End Role="SafarToAfrad" Type="Self.SafarToAfrad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Semat">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToAfrad">
+        <PropertyRef Name="IdSemat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToFactor_IdTankhaGardan">
+    <End Role="TankhaGardan" Type="Self.TankhaGardan" Multiplicity="0..1" />
+    <End Role="SafarToFactor" Type="Self.SafarToFactor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TankhaGardan">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToFactor">
+        <PropertyRef Name="IdTankhaGardan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToFactor_IdUnit">
+    <End Role="Unit" Type="Self.Unit" Multiplicity="0..1" />
+    <End Role="SafarToFactor" Type="Self.SafarToFactor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToFactor">
+        <PropertyRef Name="IdUnit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToFactor_OptionParameter">
+    <End Role="OptionParameter" Type="Self.OptionParameter" Multiplicity="1" />
+    <End Role="SafarToFactor" Type="Self.SafarToFactor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OptionParameter">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToFactor">
+        <PropertyRef Name="IdTypeFactor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToHandMoney_IdDebtHistory">
+    <End Role="DebtHistory" Type="Self.DebtHistory" Multiplicity="0..1" />
+    <End Role="SafarToHandMoney" Type="Self.SafarToHandMoney" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DebtHistory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToHandMoney">
+        <PropertyRef Name="IdDebtHistory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToHandMoney_IdUnit">
+    <End Role="Unit" Type="Self.Unit" Multiplicity="0..1" />
+    <End Role="SafarToHandMoney" Type="Self.SafarToHandMoney" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToHandMoney">
+        <PropertyRef Name="IdUnit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToHandMoney_Kala">
+    <End Role="Kala" Type="Self.Kala" Multiplicity="0..1" />
+    <End Role="SafarToHandMoney" Type="Self.SafarToHandMoney" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kala">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToHandMoney">
+        <PropertyRef Name="IdKala" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToHandMoney_Personnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="SafarToHandMoney" Type="Self.SafarToHandMoney" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToHandMoney">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToHandMoney_Safar">
+    <End Role="Safar" Type="Self.Safar" Multiplicity="1" />
+    <End Role="SafarToHandMoney" Type="Self.SafarToHandMoney" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Safar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToHandMoney">
+        <PropertyRef Name="IdSafar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToMachele_Kala">
+    <End Role="Kala" Type="Self.Kala" Multiplicity="1" />
+    <End Role="SafarToFactor" Type="Self.SafarToFactor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kala">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToFactor">
+        <PropertyRef Name="IdKala" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToMachele_Safar">
+    <End Role="Safar" Type="Self.Safar" Multiplicity="1" />
+    <End Role="SafarToFactor" Type="Self.SafarToFactor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Safar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToFactor">
+        <PropertyRef Name="IdSafar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToSahamDar_Personnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="SafarToSahamDar" Type="Self.SafarToSahamDar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToSahamDar">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToSahamDar_Safar">
+    <End Role="Safar" Type="Self.Safar" Multiplicity="1" />
+    <End Role="SafarToSahamDar" Type="Self.SafarToSahamDar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Safar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToSahamDar">
+        <PropertyRef Name="IdSafar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ship_IdPackage">
+    <End Role="Package" Type="Self.Package" Multiplicity="1" />
+    <End Role="ShipToPay" Type="Self.ShipToPay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShipToPay">
+        <PropertyRef Name="IdPackage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ship_IdShip">
+    <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+    <End Role="ShipToPay" Type="Self.ShipToPay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShipToPay">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ship_IdShomareOrder">
+    <End Role="ShomareOrder" Type="Self.ShomareOrder" Multiplicity="0..1" />
+    <End Role="ShipToPay" Type="Self.ShipToPay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShomareOrder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShipToPay">
+        <PropertyRef Name="IdShomareOrder" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ship_Personnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="Ship" Type="Self.Ship" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Ship">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShipToSahamDar_IdShip">
+    <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+    <End Role="ShipToSahamDar" Type="Self.ShipToSahamDar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShipToSahamDar">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShipToSahamDar_Personnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="ShipToSahamDar" Type="Self.ShipToSahamDar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShipToSahamDar">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Soom_Personnel">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="Soom" Type="Self.Soom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Soom">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Soom_Ship">
+    <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+    <End Role="Soom" Type="Self.Soom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Soom">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TankhaGardan_IdUser">
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="1" />
+    <End Role="TankhaGardan" Type="Self.TankhaGardan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TankhaGardan">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TankhaGardanToShip_IdShip">
+    <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+    <End Role="TankhaGardanToShip" Type="Self.TankhaGardanToShip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TankhaGardanToShip">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TankhaGardanToShip_IdTankhaGardan">
+    <End Role="TankhaGardan" Type="Self.TankhaGardan" Multiplicity="1" />
+    <End Role="TankhaGardanToShip" Type="Self.TankhaGardanToShip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TankhaGardan">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TankhaGardanToShip">
+        <PropertyRef Name="IdTankhaGardan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="golatehModelStoreContainer">
+    <EntitySet Name="Bank" EntityType="Self.Bank" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BankFileDeteil" EntityType="Self.BankFileDeteil" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BankFileMster" EntityType="Self.BankFileMster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Bimeh" EntityType="Self.Bimeh" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BimehAfrad" EntityType="Self.BimehAfrad" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BimehDeteil" EntityType="Self.BimehDeteil" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BimehMaster" EntityType="Self.BimehMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContactUs" EntityType="Self.ContactUs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DebtHistory" EntityType="Self.DebtHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JoinIt" EntityType="Self.JoinIt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kala" EntityType="Self.Kala" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Option" EntityType="Self.Option" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OptionParameter" EntityType="Self.OptionParameter" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PackageToShip" EntityType="Self.PackageToShip" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Personnel" EntityType="Self.Personnel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RolePernonnel" EntityType="Self.RolePernonnel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Safar" EntityType="Self.Safar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SafarToAfrad" EntityType="Self.SafarToAfrad" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SafarToFactor" EntityType="Self.SafarToFactor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SafarToHandMoney" EntityType="Self.SafarToHandMoney" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SafarToSahamDar" EntityType="Self.SafarToSahamDar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Semat" EntityType="Self.Semat" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ship" EntityType="Self.Ship" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ShipToPay" EntityType="Self.ShipToPay" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ShipToSahamDar" EntityType="Self.ShipToSahamDar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ShomareOrder" EntityType="Self.ShomareOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SiteSetting" EntityType="Self.SiteSetting" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Soom" EntityType="Self.Soom" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subscribe" EntityType="Self.Subscribe" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TankhaGardan" EntityType="Self.TankhaGardan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TankhaGardanToShip" EntityType="Self.TankhaGardanToShip" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BankFileDeteil_IdBankFile" Association="Self.FK_BankFileDeteil_IdBankFile">
+      <End Role="BankFileMster" EntitySet="BankFileMster" />
+      <End Role="BankFileDeteil" EntitySet="BankFileDeteil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BimehAfrad_IdShip" Association="Self.FK_BimehAfrad_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="BimehAfrad" EntitySet="BimehAfrad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BimehDeteil_IdBimehMaster" Association="Self.FK_BimehDeteil_IdBimehMaster">
+      <End Role="BimehMaster" EntitySet="BimehMaster" />
+      <End Role="BimehDeteil" EntitySet="BimehDeteil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebtHistory_IdNote" Association="Self.FK_DebtHistory_IdNote">
+      <End Role="Note" EntitySet="Note" />
+      <End Role="DebtHistory" EntitySet="DebtHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebtHistory_IdPersonnel" Association="Self.FK_DebtHistory_IdPersonnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="DebtHistory" EntitySet="DebtHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebtHistory_IdShip" Association="Self.FK_DebtHistory_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="DebtHistory" EntitySet="DebtHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HandMoneyIsPay_Personnel" Association="Self.FK_HandMoneyIsPay_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Note" EntitySet="Note" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HandMoneyIsPay_Ship" Association="Self.FK_HandMoneyIsPay_Ship">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="Note" EntitySet="Note" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kala_IdPersonnel" Association="Self.FK_Kala_IdPersonnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Kala" EntitySet="Kala" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kala_OptionParameter" Association="Self.FK_Kala_OptionParameter">
+      <End Role="OptionParameter" EntitySet="OptionParameter" />
+      <End Role="Kala" EntitySet="Kala" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kala_Unit" Association="Self.FK_Kala_Unit">
+      <End Role="Unit" EntitySet="Unit" />
+      <End Role="Kala" EntitySet="Kala" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Note_Safar" Association="Self.FK_Note_Safar">
+      <End Role="Safar" EntitySet="Safar" />
+      <End Role="Note" EntitySet="Note" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OptionParameter_Option" Association="Self.FK_OptionParameter_Option">
+      <End Role="Option" EntitySet="Option" />
+      <End Role="OptionParameter" EntitySet="OptionParameter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Package" Association="Self.FK_Order_Package">
+      <End Role="Package" EntitySet="Package" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Personnel" Association="Self.FK_Order_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Ship" Association="Self.FK_Order_Ship">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_ShomareOrder" Association="Self.FK_Order_ShomareOrder">
+      <End Role="ShomareOrder" EntitySet="ShomareOrder" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PackageToShip_IdPackage" Association="Self.FK_PackageToShip_IdPackage">
+      <End Role="Package" EntitySet="Package" />
+      <End Role="PackageToShip" EntitySet="PackageToShip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PackageToShip_IdShip" Association="Self.FK_PackageToShip_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="PackageToShip" EntitySet="PackageToShip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PackageToShip_Order" Association="Self.FK_PackageToShip_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="PackageToShip" EntitySet="PackageToShip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Personnel_IdBank" Association="Self.FK_Personnel_IdBank">
+      <End Role="Bank" EntitySet="Bank" />
+      <End Role="Personnel" EntitySet="Personnel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Personnel_IdPersonnel" Association="Self.FK_Personnel_IdPersonnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="BimehAfrad" EntitySet="BimehAfrad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Personnel_IdShip" Association="Self.FK_Personnel_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="Personnel" EntitySet="Personnel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_Role" Association="Self.FK_Role_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Role1" EntitySet="Role" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolePernonnel_Personnel" Association="Self.FK_RolePernonnel_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="RolePernonnel" EntitySet="RolePernonnel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolePernonnel_Role" Association="Self.FK_RolePernonnel_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="RolePernonnel" EntitySet="RolePernonnel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Safar_Personnel" Association="Self.FK_Safar_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Safar" EntitySet="Safar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Safar2_IdSoom" Association="Self.FK_Safar2_IdSoom">
+      <End Role="Soom" EntitySet="Soom" />
+      <End Role="Safar" EntitySet="Safar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToAfrad_Personnel" Association="Self.FK_SafarToAfrad_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="SafarToAfrad" EntitySet="SafarToAfrad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToAfrad_Safar" Association="Self.FK_SafarToAfrad_Safar">
+      <End Role="Safar" EntitySet="Safar" />
+      <End Role="SafarToAfrad" EntitySet="SafarToAfrad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToAfrad_Semat" Association="Self.FK_SafarToAfrad_Semat">
+      <End Role="Semat" EntitySet="Semat" />
+      <End Role="SafarToAfrad" EntitySet="SafarToAfrad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToFactor_IdTankhaGardan" Association="Self.FK_SafarToFactor_IdTankhaGardan">
+      <End Role="TankhaGardan" EntitySet="TankhaGardan" />
+      <End Role="SafarToFactor" EntitySet="SafarToFactor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToFactor_IdUnit" Association="Self.FK_SafarToFactor_IdUnit">
+      <End Role="Unit" EntitySet="Unit" />
+      <End Role="SafarToFactor" EntitySet="SafarToFactor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToFactor_OptionParameter" Association="Self.FK_SafarToFactor_OptionParameter">
+      <End Role="OptionParameter" EntitySet="OptionParameter" />
+      <End Role="SafarToFactor" EntitySet="SafarToFactor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToHandMoney_IdDebtHistory" Association="Self.FK_SafarToHandMoney_IdDebtHistory">
+      <End Role="DebtHistory" EntitySet="DebtHistory" />
+      <End Role="SafarToHandMoney" EntitySet="SafarToHandMoney" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToHandMoney_IdUnit" Association="Self.FK_SafarToHandMoney_IdUnit">
+      <End Role="Unit" EntitySet="Unit" />
+      <End Role="SafarToHandMoney" EntitySet="SafarToHandMoney" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToHandMoney_Kala" Association="Self.FK_SafarToHandMoney_Kala">
+      <End Role="Kala" EntitySet="Kala" />
+      <End Role="SafarToHandMoney" EntitySet="SafarToHandMoney" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToHandMoney_Personnel" Association="Self.FK_SafarToHandMoney_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="SafarToHandMoney" EntitySet="SafarToHandMoney" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToHandMoney_Safar" Association="Self.FK_SafarToHandMoney_Safar">
+      <End Role="Safar" EntitySet="Safar" />
+      <End Role="SafarToHandMoney" EntitySet="SafarToHandMoney" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToMachele_Kala" Association="Self.FK_SafarToMachele_Kala">
+      <End Role="Kala" EntitySet="Kala" />
+      <End Role="SafarToFactor" EntitySet="SafarToFactor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToMachele_Safar" Association="Self.FK_SafarToMachele_Safar">
+      <End Role="Safar" EntitySet="Safar" />
+      <End Role="SafarToFactor" EntitySet="SafarToFactor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToSahamDar_Personnel" Association="Self.FK_SafarToSahamDar_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="SafarToSahamDar" EntitySet="SafarToSahamDar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToSahamDar_Safar" Association="Self.FK_SafarToSahamDar_Safar">
+      <End Role="Safar" EntitySet="Safar" />
+      <End Role="SafarToSahamDar" EntitySet="SafarToSahamDar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ship_IdPackage" Association="Self.FK_Ship_IdPackage">
+      <End Role="Package" EntitySet="Package" />
+      <End Role="ShipToPay" EntitySet="ShipToPay" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ship_IdShip" Association="Self.FK_Ship_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="ShipToPay" EntitySet="ShipToPay" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ship_IdShomareOrder" Association="Self.FK_Ship_IdShomareOrder">
+      <End Role="ShomareOrder" EntitySet="ShomareOrder" />
+      <End Role="ShipToPay" EntitySet="ShipToPay" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ship_Personnel" Association="Self.FK_Ship_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Ship" EntitySet="Ship" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShipToSahamDar_IdShip" Association="Self.FK_ShipToSahamDar_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="ShipToSahamDar" EntitySet="ShipToSahamDar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShipToSahamDar_Personnel" Association="Self.FK_ShipToSahamDar_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="ShipToSahamDar" EntitySet="ShipToSahamDar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Soom_Personnel" Association="Self.FK_Soom_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Soom" EntitySet="Soom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Soom_Ship" Association="Self.FK_Soom_Ship">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="Soom" EntitySet="Soom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TankhaGardan_IdUser" Association="Self.FK_TankhaGardan_IdUser">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="TankhaGardan" EntitySet="TankhaGardan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TankhaGardanToShip_IdShip" Association="Self.FK_TankhaGardanToShip_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="TankhaGardanToShip" EntitySet="TankhaGardanToShip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TankhaGardanToShip_IdTankhaGardan" Association="Self.FK_TankhaGardanToShip_IdTankhaGardan">
+      <End Role="TankhaGardan" EntitySet="TankhaGardan" />
+      <End Role="TankhaGardanToShip" EntitySet="TankhaGardanToShip" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

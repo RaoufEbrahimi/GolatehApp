@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "لیست کاربران";
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div id="DivReadSiteSetting"></div>
+    </div>
+</div>
+
+
+
+<script>
+    function PersonnelManagementSubmit() {
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/PersonnelManagement/PersonnelManagementSubmit',
+            data: { FirstName: $('#FirstName').val(), LastName: $('#LastName').val(), UserName: $('#UserName').val(), Password: $('#Password').val() },
+            success: function (dataa) {
+
+                if (dataa == 1) {
+                    toastr.success('این عملیات موفقیت آمیز بود');
+                    Reload();
+                }
+                else {
+                    toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+            }
+        });
+
+    }
+    function PersonnelManagementDelete(Id) {
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/PersonnelManagement/PersonnelManagementDelete',
+            data: { Id: Id },
+            success: function (dataa) {
+
+                if (dataa == 1) {
+                    toastr.success('این عملیات موفقیت آمیز بود');
+                    Reload();
+                }
+                else {
+                    toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+            }
+        });
+
+    }
+    function ChangeStatusPersonnel(Itm) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/PersonnelManagement/ChangeStatusPersonnel',
+            data: { Id: $(Itm).attr('ArtId'), IsActive: $(Itm).is(":checked") },
+            success: function (dataa) {
+
+                if (dataa == 1) {
+                    toastr.success('این عملیات موفقیت آمیز بود');
+                    Reload();
+                }
+                else {
+                    toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+            }
+        });
+
+    }
+    function ChangeStatusPersonnelArticle(Itm) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/PersonnelManagement/ChangeStatusPersonnelArticle',
+            data: { Id: $(Itm).attr('ArtId'), IsActive: $(Itm).is(":checked") },
+            success: function (dataa) {
+
+                if (dataa == 1) {
+                    toastr.success('این عملیات موفقیت آمیز بود');
+                    Reload();
+                }
+                else {
+                    toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+            }
+        });
+
+    }
+    function Reload() {
+        $.ajax({
+            url: "/Admin/PersonnelManagement/GetListPersonnelManagement",
+            method: "POST",
+            success: function (data) {
+
+                $('#DivReadSiteSetting').html('');
+                $('#DivReadSiteSetting').html(data);
+
+            },
+            error: function () {
+                toastr.error('خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.');
+            },
+            beforeSend: function () {
+
+            }
+        });
+    }
+
+    
+    Reload();
+</script>

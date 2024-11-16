@@ -1,0 +1,715 @@
+﻿@using Ship.Model.BLL.Admin
+@using Ship.Model.ViewModel
+
+@{
+    var tag = new ContentOptimization(true) { IsUser = true };
+
+    var SiteSe = SiteSettingBLL.GetListSiteSetting().First();
+}
+
+@section ContentOptimization
+{
+    @Html.Partial("~/Views/Shared/ContentOptimization.cshtml", tag)
+}
+
+<section id="home" class="slider-area slider-bg" style="background-image:url(@SiteSettings.CDN/Content/theme/site/img/slider/slider_bg01.png)" >
+    <div class="slider-active" dir="rtl">
+        <div class="single-slider">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-7 col-lg-6">
+                        <div class="slider-content">
+                            <span data-animation="fadeInUp" data-delay=".2s">خوش آمدید</span>
+                            <h2 data-animation="fadeInUp" data-delay=".4s">سیستم گُلاته</h2>
+                            <p data-animation="fadeInUp" data-delay=".6s">دیگه وقت این رسیده که مانند صاحبان کسب و کار های بزرگ به صورت حرفه‌ای نیروی انسانی و حسابرسی لنج خودتون را مدیریت کنید.</p>
+                            <div class="slider-btn">
+                                @if (User.Identity.IsAuthenticated == false)
+                                {
+                                    <a href="/home/register" class="btn transparent-btn" data-animation="fadeInLeft" data-delay=".8s">ثبت نام</a>
+                                    <a href="/loginadmin" class="btn" data-animation="fadeInRight" data-delay=".8s">ورود</a>
+                                }
+                                else
+                                {
+                                    if (User.Identity.Name.Contains("TankhaGardan"))
+                                    {
+                                        <a href="/tankha" class="btn" data-animation="fadeInRight" data-delay=".8s">بخش مدیریت</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/admin" class="btn" data-animation="fadeInRight" data-delay=".8s">بخش مدیریت</a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 d-none d-lg-block">
+                        <div class="slider-img p-relative" data-animation="fadeInLeft" data-delay=".6s">
+                            <img src="@SiteSettings.CDN/Content/theme/site/img/slider/GolatehLanj.png" alt="سیستم گلاته">
+                            <div class="slider-shape">
+              
+                                <br />
+                                <img src="@SiteSettings.CDN/Content/theme/site/img/slider/slider_shape01.png" alt="سیستم گلاته">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="about" class="about-area pb-35">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-9">
+                <div class="section-title text-center mb-45">
+                    <h2>سیستم گُلاته چیست ؟</h2>
+                   
+                    <p>سیستم گُلاته اولین نرم افزار جامع مدیریت مالی بر اساس محاسبات سنتی شناور های صیادی طراحی کرده‌ شده است که نه تنها نیاز صیادان و لنج داران را برطرف مینماید بلکه با ارائه آمار و گزارشات پیشرفته کسب و کار آنها را نیز چند پله به جلو خواهد برد.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-xl-5 col-lg-6">
+                <div class="about-content">
+                    <h3>گُلاته‌ رو براتون حساب می کنیم</h3>
+                    <p>تیم قدرتمند سیستم گُلاته با شناخت کامل و تحلیل نیاز های صیادان و لنج داران بومی بوشهر، نوعی نرم افزار حسابداری و مدیریت منابع انسانی شناورهای صیادی تحت وب طراحی کرده است که بر اساس رایانش ابری طراحی و پیاده سازی شده، به این معنی که تمام اطلاعات شما بر روی سرورهای گُلاته ذخیره و سازماندهی خواهد شد و همچنین تضمین می نماییم که از اطلاعات کاربران و حریم خصوصی آنها را به طور کامل حفاظت کنیم.</p>
+                    <p>بدین ترتیب شما برای استفاده از سیستم گُلاته نیاز به نصب هیچ برنامه‌ای ندارید فقط کافی است از طریق مرورگر لبتاب، تبلت و یا موبایل و اتصال به اینترنت حسابرسی شناور خود را مدیریت کنید.</p>
+                    @*<a href="#" class="btn mt-20">بیشتر بخوانید</a>*@
+                </div>
+            </div>
+            <div class="col-xl-7 col-lg-6 d-none d-md-block">
+                <br />
+                <div class="about-img p-relative">
+                    <img src="@SiteSettings.CDN/Content/theme/site/img/slider/GolatehiMac.png" class="wow fadeInLeft" data-wow-delay="0.6s" alt="سیستم گلاته">
+                    @*<img src="@SiteSettings.CDN/Content/theme/site/img/slider/Golatehphone1.png" class="wow fadeInLeft" data-wow-delay="0.2s" alt="img">*@
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="features" class="features-area p-relative polygon-padding pt-200 pb-150">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-9">
+                <div class="section-title text-center mb-45">
+                    <h2>چرا سیستم گلاته ؟</h2>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="features-app p-relative">
+                    <img src="@SiteSettings.CDN/Content/theme/site/img/slider/2phonesgolateh.png" alt="گلاته" class="fadeInRight" data-wow-delay="0.2s">
+                </div>
+            </div>
+            <div class="col-xl-8 features-p pt-60">
+                <div class="about-list">
+                    <ul>
+                        <li>
+                            <div class="single-about-list">
+                                <div class="s-about-icon">
+                                    <i class="flaticon-vector"></i>
+                                </div>
+                                <div class="s-about-content fix">
+                                    <h5>استفاده آسان</h5>
+                                    <p>برای کار با سیستم گُلاته نیاز به دانش حسابداری ندارید، همه کاربران می توانند به سادگی با سیستم کار کنند چرا که سعی کرده ایم با حذف پیچیدگی ها و طراحی محیطی کاربر پسند وجذاب سیستم را برای کاربران تا حد امکان قابل فهم کنیم.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-about-list">
+                                <div class="s-about-icon">
+                                    <i class="flaticon-pencil"></i>
+                                </div>
+                                <div class="s-about-content fix">
+                                    <h5>قدرتمند در عین سادگی</h5>
+                                    <p>عملیات های محاسبه گُلاته و سود و زیان کاملا اتوماتیک توسط سیستم انجام می شود و خروجی آن به صوت آمار و گزارشاتی با ریز جزییات در اختیار کاربران قرار خواهد گرفت که کاربران را از صرف وقت برای انجام محاسبات دستی بی نیاز می سازد.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-about-list">
+                                <div class="s-about-icon">
+                                    <i class="flaticon-wrench"></i>
+                                </div>
+                                <div class="s-about-content fix">
+                                    <h5>سیستم گلاته همیشه به روز است</h5>
+                                    <p>با توجه به این که سیستم گُلاته بر بستر اینترنت ارائه میشود نیاز به حذف و نصب نرم افزار برای دریافت نسخه جدید نیست، به محض ورود به سیستم آخرین نسخه در اخیتیار شما قرار خواهد گرفت و همچنین تیم فنی گُلاته به صورت مرتب در حال به روز رسانی و افزودن امکانات جدیدی هست که رایگان در اختیار کاربران قرار خواهد گرفت</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="features-shape fs-one">
+        <img src="@SiteSettings.CDN/Content/theme/site/img/shape/features_shape01.png" alt="سیستم گلاته">
+    </div>
+    <div class="features-shape fs-two rotateme">
+        <img src="@SiteSettings.CDN/Content/theme/site/img/shape/features_shape02.png" alt="سیستم گلاته">
+    </div>
+    <div class="features-shape fs-three">
+        <img src="@SiteSettings.CDN/Content/theme/site/img/shape/features_shape03.png" alt="سیستم گلاته">
+    </div>
+    <div class="features-shape fs-four">
+        <img src="@SiteSettings.CDN/Content/theme/site/img/shape/features_shape04.png" alt="سیستم گلاته">
+    </div>
+    <div class="features-shape fs-five">
+        <img src="@SiteSettings.CDN/Content/theme/site/img/shape/features_shape05.png" alt="سیستم گلاته">
+    </div>
+    <div class="features-shape fs-six">
+        <img src="@SiteSettings.CDN/Content/theme/site/img/shape/features_shape06.png" alt="سیستم گلاته">
+    </div>
+    <div class="features-shape fs-seven rotateme">
+        <img src="@SiteSettings.CDN/Content/theme/site/img/shape/features_shape07.png" alt="سیستم گلاته">
+    </div>
+</section>
+<section id="workprocess" class="workprocess-area wp-padding pt-90 pb-70">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-9">
+                <div class="section-title home-two text-center mb-45">
+                    <h2>کار با سیستم گُلاته‌!</h2>
+                    <p>مراحی کار با سیستم گلاته به صورت کلی در این قسمت توضیح داده ایم</p>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-5">
+                <div class="wp-img-wrap text-center">
+                    <img src="@SiteSettings.CDN/Content/theme/site/img/slider/Golatehphone1.png" alt="سیستم گلاته">
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="wp-list p-relative">
+                    <ul>
+                        <li>
+                            <div class="single-wp-list">
+                                <div class="wp-list-icon">
+                                    <i class="flaticon-login"></i>
+                                </div>
+                                <div class="wp-list-content fix">
+                                    <h5>ثبت شناور</h5>
+                                    <p>در اولین مرحله بعد از ثبت نام و ورود به سیستم باید شناور خود را تعریف کنید. در این گام شما اطلاعات شناور خود را وارد کرده و در ادامه پرسنل آن را وارد سیستم می کنید. </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-wp-list">
+                                <div class="wp-list-icon">
+                                    <i class="flaticon-analysis"></i>
+                                </div>
+                                <div class="wp-list-content fix">
+                                    <h5>تعریف فصل یا صوم</h5>
+                                    <p>بعد از ثبت شناور برای انجام محاسبات فصلی یا صوم صید می بایست یک صوم تعریف کنید که تاریخ شروع آن مبدا محاسبات شما برای آن فصل خواهد بود و وقتی که صوم بسته شود شما قادر به دریافت گزارشات و محاسبات آن فصل خواهید بود.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-wp-list">
+                                <div class="wp-list-icon">
+                                    <i class="flaticon-molecular"></i>
+                                </div>
+                                <div class="wp-list-content fix">
+                                    <h5>ثبت سفر</h5>
+                                    <p>همان طور میدانید هر صوم شامل چندین سفر می باشد. ثبت سفر مهم ترین قسمت سیستم گلاته می باشد و باید با دقت بسیار اطلاعات مربوط به هر سفر را به سیستم بدهید تا محاسبات کامل و بدون هیچ گونه اشتباهی صورت بگیرد. اطلاعاتی نظیر ملوانانی که با شناور به دریا رفته اند، فاکتور خرید قطعات و ماچله، فاکتور تعمیرات و همچنین فاکتور فروش صید و ... </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-wp-list">
+                                <div class="wp-list-icon">
+                                    <i class="flaticon-analysis-1"></i>
+                                </div>
+                                <div class="wp-list-content fix">
+                                    <h5>نمایش محاسبات</h5>
+                                    <p>پس بستن هر سفر و هر صوم شما می توانید محسبات گلاته را برای ان سفر یا آن صوم مشاهده بکنید، این امکان در سیستم گلاته فراهم آمده است که سفر به سفر و صوم به صوم محاسبات را انجام دهد. به علاوه سیستم گزارشات حرفه ای و پیشرفته ای به صورت کلی برای کل شناور ها و تک تک شناور ها به کاربر ارائه می دهد و همچنین کاربران می توانند در بخش گزارشات ریز گزارشات مد نظرشان را مشاهده بکنند.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="screenshots" class="screenshot-area p-relative screenshot-bg pt-100 pb-95" style="background-image:url(@SiteSettings.CDN/Content/theme/site/img/bg/screenshot_bg.png)">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-xl-6">
+                <div class="screenshot-title mb-40">
+                    <span>حرکت به سمت حرفه ای شدن!</span>
+                    <h3>امکانات منحصر به فرد برنامه</h3>
+                    <p>سیستم گلاته با رائه امکانات منحصر به فرد، شما را از مدیریت سنتی به سمت مدیریت حرفه ای شناور های صیادیتان سوق میدهد. شما قادر خواهید بود به صورت دقیق هزینه یابی کنید و از هدر رفتن وقت و سرمایه هایتان جلوگیری نماید.</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="ss-content mb-30">
+                            <div class="ss-icon d-flex align-items-center">
+                                <i class="flaticon-check"></i>
+                                <h5>محاسبه اتوماتیک گلاته</h5>
+                            </div>
+                            <p>گلاته هر شناور به صورت اتوماتیک سفر به سفر و فصل به فصل انجام میگیرد و نمایش داده میشود.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ss-content mb-30">
+                            <div class="ss-icon d-flex align-items-center">
+                                <i class="flaticon-check"></i>
+                                <h5>نمودار های آماری</h5>
+                            </div>
+                            <p>ما با ارائه نمودار های آماری هزینه ها، دارمد و سود به شکل کلی و به ازای هر شناور به شما دید روشن تری از کسب و کارتان می دهیم.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ss-content mb-30">
+                            <div class="ss-icon d-flex align-items-center">
+                                <i class="flaticon-check"></i>
+                                <h5>گزرشات حرفه ای</h5>
+                            </div>
+                            <p> با ارائه انواع گزارش های دقیق ریز و کللان به صورت دوره ای، سفر به سفر، فصل به فصل به شما آگاهی بیشتری از کسب و کارتان می دهیم. </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ss-content mb-30">
+                            <div class="ss-icon d-flex align-items-center">
+                                <i class="flaticon-check"></i>
+                                <h5>چند شناوری</h5>
+                            </div>
+                            <p>در سیستم گلاته هر کاربر میتواند چند شناور را ثبت و مدیریت نماید که گزارشات به ازای هر شناور و به صورت کلی در اختیار ایشان قرار میگیرد.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ss-content mb-30">
+                            <div class="ss-icon d-flex align-items-center">
+                                <i class="flaticon-check"></i>
+                                <h5>تنخواه گردان</h5>
+                            </div>
+                            <p>برای صیادانی که چندین شناور دارند و برای مدیریت آن از تن خواه استفاده میکنند نیز تدبیری اندیشیده شده است. میتوانند تنخواه را ثبت نام کنند و ایشان هزینه های انجام شده را در سیستم ثبت نماید.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ss-content mb-30">
+                            <div class="ss-icon d-flex align-items-center">
+                                <i class="flaticon-check"></i>
+                                <h5>دفتر بدهی هوشمند</h5>
+                            </div>
+                            <p>دفترچه بدهی لنجداران را قادر می سازد تا بدهی ملوانان خود را ثبت کرده و هنگامی که قرار است مبلغی از گلاته آنان کسر شود بر آن مبلغ بدهی یاداشت شده استناد کنند و به صورت خود کار از بدهی ملوان کسر گردد.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ss-content mb-30">
+                            <div class="ss-icon d-flex align-items-center">
+                                <i class="flaticon-check"></i>
+                                <h5>فایل بیمه</h5>
+                            </div>
+                            <p>این سیستم شما را قادر میسازد که بدون نیاز به مراجه به شخص سومی فایل های بیمه ملوانان خود را دریافت کرده و جهت پرداخت بیمه آنها اقدام کنید. </p>
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
+            <div class="ss-content mb-30">
+                <div class="ss-icon d-flex align-items-center">
+                    <i class="flaticon-check"></i>
+                    <h5>فایل بانک</h5>
+                </div>
+                <p>برای سهولت در پرداخت گلاته به ملوانان امکان فایل بانک را فراهم کرده ایم که کار شما را برای پرداخت جمعی گلاته ها راحت می نماید.</p>
+            </div>
+        </div>*@
+
+                    <div class="col-md-6">
+                        <div class="ss-content mb-30">
+                            <div class="ss-icon d-flex align-items-center">
+                                <i class="flaticon-check"></i>
+                                <h5>ظاهر جذاب</h5>
+                            </div>
+                            <p>ما در طراحی این سیستم تلاش کرده ایم محیط سیستم با رنگ های استاندارد و فرح بخش، ظاهری زیبا ایجاد کنیم تا کاربر محیطی خشک و خسته کننده را تجربه نکند. </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ss-content mb-30">
+                            <div class="ss-icon d-flex align-items-center">
+                                <i class="flaticon-check"></i>
+                                <h5>کاربری آسان</h5>
+                            </div>
+                            <p>یکی از مهمترین مالفه های سیستم گلاته رابط کاربری آسان و راحت آن می باشد که هر کاربری بدون داشتن دانش حسابداری یا مالی را قادر میسازد تا به مدیریت مالی شناور های خود بپردازد.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 d-none d-lg-block">
+                <div class="screenshot-carousel" style="height: 600px">
+                    <img src="@SiteSettings.CDN/Content/theme/site/img/images/Golatescreenshot1.png" alt="سیستم گلاته">
+                    <img src="@SiteSettings.CDN/Content/theme/site/img/images/Golatescreenshot3.png" alt="سیستم گلاته">
+                    <img src="@SiteSettings.CDN/Content/theme/site/img/images/Golatescreenshot2.png" alt="سیستم گلاته">
+                    <img src="@SiteSettings.CDN/Content/theme/site/img/images/Golatescreenshot4.png" alt="سیستم گلاته">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="screendhot-shape sshape-one">
+        <img src="@SiteSettings.CDN/Content/theme/site/img/shape/features_shape05.png" alt="سیستم گلاته">
+    </div>
+    <div class="screendhot-shape sshape-two">
+        <img src="@SiteSettings.CDN/Content/theme/site/img/shape/features_shape06.png" alt="سیستم گلاته">
+    </div>
+    <div class="screendhot-shape sshape-three rotateme">
+        <img src="@SiteSettings.CDN/Content/theme/site/img/shape/features_shape07.png" alt="سیستم گلاته">
+    </div>
+</section>
+<section id="features2" class="s-features-area theme-bg pt-90 pb-70">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-9">
+                <div class="section-title home-two text-center mb-45">
+                    <h2>گزارشات</h2>
+                    <p>با ارائه انواع گزارشات حرفه ای در سیستم گلاته صیادان عزیز میتوانند بسیار حرفه ای تر از گذشته کسب و کار خود را مدیریت کنند.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="inner-features-wrap mb-30">
+                    <div class="inner-features-icon">
+                        <i class="fas fa-compress"></i>
+                    </div>
+                    <div class="inner-features-content">
+                        <h5> درآمد و سود-زیان</h5>
+                        <p>گزارش درآمد سود و زیان هر شناور شما به صورت نموداری و هم چنین با ریز جزییات قابل دریافت می باشد. شما میتوانید گزارشات درآمد سود و زیان را در بازه های مشخص دل خواه نیز دریافت کنید. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="inner-features-wrap mb-30">
+                    <div class="inner-features-icon">
+                        <i class="fas fa-map-signs"></i>
+                    </div>
+                    <div class="inner-features-content">
+                        <h5>هزینه ها</h5>
+                        <p>شما می توانید کلیه گزارشات خرید، مثل خرید ادوات، خرید قطعات و خرید لوازم ایمنی و جانبی برای هر شناور را در بازه های زمانی دلخواه به صورت تفکیک شده بر روی نمودار و با جزییات در قسمت گزارشات دریافت کنید. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="inner-features-wrap mb-30">
+                    <div class="inner-features-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="inner-features-content">
+                        <h5>ماچله</h5>
+                        <p>بنا به نحوه محاسبه هزینه های ماچله، ما این مورد را از مابقی هزینه ها جدا کرده ایم ولی شما می توانید در گزارشات ریز در بخش گزارشات و همچنین به صورت تفکیک شده در قالب نمودار برای هر سناور و برای کل شناورها دریافت نمایید. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="inner-features-wrap mb-30">
+                    <div class="inner-features-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="inner-features-content">
+                        <h5>گلاته های حساب شده</h5>
+                        <p>شما میتوانید خلاصه گلاته های پرداخت شده مللوانان را در قالب گزارش به شکل یک جا دریافت نماید. نمودار گلاته موجود در پروفایل هر شناور گلاته حساب شده را به ازای هر سفر نمایش میدهد.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="inner-features-wrap mb-30">
+                    <div class="inner-features-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="inner-features-content">
+                        <h5>نوسان قیمت صید</h5>
+                        <p>گزارش نوسان قیمت برای هر کدام از انواع صید نیز قابل دریافت می باشد، شما میتوانید در بازه های زمانی دلخواه نوسان قیمت تمامی موارد صید شده را مشاهده بفرمایید.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="inner-features-wrap mb-30">
+                    <div class="inner-features-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="inner-features-content">
+                        <h5>حجم صید</h5>
+                        <p>گزارش حجم صید نیز به مانند انواع دیگر گزارش های موجود در سیستم گلاته هم خروجی نموداری به ازای هر شناور و همچنین جمع کل شناورها دارد و هم به صورت ریز در قسمت گزارشات قابل دریافت می باشد.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="faqs" class="faq-area faq-padding pt-95 pb-75">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-9">
+                <div class="section-title text-center mb-45">
+                    <h2>سوالات متداول</h2>
+                    @*<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>*@
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-xl-6">
+                <div class="faq-img">
+                    <img src="@SiteSettings.CDN/Content/theme/site/img/slider/GolatehFishingShip.png" alt="سیستم گلاته" style="float:left;">
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="faq-wrapper">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <a href="#" class="btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                        <i class="flaticon-checked"></i>
+                                        چند روش محاسبه گلاته در سیستم وجود دارد ؟
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    در حال حاظر سیستم گلاته فقط یک نوع محاسبه گلاته را انجام میدهد که روش محاسبه سنتی گلاته در شهر بوشهر و حومه و شهرستان های استان بوشهر می باشد. ولی در آینده روش های دیگر محاسبه گلاته در شهرها و استان های دیگر نیز به سیستم اضافه خواهد شد.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <a href="#" class="btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"><i class="flaticon-checked"></i> محاسبه گلاته به چه روشی انجام میشود ؟</a>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    طبق محاسبات سنتی که در شهر بوشهر انجام میگیرد کلیه مبلغ صید بعد از کسر هزینه ها از قبیل (سوخت، آب، ماچله) تقصیم بر دو شده که یک دوم آن سهم صاحب لنج و یک دوم دیگر آن گلاته بندی می شود و هر کدام از صیادان چه جاشو و چه ناخدا طبق تعداد گلاته ای که برای دریافت آن توافق کرده اند مبلغ سهم شان در سیستم محاسبه خواهد شد.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                    <a href="#" class="btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <i class="flaticon-checked"></i>
+                                        آیا استفاده از سیستم گلاته از طریق موبایل و تبلت امکان پذیر است ؟
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    از آن جایی که سیستم گلاته تحت وب بوده و کاملا به صورت ریسپانسو طراحی و پیاده سازی شده است محدودیتی برای استفاده از طریق موبایل یا تبلت نخواهد داشت و با همه سیستم ها سازگار خواهد بود.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingFour">
+                                <h5 class="mb-0">
+                                    <a href="#" class="btn-link" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        <i class="flaticon-checked"></i>
+                                        آیا روش محاسبه گلاته قایق ها نیز وجود دارد ؟
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseFour" class="collapse " aria-labelledby="headingFour" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    خیر، در حال حاظر سیستم گلاته فقط محاسبه گلاته لنج های صیادی را انجام میدهد.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingFive">
+                                <h5 class="mb-0">
+                                    <a href="#" class="btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        <i class="flaticon-checked"></i>
+                                        آیا یک شناور می تواند چند سهامدار داشته باشد ؟
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    بله، شما میتوانید برای هر شناور چند سهام دار ثبت کنید که سیستم سهم هر یک از سهام داران را به نسبت دانگ یا درصدی که دارند محاسبه خواهد کرد.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingSix">
+                                <h5 class="mb-0">
+                                    <a href="#" class="btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                        <i class="flaticon-checked"></i>
+                                        هر کاربر چند شناور را می تواند ثبت کند ؟
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    محدودیتی برای ثبت شناور به ازای هر کاربر در سیستم گلاته وجود ندارد، شما میتوانید هر چند شناور که می خواهید را در سیستم گلاته مدیریت کنید.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingSeven">
+                                <h5 class="mb-0">
+                                    <a href="#" class="btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                        <i class="flaticon-checked"></i>
+                                        محاسبه سود و زیان در سیستم گلاته انجام می شود ؟
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    بله محاسبه سود و زیان به ازای هر شناور و همچنین به صورت کلی برای همه شناور ها در سیستم گلاته انجام می شود و بر روی نمودار قابل مشاهده می باشد.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingEight">
+                                <h5 class="mb-0">
+                                    <a href="#" class="btn-link collapsed" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                        <i class="flaticon-checked"></i>
+                                        آیا سیستم گلاته قابلیت ثبت فاکتور ها را دارد ؟
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    بله، شما می توانید تمامی فاکتور های خرید، تعمیرات، ماچله، صید و... را به ازای هر سفر در سیستم ثبت کنید.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingNine">
+                                <h5 class="mb-0">
+                                    <a href="#" class="btn-link collapsed" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                        <i class="flaticon-checked"></i>
+                                        آیا سیستم گلاته قابلیت ثبت بده کاری صیادان را دارد ؟
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    بله، شما میتوانید بده کاری هر یک از صیادان را در سفر ثبت کنید که از حسابشان کسر شود.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingTen">
+                                <h5 class="mb-0">
+                                    <a href="#" class="btn-link collapsed" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                                        <i class="flaticon-checked"></i>
+                                        محاسبات سیستم گلاته تا چه اندازه دقیق است ؟
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    از آنجایی که کلیه محاسبات با فرمول های تعریف شده توسط سرور انجام می شود، همه محاسبات کاملا دقیق انجام می شوند. اما توجه داشته باشید که کلیه این محاسبات بر روی اطلاعاتی که شما وارد سیستم می کنید انجام میگیرد و درصورتی که شما اطلاعات دقیق و درستی را به سیستم وارد کنید محاسبات انجام شده دقیق و درست انجام خواهند شد.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="contact-area pt-100" style="padding-bottom: 300px;">
+    <div class="container">
+        <div class="contact-wrap">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="contact-content cc-bg" style="background-image: url(@SiteSettings.CDN/Content/theme/site/img/slider/Contactus1.png)">
+                        <h4>هم اکنون مشترک شوید</h4>
+                        <p>برای دریافت خبر نامه های گلاته ایمل خود را وارد کنید.</p>
+                        <form action="#" class="contact-form p-relative mt-25" method="post">
+                            <input type="email" id="email2" placeholder="آدرس ایمیل شما" dir="ltr">
+                            <button type="button" onclick="joint()">ارسال</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <form  class="message-form" method="post">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <input type="text" id="namee" placeholder="نام شما *" required>
+                            </div>
+                            <div class="col-xl-6">
+                                <input type="email" id="email22" placeholder="* ایمیل شما" dir="ltr" required>
+                            </div>
+                        </div>
+                        <input type="text" id="subject" placeholder="موضوع">
+                        <textarea id="message" placeholder="پیام شما *" required></textarea>
+                        <button class="btn" type="button" onclick="ContactAdd()">ارسال پیام</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<link href="~/Content/theme/site/css/toastr.min.css" rel="stylesheet" />
+<script src="~/Content/theme/site/js/toastr.min.js"></script>
+
+<script>
+    function ContactAdd() {
+
+        if ($('#namee').val() == '' || $('#email22').val() == '' || $('#subject').val() == '' || $('#message').val() == '') {
+            return;
+        }
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/Home/ContactAdd',
+            data: { name: $('#namee').val(), email: $('#email22').val(), subject: $('#subject').val(), message: $('#message').val() },
+            success: function (dataa) {
+                if (dataa == "1") {
+                    $('#namee').val('');
+                    $('#email22').val('');
+                    $('#subject').val('');
+                    $('#message').val('');
+
+                    toastr.success('درخواست شما با موفقیت ارسال شد');
+                }
+                else if (dataa == "0") {
+                    toastr.error('ایمیل وارد شده اشتباه است');
+                }
+                else {
+                    toastr.error('خطا در ارسال اطلاعات');
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                toastr.error('خطا در ارسال اطلاعات');
+            }
+        });
+    }
+    function joint() {
+
+        if ($('#email2').val() == '') {
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Home/joint',
+            data: { email: $('#email2').val() },
+            success: function (dataa) {
+                if (dataa == 1) {
+                    $('#email2').val('');
+                    toastr.success('درخواست شما با موفقیت ارسال شد');
+                }
+                else if (dataa == "0") {
+                    toastr.error('ایمیل وارد شده اشتباه است');
+                }
+                else {
+                    toastr.error('خطا در ارسال اطلاعات');
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                toastr.error('خطا در ارسال اطلاعات');
+            }
+        });
+    }
+</script>

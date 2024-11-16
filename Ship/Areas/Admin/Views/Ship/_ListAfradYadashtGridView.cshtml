@@ -1,0 +1,42 @@
+﻿@model List<Ship.Model.ViewModel.Admin.YadashtViewModel>
+@{
+    int a = 1;
+}
+
+<div class="table-responsive" style="margin-top: 20px;">
+    @*جمع کل : <b>@Model.Sum(v => decimal.Parse(v.Price.Replace(",", ""))).ToString("N0") تومان</b>
+        <br />*@
+    <table id="TableSoom" class="table table-bordered mb-0" style="width: 100%">
+        <thead>
+            <tr style="background-color: #dee2e6b3">
+                <td style="text-align: center">#</td>
+                <td style="text-align: center">نام و نام خانوادگی</td>
+                <td style="text-align: center">توضیحات</td>
+                <td style="text-align: center">مبلغ - تومان</td>
+                <td style="text-align: center">مبلغ پرداختی - تومان</td>
+                <td style="text-align: center">مانده - تومان</td>
+                <td style="text-align: center">تاریخ</td>
+                <td style="text-align: center">عملیات</td>
+            </tr>
+        </thead>
+        @foreach (var cc in Model)
+        {
+            <tr>
+                <td style="text-align:center">@(a++)</td>
+                <td style="text-align:center">@cc.Name</td>
+                <td style="text-align:center">@cc.Desc</td>
+                <td style="text-align:center">@cc.Price</td>
+                <td style="text-align:center">@cc.PriceToPay</td>
+                <td style="text-align:center">@cc.PriceMande</td>
+                <td style="text-align:center">@PersianCalander.ToShamsi(DateTime.Parse(cc.Date))</td>
+                <td style="text-align: center">
+                    <button onclick="KartezBedehi(@cc.Id)" type="button" class="btn btn-outline"><i class="fadeIn animated bx bx-align-justify"></i></button>
+                 @if (!cc.IdSafar.HasValue)
+                 { 
+                    <button onclick="DeleteYadasht(@cc.Id)" type="button" class="btn btn-outline"><i class="fadeIn animated bx bx-trash"></i></button>
+                 }
+                </td>
+            </tr>
+        }
+    </table>
+</div>

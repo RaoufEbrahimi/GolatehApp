@@ -1,0 +1,2740 @@
+﻿@{
+    int IdUser = int.Parse(User.Identity.Name);
+
+    if (Request.QueryString["Id"] != null)
+    {
+
+        try
+        {
+            int.Parse(Request.QueryString["Id"].ToString());
+        }
+        catch (Exception e)
+        {
+            Response.Redirect(@"/Admin/Default", false);
+            return;
+        }
+    }
+    else
+    {
+        Response.Redirect(@"/Admin/Default", false);
+        return;
+    }
+
+
+    var dd = SiteSettingBLL.GetListShip(IdUser).Where(v => v.Id.ToString() == Request.QueryString["Id"].ToString()).ToList();
+
+
+    if (dd.Any() == false)
+    {
+        Response.Redirect(@"/Admin/Default", false);
+        return;
+    }
+
+
+    ViewBag.Title = "لنج " + (dd.First().Title);
+
+    var dash1 = SiteSettingBLL.Dashboard1(IdUser);
+
+    var IdQ = Request.QueryString["Id"].ToString();
+
+    var dash2 = SiteSettingBLL.Dashbor3(Convert.ToInt32(IdQ));
+}
+
+<input type="hidden" id="IdShip22" value="@Request.QueryString["Id"].ToString()" />
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a title="داشبورد" href="/admin"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">لنج (@dd.First().Title)</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<style>
+    .selected {
+        background-color: #f2f2f3 !important;
+    }
+
+    .modal {
+        overflow-y: auto;
+    }
+</style>
+
+<div class="row">
+    <div id="DivListShip"></div>
+    <div class="col-lg-12" style="margin-bottom: 10px">
+        <div class="p-4 border text-center rounded bg-light">
+            <div class="row">
+
+                @{
+                    int a = 1;
+                }
+
+                <div class="table-responsive" style="margin-top: 20px;">
+                    <table id="TableSafar" class="table table-bordered mb-0" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center; background-color: #dee2e6b3">نام صوم</th>
+                                <th style="text-align: center; background-color: #dee2e6b3">تعداد سفر</th>
+                                <th style="text-align: center; background-color: #dee2e6b3">درامد</th>
+                                <th style="text-align: center; background-color: #dee2e6b3">کل هزینه</th>
+                                <th style="text-align: center; background-color: #dee2e6b3">سود</th>
+                                <th style="text-align: center; background-color: #dee2e6b3">تاریخ شروع</th>
+                                <th style="text-align: center; background-color: #dee2e6b3">تاریخ پایان</th>
+                            </tr>
+                        </thead>
+                        @foreach (var cc in dash2)
+                        {
+                            <tr>
+                                <td style="text-align: center">@cc.Soom</td>
+                                <td style="text-align: center">@cc.Safar</td>
+                                <td style="text-align: center">@cc.Daramad.AddCommaToDecimal() تومان</td>
+                                <td style="text-align: center">@cc.Hazine.AddCommaToDecimal() تومان</td>
+                                <td style="text-align: center">@cc.Sood.AddCommaToDecimal() تومان</td>
+                                <td style="text-align: center">@cc.DateStart</td>
+                                <td style="text-align: center">@cc.DateFinish</td>
+                            </tr>
+                        }
+                        @if (dash2.Count > 1)
+                        {
+                            <tr>
+                                <td style="text-align: center" colspan="1"></td>
+                                <td style="text-align: center; background-color: #dee2e6b3;">@dash2.Sum(b => b.Safar)</td>
+                                <td style="text-align: center; background-color: #dee2e6b3;">@dash2.Sum(b => b.Daramad).AddCommaToDecimal() تومان</td>
+                                <td style="text-align: center; background-color: #dee2e6b3;">@dash2.Sum(b => b.Hazine).AddCommaToDecimal() تومان</td>
+                                <td style="text-align: center; background-color: #dee2e6b3;">@dash2.Sum(b => b.Sood).AddCommaToDecimal() تومان</td>
+                                <td style="text-align: center" colspan="2"></td>
+                            </tr>
+                        }
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                @if (dash1.Any() == false)
+                {
+                    <br />
+                    <h5 style="text-align: center">موردی یافت نشد</h5>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="DivModalIUShip"></div>
+<div id="DivModalIUOpenSahamDar"></div>
+<div id="DivModalIUOpenAfrad"></div>
+<div id="DivModalIUOpenAfradEdit"></div>
+<div id="DivModalIUListHandMoney"></div>
+<div id="DivModalIUyadasht"></div>
+<div id="DivModalKartezBedehi"></div>
+
+<input type="hidden" id="IdSelectedKartezBedehi" value="0" />
+
+
+@section js_down{
+    <script>
+
+
+        function iso7064Mod97_10(iban) {
+            var remainder = iban,
+                block;
+
+            while (remainder.length > 2) {
+                block = remainder.slice(0, 9);
+                remainder = parseInt(block, 10) % 97 + remainder.slice(block.length);
+            }
+
+            return parseInt(remainder, 10) % 97;
+        }
+
+        function validateIranianSheba(str) {
+            var pattern = /IR[0-9]{24}/;
+
+            if (str.length !== 26) {
+                return false;
+            }
+
+            if (!pattern.test(str)) {
+                return false;
+            }
+
+            var newStr = str.substr(4);
+            var d1 = str.charCodeAt(0) - 65 + 10;
+            var d2 = str.charCodeAt(1) - 65 + 10;
+            newStr += d1.toString() + d2.toString() + str.substr(2, 2);
+
+            var remainder = iso7064Mod97_10(newStr);
+            if (remainder !== 1) {
+                return false;
+            }
+
+            return true;
+        };
+
+        function _OpenAdd(Id) {
+            $.ajax({
+                url: "/Admin/Ship/_Add",
+                method: "POST",
+                data: { Id: Id },
+                success: function (data) {
+                    $('#DivModalIUShip').html('');
+                    $('#DivModalIUShip').html(data);
+
+                    $('#ModalIUShip').modal('show');
+
+                    $('.datepicker2').persianDatepicker({
+                        observer: true,
+                        format: 'YYYY/MM/DD',
+                        initialValueType: 'persian'
+                    });
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function GetListShip() {
+            $.ajax({
+                url: "/Admin/Ship/GetListShip2",
+                method: "POST",
+                data: { Id: $('#IdShip22').val() },
+                success: function (data) {
+
+                    $('#DivListShip').html('');
+                    $('#DivListShip').html(data);
+
+                    //var table = $('#TableShip').DataTable({
+                    //    lengthChange: false,
+                    //    autoWidth: false,
+                    //    buttons: ['copy', 'excel', 'print']
+                    //});
+
+                    //$('#TableShip tbody').on('click', 'tr', function () {
+                    //    if ($(this).hasClass('selected')) {
+                    //        $(this).removeClass('selected');
+                    //    }
+                    //    else {
+                    //        table.$('tr.selected').removeClass('selected');
+                    //        $(this).addClass('selected');
+                    //    }
+                    //});
+
+                    // table.buttons().container().appendTo('#TableShip_wrapper .col-md-6:eq(0)');
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function ToDelete(Id) {
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به حذف لنج هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/Delete',
+                                data: { Id: Id },
+                                success: function (dataa) {
+
+                                    if (Boolean(dataa) == true) {
+                                        window.location.href = '/admin';
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'این لنج قابل حذف نیست'
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function ToEdit(Id) {
+            _OpenAdd(Id);
+        }
+        function AddSave() {
+
+            $.alert({
+                title: 'ثبت',
+                content: 'آیا مایل به ثبت لنج هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/AddSave',
+                                data: {
+                                    Id: '0', Title: $('#TxtTitle').val(), Number: $('#TxtNumber').val(), YearProduction: $('#TxtYearProduction').val(),
+                                    Tul: $('#TxtTul').val(), Arz: $('#TxtArz').val(), NameMotor: $('#TxtNameMotor').val(), HajMotor: $('#TxtHajMotor').val()
+                                },
+                                success: function (dataa) {
+
+                                    if (Boolean(dataa) == true) {
+                                        GetListShip();
+                                        $('#F1')[0].reset();
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در ثبت، لطفا دقایقی دیگر دوباره امتحان کنید.'
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function AddSave2() {
+            $('#TxtTitle2,#TxtNumber2,#TxtYearProduction2,#TxtTul2,#TxtArz2,#TxtNameMotor2,#TxtHajMotor2,#TxtShomareBime').removeClass('inputerror');
+
+            var eror = false;
+
+            if ($('#TxtTitle2').val().trim().length === 0) {
+                $('#TxtTitle2').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtNumber2').val().trim().length === 0) {
+                $('#TxtNumber2').addClass('inputerror');
+                eror = true;
+            }
+            //if ($('#TxtYearProduction2').val().trim().length !== 10) {
+            //    $('#TxtYearProduction2').addClass('inputerror');
+            //    eror = true;
+            //}
+            //if ($('#TxtTul2').val().trim().length === 0) {
+            //    $('#TxtTul2').addClass('inputerror');
+            //    eror = true;
+            //}
+            //if ($('#TxtArz2').val().trim().length === 0) {
+            //    $('#TxtArz2').addClass('inputerror');
+            //    eror = true;
+            //}
+            //if ($('#TxtNameMotor2').val().trim().length === 0) {
+            //    $('#TxtNameMotor2').addClass('inputerror');
+            //    eror = true;
+            //}
+            //if ($('#TxtHajMotor2').val().trim().length === 0) {
+            //    $('#TxtHajMotor2').addClass('inputerror');
+            //    eror = true;
+            //}
+            //if ($('#TxtShomareBime').val().trim().length === 0) {
+            //    $('#TxtShomareBime').addClass('inputerror');
+            //    eror = true;
+            //}
+
+            if (eror) {
+                return false;
+            }
+
+
+            //$.ajax({
+            //    type: 'POST',
+            //    url: '/Admin/Ship/AddSave',
+            //    data: {
+            //        Id: $('#Id2').val(), Title: $('#TxtTitle2').val(), Number: $('#TxtNumber2').val(), YearProduction: $('#TxtYearProduction2').val(),
+            //        Tul: $('#TxtTul2').val(), Arz: $('#TxtArz2').val(), NameMotor: $('#TxtNameMotor2').val(), HajMotor: $('#TxtHajMotor2').val(),
+            //        ShomareBime: $('#TxtShomareBime').val()
+            //    },
+            //    success: function (dataa) {
+
+            //        if (Boolean(dataa) == true) {
+            //            GetListShip();
+            //            $('#F1')[0].reset();
+            //            $('#ModalIUShip').modal('hide');
+            //        }
+            //        else {
+            //            Lobibox.notify('error', {
+            //                pauseDelayOnHover: true,
+            //                continueDelayOnInactiveTab: false,
+            //                position: 'top right',
+            //                icon: 'bx bx-x-circle',
+            //                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+            //            });
+            //        }
+
+            //    },
+            //    error: function (jqXHR, textStatus, errorThrown) {
+            //        Lobibox.notify('error', {
+            //            pauseDelayOnHover: true,
+            //            continueDelayOnInactiveTab: false,
+            //            position: 'top right',
+            //            icon: 'bx bx-x-circle',
+            //            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+            //        });
+            //    }
+            //});
+
+
+
+
+            var formData = new FormData();
+            var totalFiles = document.getElementById("imageUploadForm").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("imageUploadForm").files[i];
+                formData.append("imageUploadForm", file);
+
+                const fileType = file['type'];
+                const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+                if (!validImageTypes.includes(fileType)) {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'پسوند فایل معتبر نیست'
+                    });
+                    return;
+                }
+            }
+
+            formData.append("imageUploadForm", file);
+            formData.append("Id", $('#Id2').val());
+            formData.append("Title", $('#TxtTitle2').val());
+            formData.append("Number", $('#TxtNumber2').val());
+            formData.append("YearProduction", $('#TxtYearProduction2').val());
+            formData.append("Tul", $('#TxtTul2').val());
+            formData.append("Arz", $('#TxtArz2').val());
+            formData.append("NameMotor", $('#TxtNameMotor2').val());
+            formData.append("HajMotor", $('#TxtHajMotor2').val());
+            formData.append("ShomareBime", $('#TxtShomareBime').val());
+
+            $.ajax({
+                type: "POST",
+                url: '/Admin/Ship/AddSave',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false
+            }).done(function (dataa) {
+
+                if (Boolean(dataa) == true) {
+                    GetListShip();
+                    $('#F1')[0].reset();
+                    $('#ModalIUShip').modal('hide');
+                }
+                else {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg:  'خطا در ثبت، لطفا دقایقی دیگر دوباره امتحان کنید.'
+                    });
+                }
+
+            }).fail(function (xhr, status, errorThrown) {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                });
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+        function GetListSahamDar(IdShip) {
+            $.ajax({
+                url: "/Admin/Ship/GetListSahamDar",
+                method: "POST",
+                data: { IdShip: IdShip },
+                success: function (data) {
+
+                    $('#ListSahamDarRefresh').html('');
+                    $('#ListSahamDarRefresh').html(data);
+
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function _OpenSahamDar(IdShip) {
+            $.ajax({
+                url: "/Admin/Ship/OpenSahamDar",
+                method: "POST",
+                data: { IdShip: IdShip },
+                success: function (data) {
+                    $('#DivModalIUOpenSahamDar').html('');
+                    $('#DivModalIUOpenSahamDar').html(data);
+
+                    $('#ModalIUOpenSahamDar').modal('show');
+
+                    GetListSahamDar(IdShip);
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function ToDeleteSahamDar(Id) {
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به حذف سهام دار هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/DeleteSahamDar',
+                                data: { Id: Id, IdShip: $('#Id3').val() },
+                                success: function (dataa) {
+
+                                    if (Boolean(dataa) == true) {
+                                        GetListSahamDar($('#Id3').val());
+                                        GetListShip();
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در حذف، لطفا دقایقی دیگر دوباره امتحان کنید.'
+
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function AddSave3() {
+
+
+            $('#TxtNumber3').removeClass('inputerror');
+
+            var eror = false;
+
+            if ($('#TxtNumber3').val().trim().length === 0) {
+                $('#TxtNumber3').addClass('inputerror');
+                eror = true;
+            }
+
+            if (eror) {
+                return false;
+            }
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Ship/AddSaveSahamDar',
+                data: {
+                    Id: $('#Id3').val(),
+                    IdUserSelected: $('#IdHandMoneyList2').val(),
+                    Rate: $('#TxtNumber3').val(),
+                    IdDong: $('#IdDong').val()
+                },
+                success: function (dataa) {
+
+                    if (parseInt(dataa) == 2) {
+                        GetListSahamDar($('#Id3').val());
+                        GetListShip();
+                        $("#IdHandMoneyList2").select2('val', '0');
+                        $("#IdDong").select2('val', '0');
+                        $('#TxtNumber3').val('')
+                    }
+                    else if (parseInt(dataa) == 1) {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'درصد وارد شده بیشتر از 100 درصد است'
+                        });
+                    }
+                    else {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                }
+            });
+        }
+        $(document).ready(function () {
+            GetListShip();
+            $('.datepicker2').persianDatepicker({
+                observer: true,
+                format: 'YYYY/MM/DD',
+                initialValueType: 'persian'
+            });
+        });
+
+        function _OpenAfrad(IdShip) {
+            $.ajax({
+                url: "/Admin/Ship/OpenAfrad",
+                method: "POST",
+                data: { IdShip: IdShip },
+                success: function (data) {
+                    $('#DivModalIUOpenAfrad').html('');
+                    $('#DivModalIUOpenAfrad').html(data);
+
+                    $('#ModalIUOpenAfrad').modal('show');
+                    GetListAfrad(IdShip, true);
+
+
+                    $('#IdBank').select2({
+                        theme: 'bootstrap4',
+                        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                        placeholder: $(this).data('placeholder'),
+                        allowClear: Boolean($(this).data('allow-clear')),
+                        dropdownParent: $('#ModalIUOpenAfrad')
+                    });
+
+
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function GetListAfrad(IdShip, Active) {
+
+            var _Active = true;
+
+            if (Active == 1 || Active == 0) {
+                _Active = (Active == 1 ? true : false);
+                IdShip = $('#IdShip55').val();
+            } else {
+                _Active = Active;
+            }
+
+            $.ajax({
+                url: "/Admin/Ship/GetListAfrad",
+                method: "POST",
+                data: { IdShip: IdShip, Active: _Active },
+                success: function (data) {
+                    $('#ListAfradRefresh').html('');
+                    $('#ListAfradRefresh').html(data);
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+        function AddAfrad() {
+
+            $('#FirstName,#LastName,#NationalCode,#Phone,#ShebaNumber,#TxtNameMotor,#ShomareCart14,#ShomareHesab').removeClass('inputerror');
+
+            var eror = false;
+
+            if ($('#FirstName').val().trim().length === 0) {
+                $('#FirstName').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#LastName').val().trim().length === 0) {
+                $('#LastName').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#NationalCode').val().trim().length !== 10) {
+                $('#NationalCode').addClass('inputerror');
+                eror = true;
+            }
+
+            var lenphon = $('#Phone').val().trim().length;
+            var statusphon = false;
+            if (lenphon == 11 || lenphon == 10) {
+                statusphon = true;
+            }
+
+            if (statusphon === false) {
+                $('#Phone').addClass('inputerror');
+                eror = true;
+            }
+
+            if ($('#ShebaNumber').val().trim() != '') {
+                if (validateIranianSheba($('#ShebaNumber').val().trim()) === false) {
+                    $('#ShebaNumber').addClass('inputerror');
+                    eror = true;
+                }
+            }
+
+            if ($('#ShomareCart14').val().trim() != '') {
+                if ($('#ShomareCart14').val().trim().length !== 16) {
+                    $('#ShomareCart14').addClass('inputerror');
+                    eror = true;
+                }
+            }
+
+
+
+            if (eror) {
+                return false;
+            }
+
+
+
+            var fileUpload = $("#Logo").get(0);
+            var files = fileUpload.files;
+
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+
+            fileData.append('IdShip', $('#IdShip55').val());
+            fileData.append('Id', 0);
+            fileData.append('FirstName', $('#FirstName').val());
+            fileData.append('LastName', $('#LastName').val());
+            fileData.append('NationalCode', $('#NationalCode').val());
+            fileData.append('Phone', $('#Phone').val());
+            fileData.append('ShebaNumber', $('#ShebaNumber').val());
+            fileData.append('ShomareCart14', $('#ShomareCart14').val());
+            fileData.append('ShomareHesab', $('#ShomareHesab').val());
+            fileData.append('IdBank', $('#IdBank').val());
+
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Ship/AddAfrad',
+                data: fileData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (dataa) {
+                    if (dataa.status) {
+                        GetListAfrad($('#IdShip55').val(), true);
+                        GetListShip();
+                        $('#F13')[0].reset();
+                    }
+                    else {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: dataa.msg
+                        });
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                }
+            });
+
+        }
+        function ToActiveAfrad(Id) {
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به فعال کردن فرد هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/ToActiveAfrad',
+                                data: { Id: Id, IdShip: $('#IdShip55').val() },
+                                success: function (dataa) {
+
+                                    if (Boolean(dataa) == true) {
+                                        GetListAfrad($('#IdShip55').val(), false);
+                                        GetListShip();
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function ToDeleteAfrad(Id) {
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به حذف فرد هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/DeleteAfrad',
+                                data: { Id: Id, IdShip: $('#IdShip55').val() },
+                                success: function (dataa) {
+
+                                    if (Boolean(dataa) == true) {
+                                        GetListAfrad($('#IdShip55').val(), true);
+                                        GetListShip();
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function ToEditAfrad(Id) {
+            $.ajax({
+                url: "/Admin/Ship/AfradOpenEdit",
+                method: "POST",
+                data: { Id: Id, IdShip: $('#IdShip55').val() },
+                success: function (data) {
+                    $('#DivModalIUOpenAfradEdit').html('');
+                    $('#DivModalIUOpenAfradEdit').html(data);
+
+                    $('#ModalIUShipEdit').modal('show');
+                    $('#ModalIUOpenAfrad').modal('hide');
+
+
+                    $('#IdBank2').select2({
+                        theme: 'bootstrap4',
+                        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                        placeholder: $(this).data('placeholder'),
+                        allowClear: Boolean($(this).data('allow-clear')),
+                        dropdownParent: $('#ModalIUShipEdit')
+                    });
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function AddAfradSaveEdit() {
+
+            $('#FirstName2,#LastName2,#NationalCode2,#Phone2,#ShebaNumber2,#TxtNameMotor2,#ShomareCart142,#ShomareHesab2').removeClass('inputerror');
+
+            var eror = false;
+
+            if ($('#FirstName2').val().trim().length === 0) {
+                $('#FirstName2').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#LastName2').val().trim().length === 0) {
+                $('#LastName2').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#NationalCode2').val().trim().length !== 10) {
+                $('#NationalCode2').addClass('inputerror');
+                eror = true;
+            }
+
+            var lenphon = $('#Phone2').val().trim().length;
+            var statusphon = false;
+            if (lenphon == 11 || lenphon == 10) {
+                statusphon = true;
+            }
+
+            if (statusphon === false) {
+                $('#Phone2').addClass('inputerror');
+                eror = true;
+            }
+
+            if ($('#ShebaNumber2').val().trim() != '') {
+                if (validateIranianSheba($('#ShebaNumber2').val().trim()) === false) {
+                    $('#ShebaNumber2').addClass('inputerror');
+                    eror = true;
+                }
+            }
+
+            if ($('#ShomareCart142').val().trim() != '') {
+                if ($('#ShomareCart142').val().trim().length !== 16) {
+                    $('#ShomareCart142').addClass('inputerror');
+                    eror = true;
+                }
+            }
+
+            if (eror) {
+                return false;
+            }
+
+
+
+            var fileUpload = $("#Logo2").get(0);
+            var files = fileUpload.files;
+
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+
+            fileData.append('IdShip', $('#IdShip55').val());
+            fileData.append('Id', $('#Id11').val());
+            fileData.append('FirstName', $('#FirstName2').val());
+            fileData.append('LastName', $('#LastName2').val());
+            fileData.append('NationalCode', $('#NationalCode2').val());
+            fileData.append('Phone', $('#Phone2').val());
+            fileData.append('ShebaNumber', $('#ShebaNumber2').val());
+            fileData.append('ShomareCart14', $('#ShomareCart142').val());
+            fileData.append('ShomareHesab', $('#ShomareHesab2').val());
+            fileData.append('IdBank', $('#IdBank2').val());
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Ship/AddAfrad',
+                data: fileData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (dataa) {
+                    if (Boolean(dataa) === true) {
+                        GetListAfrad($('#IdShip55').val(), true);
+                        GetListShip();
+                        $('#F133')[0].reset();
+                        $('#ModalIUOpenAfrad').modal('show');
+                        $('#ModalIUShipEdit').modal('hide');
+                    }
+                    else {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                }
+            });
+        }
+
+
+
+        function DeleteAfradhand(IdPersonnel, IdShip) {
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به حذف فرد هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/DeleteAfradhand',
+                                data: { IdPersonnel: IdPersonnel, IdShip: IdShip },
+                                success: function (dataa) {
+                                    if (Boolean(dataa) == true) {
+                                        $('#DivPerson_' + IdPersonnel).remove();
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function _OpenListHandMoneyAfrad(IdShip) {
+            $.ajax({
+                url: "/Admin/Ship/OpenListHandMoneyAfrad",
+                method: "POST",
+                data: { IdShip: $('#IdShip22').val() },
+                success: function (data) {
+                    $('#DivModalIUListHandMoney').html('');
+                    $('#DivModalIUListHandMoney').html(data);
+
+                    $('#IdModalHandMoneyAfrad').modal('show');
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function ToUperCase(itm) {
+            $(itm).val($(itm).val().toUpperCase());
+        }
+
+
+
+        function GetListAfradYadasht() {
+            $.ajax({
+                url: "/Admin/Ship/GetListAfradYadasht",
+                data: { IdShip: $('#IdShip22').val() },
+                method: "POST",
+                success: function (data) {
+                    $('#DivModalIUyadasht').html('');
+                    $('#DivModalIUyadasht').html(data);
+
+                    $('#IdPersonnel33').select2();
+
+                    $('#IdModalListAfradYadasht').modal('show');
+                    $('.datepicker2').persianDatepicker({
+                        observer: true,
+                        format: 'YYYY/MM/DD',
+                        initialValueType: 'persian'
+                    });
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function AfradYadashtSave() {
+
+            if ($('#Date5').val().length != 10) {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'تاریخ را انتخاب کنید'
+                });
+                return;
+            }
+
+            if ($('#IdYadasht').val().length == 0) {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'متنی را وارد کنید'
+                });
+                return;
+            }
+            if ($('#IdYadashtPrice').val().length == 0) {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'مبلغ را وارد کنید'
+                });
+                return;
+            }
+
+            if ($('#IdPersonnel33').val() == '0') {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'افراد را انتخاب کنید'
+                });
+                return;
+            }
+
+            var Price = $("#IdYadashtPrice").val().replace(',', '').replace(',', '').replace(',', '').replace(',', '');
+
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به ثبت هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/AfradYadashtSave',
+                                data: {
+                                    IdShip: $('#IdShip22').val(), Date: $('#Date5').val(),
+                                    Desc: $('#IdYadasht').val(),
+                                    Price: Price,
+                                    IdPersonnel: $('#IdPersonnel33').val()
+                                },
+                                success: function (dataa) {
+                                    if (parseInt(dataa) > 0) {
+                                        //$('#IdModalListAfradYadasht').modal('hide');
+                                        Reload($('#IdPersonnel33').val());
+                                        $('#IdYadashtPrice').val('');
+                                        $('#IdYadasht').val('');
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function DeleteYadasht(Id) {
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا از حذف اطمینان دارید ؟ !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/DeleteYadasht',
+                                data: { Id: Id, IdShip: $('#IdShip22').val() },
+                                success: function (dataa) {
+                                    if (Boolean(dataa) == true) {
+                                        //$('#IdModalListAfradYadasht').modal('hide');
+                                        Reload($('#IdPersonnel33').val());
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'بر مبنای این یادداشت ازگلاته صیاد مبلغی کسر شده و قابل حذف نمی باشد.'
+                                        });
+                                    }
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function KartezBedehi(Id) {
+
+            $.ajax({
+                url: "/Admin/Ship/KartezBedehi",
+                data: { IdShip: $('#IdShip22').val(), IdPersonnel: $('#IdPersonnel33').val(), Id: Id },
+                method: "POST",
+                success: function (data) {
+
+
+                    $('#IdSelectedKartezBedehi').val(Id);
+
+                    $('#DivModalKartezBedehi').html('');
+                    $('#DivModalKartezBedehi').html(data);
+                    $('#IdPersonnel333').select2();
+                    $('#IdModalListAfradYadashtKartezBedehi').modal('show');
+                    $('.datepicker22').persianDatepicker({
+                        observer: true,
+                        format: 'YYYY/MM/DD',
+                        initialValueType: 'persian'
+                    });
+
+                    Reload2($('#IdPersonnel33').val());
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function Reload(IdPersonnel) {
+            $.ajax({
+                url: "/Admin/Ship/GetListAfradYadasht2",
+                method: "POST",
+                data: { IdShip: $('#IdShip22').val(), IdPersonnel: IdPersonnel },
+                success: function (data) {
+                    $('#ListAfradRefresh').html('');
+                    $('#ListAfradRefresh').html(data);
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function Reload2(IdPersonnel) {
+
+            var Id = $('#IdSelectedKartezBedehi').val();
+
+            $.ajax({
+                url: "/Admin/Ship/GetListAfradYadashtKartezBedehiGride",
+                method: "POST",
+                data: { IdShip: $('#IdShip22').val(), IdPersonnel: IdPersonnel, Id: Id },
+                success: function (data) {
+                    $('#ListAfradRefresh22').html('');
+                    $('#ListAfradRefresh22').html(data);
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function AfradYadashtKartexSave() {
+
+            if ($('#Date52').val().length != 10) {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'تاریخ را انتخاب کنید'
+                });
+                return;
+            }
+
+            if ($('#IdYadasht2').val().length == 0) {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'متنی را وارد کنید'
+                });
+                return;
+            }
+            if ($('#IdYadashtPrice2').val().length == 0) {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'مبلغ را وارد کنید'
+                });
+                return;
+            }
+
+            var Price = $("#IdYadashtPrice2").val().replace(',', '').replace(',', '').replace(',', '').replace(',', '');
+
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به ثبت هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/AfradYadashtKartexSave',
+                                data: {
+                                    IdShip: $('#IdShip22').val(),
+                                    Date: $('#Date52').val(),
+                                    Desc: $('#IdYadasht2').val(),
+                                    Price: Price,
+                                    IdPersonnel: $('#IdPersonnel33').val(),
+                                    IdNot: $('#IdPersonnel333').val()
+                                },
+                                success: function (dataa) {
+                                    if (parseInt(dataa) > 0) {
+                                        //$('#IdModalListAfradYadasht').modal('hide');
+                                        Reload2($('#IdPersonnel33').val());
+                                        $('#IdYadashtPrice2').val('');
+                                        $('#IdYadasht2').val('');
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function DeleteYadashtKartex(Id) {
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا از حذف اطمینان دارید ؟ !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Ship/DeleteYadashtKartex',
+                                data: { Id: Id, IdShip: $('#IdShip22').val() },
+                                success: function (dataa) {
+                                    if (Boolean(dataa) == true) {
+                                        //$('#IdModalListAfradYadasht').modal('hide');
+                                        Reload2($('#IdPersonnel33').val());
+                                    }
+                                    else {
+                                        Lobibox.notify('error', {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                    }
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error', {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+
+    </script>
+
+
+
+
+
+
+
+
+    <script>
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        $(document).ready(function () {
+            C1();
+            C2();
+            C3();
+            C4();
+            C5();
+            C6();
+            //   C7();
+            $('.ooo').select2();
+            C500();
+        });
+
+        var colors = ['#ff6666', '#1a0000', '#008000', '#00bfff', '#800080', '#ff0040', '#008080', '#000080', '#6a9aba', '#808000', '#24A19C', '#D22779', '#612897', '#632626', '#876445', '#370665', '#064663', '#519259', '#FEC260', '#7E7474', '#3B5249', '#382933', '#A4B494', '#31112C', '#F4ABC4', '#BC6FF1', '#84142D', '#AD62AA', '#9E579D', '#FF5722', '#5FB9B0', '#04879C', '#DD5B82', '#414141', '#46B5D1'];
+
+        function generateRandomColor() {
+            return colors[Math.floor(Math.random() * 35)];
+        }
+
+        function C1() {
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/ship/C1',
+                timeout: 1000000,
+                data: { IdShip: $('#IdShip22').val() },
+                success: function (data) {
+
+                    if (data.length == 0) {
+                        $("#c1").remove();
+                    }
+                    else {
+                        var randomColor = Array();
+                        var series = Array();
+                        var labels = Array();
+
+                        var total = 0;
+
+                        for (var i = 0; i < data.length; i++) {
+                            randomColor.push(generateRandomColor());
+
+                            series.push(data[i].Val);
+                            labels.push(data[i].Title);
+
+                            total = total + data[i].Val;
+                        }
+
+                        var _title = 'سود هر یک از سهام داران ' + numberWithCommas(total) + ' تومان';
+                        var options = {
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(value) + ' تومان';
+                                    }
+                                },
+                            },
+                            xaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(value) + ' تومان';
+                                    }
+                                }
+                            },
+                            legend: {
+                                fontSize: "16px"
+                            },
+                            width: "100%",
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: "16px"
+                                }
+                            },
+                            series: series,
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 330,
+                                type: 'pie',
+                            },
+                            colors: randomColor,
+                            labels: labels,
+                            responsive: [{
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        height: 360
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    }
+                                }
+                            }],
+                            title: {
+                                text: _title,
+                                align: 'right',
+                                margin: 10,
+                                offsetX: 0,
+                                offsetY: 0,
+                                floating: false,
+                                style: {
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    color: '#263238'
+                                },
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector("#c1"), options);
+                        chart.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function C2() {
+
+            var total = 0;
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/ship/C2',
+                timeout: 1000000,
+                data: { IdShip: $('#IdShip22').val() },
+                success: function (data) {
+
+                    if (data.length == 0) {
+                        $("#c2").remove();
+                    }
+                    else {
+                        var randomColor = Array();
+                        var series = Array();
+                        var labels = Array();
+
+                        for (var i = 0; i < data.length; i++) {
+                            randomColor.push(generateRandomColor());
+
+                            series.push(data[i].Val);
+                            labels.push(data[i].Title);
+
+                            total = total + data[i].Val;
+                        }
+
+                        var _title = 'ماچله ' + numberWithCommas(total) + ' تومان';
+
+                        var options = {
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(value) + ' تومان';
+                                    }
+                                },
+                            },
+                            xaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(value) + ' تومان';
+                                    }
+                                }
+                            },
+                            legend: {
+                                fontSize: "16px"
+                            },
+                            width: "100%",
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: "16px"
+                                }
+                            },
+                            series: series,
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 330,
+                                type: 'pie',
+                            },
+                            colors: randomColor,
+                            labels: labels,
+                            responsive: [{
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        height: 360
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    }
+                                }
+                            }],
+                            title: {
+                                text: _title,
+                                align: 'right',
+                                margin: 10,
+                                offsetX: 0,
+                                offsetY: 0,
+                                floating: false,
+                                style: {
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    color: '#263238'
+                                }
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector("#c2"), options);
+                        chart.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function C3() {
+
+            var total = 0;
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/ship/C3',
+                timeout: 1000000,
+                data: { IdShip: $('#IdShip22').val() },
+                success: function (data) {
+
+                    if (data.length == 0) {
+                        $("#c3").remove();
+                    }
+                    else {
+                        var randomColor = Array();
+                        var series = Array();
+                        var labels = Array();
+
+                        for (var i = 0; i < data.length; i++) {
+                            randomColor.push(generateRandomColor());
+
+                            series.push(data[i].Val);
+                            labels.push(data[i].Title);
+
+                            total = total + data[i].Val;
+                        }
+
+                        var _title = 'فروش ' + numberWithCommas(total) + ' تومان';
+
+
+                        var options = {
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(value) + ' تومان';
+                                    }
+                                },
+                            },
+                            series: [{
+                                data: series
+                            }],
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 360,
+                                type: 'line',
+                                zoom: {
+                                    enabled: false
+                                },
+                                toolbar: {
+                                    show: false
+                                },
+                                dropShadow: {
+                                    enabled: true,
+                                    top: 3,
+                                    left: 14,
+                                    blur: 4,
+                                    opacity: 0.10,
+                                }
+                            },
+                            stroke: {
+                                width: 5,
+                                curve: 'smooth'
+                            },
+                            xaxis: {
+                                categories: labels
+                            },
+                            fill: {
+                                type: 'gradient',
+                                gradient: {
+                                    shade: 'light',
+                                    gradientToColors: ['#8833ff'],
+                                    shadeIntensity: 1,
+                                    type: 'horizontal',
+                                    opacityFrom: 1,
+                                    opacityTo: 1,
+                                    stops: [0, 100, 100, 100]
+                                },
+                            },
+                            markers: {
+                                size: 4,
+                                colors: ["#8833ff"],
+                                strokeColors: "#fff",
+                                strokeWidth: 2,
+                                hover: {
+                                    size: 7,
+                                }
+                            },
+                            colors: ["#8833ff"],
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: "16px"
+                                },
+                                formatter: function (val, opts) {
+                                    return numberWithCommas(val);
+                                }
+                            },
+                            title: {
+                                text: _title,
+                                align: 'right',
+                                margin: 10,
+                                offsetX: 0,
+                                offsetY: 0,
+                                floating: false,
+                                style: {
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    color: '#263238'
+                                }
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector("#c3"), options);
+                        chart.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function C4() {
+
+            var total = 0;
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/ship/C4',
+                timeout: 1000000,
+                data: { IdShip: $('#IdShip22').val() },
+                success: function (data) {
+
+                    if (data.length == 0) {
+                        $("#c4").remove();
+                    }
+                    else {
+                        var randomColor = Array();
+                        var series = Array();
+                        var labels = Array();
+
+                        for (var i = 0; i < data.length; i++) {
+                            randomColor.push(generateRandomColor());
+
+                            series.push(data[i].Val);
+                            labels.push(data[i].Title);
+
+                            total = total + data[i].Val;
+                        }
+
+                        var _title = 'حجم صید ' + total + ' تن';
+
+
+                        var options = {
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return value.toFixed(4) + ' تن';
+                                    }
+                                },
+                            },
+                            series: [{
+                                data: series
+                            }],
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 360,
+                                type: 'line',
+                                zoom: {
+                                    enabled: false
+                                },
+                                toolbar: {
+                                    show: false
+                                },
+                                dropShadow: {
+                                    enabled: true,
+                                    top: 3,
+                                    left: 14,
+                                    blur: 4,
+                                    opacity: 0.10,
+                                }
+                            },
+                            stroke: {
+                                width: 5,
+                                curve: 'smooth'
+                            },
+                            xaxis: {
+                                categories: labels
+                            },
+                            fill: {
+                                type: 'gradient',
+                                gradient: {
+                                    shade: 'light',
+                                    gradientToColors: ['#8833ff'],
+                                    shadeIntensity: 1,
+                                    type: 'horizontal',
+                                    opacityFrom: 1,
+                                    opacityTo: 1,
+                                    stops: [0, 100, 100, 100]
+                                },
+                            },
+                            markers: {
+                                size: 4,
+                                colors: ["#8833ff"],
+                                strokeColors: "#fff",
+                                strokeWidth: 2,
+                                hover: {
+                                    size: 7
+                                }
+                            },
+                            colors: ["#8833ff"],
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: "16px"
+                                },
+                                formatter: function (val, opts) {
+                                    return val.toFixed(4);
+                                }
+                            },
+                            title: {
+                                text: _title,
+                                align: 'right',
+                                margin: 10,
+                                offsetX: 0,
+                                offsetY: 0,
+                                floating: false,
+                                style: {
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    color: '#263238'
+                                }
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector("#c4"), options);
+                        chart.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function C5() {
+
+            var total = 0;
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/ship/C5',
+                timeout: 1000000,
+                data: { IdShip: $('#IdShip22').val() },
+                success: function (data) {
+
+                    if (data.length == 0) {
+                        $("#c5").remove();
+                    }
+                    else {
+                        var randomColor = Array();
+                        var series = Array();
+                        var labels = Array();
+
+                        for (var i = 0; i < data.length; i++) {
+                            randomColor.push(generateRandomColor());
+
+                            series.push(data[i].Val);
+                            labels.push(data[i].Title);
+
+                            total = total + data[i].Val;
+                        }
+
+                        var _title = 'مبلغه گلاته ' + numberWithCommas(total) + ' تومان';
+
+
+                        var options = {
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(value) + ' تومان';
+                                    }
+                                },
+                            },
+                            series: [{
+                                data: series
+                            }],
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 360,
+                                type: 'line',
+                                zoom: {
+                                    enabled: false
+                                },
+                                toolbar: {
+                                    show: false
+                                },
+                                dropShadow: {
+                                    enabled: true,
+                                    top: 3,
+                                    left: 14,
+                                    blur: 4,
+                                    opacity: 0.10,
+                                }
+                            },
+                            stroke: {
+                                width: 5,
+                                curve: 'smooth'
+                            },
+                            xaxis: {
+                                categories: labels
+                            },
+                            fill: {
+                                type: 'gradient',
+                                gradient: {
+                                    shade: 'light',
+                                    gradientToColors: ['#8833ff'],
+                                    shadeIntensity: 1,
+                                    type: 'horizontal',
+                                    opacityFrom: 1,
+                                    opacityTo: 1,
+                                    stops: [0, 100, 100, 100]
+                                },
+                            },
+                            markers: {
+                                size: 4,
+                                colors: ["#8833ff"],
+                                strokeColors: "#fff",
+                                strokeWidth: 2,
+                                hover: {
+                                    size: 7,
+                                }
+                            },
+                            colors: ["#8833ff"],
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: "16px"
+                                },
+                                formatter: function (val, opts) {
+                                    return numberWithCommas(val) + ' تومان';
+                                }
+                            },
+                            title: {
+                                text: _title,
+                                align: 'right',
+                                margin: 10,
+                                offsetX: 0,
+                                offsetY: 0,
+                                floating: false,
+                                style: {
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    color: '#263238'
+                                }
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector("#c5"), options);
+                        chart.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function C6() {
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/ship/C6',
+                timeout: 1000000,
+                data: { IdShip: $('#IdShip22').val() },
+                success: function (data) {
+
+                    if (data.length == 0) {
+                        $("#c6").remove();
+                    }
+                    else {
+                        var randomColor = Array();
+                        var series = Array();
+                        var labels = Array();
+
+                        var total = 0;
+
+                        for (var i = 0; i < data.length; i++) {
+                            randomColor.push(generateRandomColor());
+
+                            series.push(data[i].Val);
+                            labels.push(data[i].Title);
+
+                            total = total + data[i].Val;
+                        }
+
+                        var _title = 'خرید ها ' + numberWithCommas(total) + ' تومان';
+
+
+                        var options = {
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(value) + ' تومان';
+                                    }
+                                },
+                            },
+                            xaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(value) + ' تومان';
+                                    }
+                                }
+                            },
+                            legend: {
+                                fontSize: "16px"
+                            },
+                            width: "100%",
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: "16px"
+                                }
+                            },
+                            series: series,
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 330,
+                                type: 'pie',
+                            },
+                            colors: randomColor,
+                            labels: labels,
+                            responsive: [{
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        height: 360
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    }
+                                }
+                            }],
+                            title: {
+                                text: _title,
+                                align: 'right',
+                                margin: 10,
+                                offsetX: 0,
+                                offsetY: 0,
+                                floating: false,
+                                style: {
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    color: '#263238'
+                                },
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector("#c6"), options);
+                        chart.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function C7() {
+
+            var total = 0;
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/ship/C7',
+                timeout: 1000000,
+                data: { IdShip: $('#IdShip22').val() },
+                success: function (data) {
+
+                    if (data.length == 0) {
+                        $("#c7").remove();
+                    }
+                    else {
+                        var randomColor = Array();
+                        var series = Array();
+                        var labels = Array();
+
+                        for (var i = 0; i < data.length; i++) {
+                            randomColor.push(generateRandomColor());
+
+                            series.push(data[i].Val);
+                            labels.push(data[i].Title);
+
+                            total = total + data[i].Val;
+                        }
+
+                        var _title = 'سود ' + numberWithCommas(value) + ' تومان';
+
+
+                        var options = {
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(value) + ' تومان';
+                                    }
+                                },
+                            },
+                            series: [{
+                                data: series
+                            }],
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 360,
+                                type: 'line',
+                                zoom: {
+                                    enabled: false
+                                },
+                                toolbar: {
+                                    show: false
+                                },
+                                dropShadow: {
+                                    enabled: true,
+                                    top: 3,
+                                    left: 14,
+                                    blur: 4,
+                                    opacity: 0.10,
+                                }
+                            },
+                            stroke: {
+                                width: 5,
+                                curve: 'smooth'
+                            },
+                            xaxis: {
+                                categories: labels
+                            },
+                            fill: {
+                                type: 'gradient',
+                                gradient: {
+                                    shade: 'light',
+                                    gradientToColors: ['#8833ff'],
+                                    shadeIntensity: 1,
+                                    type: 'horizontal',
+                                    opacityFrom: 1,
+                                    opacityTo: 1,
+                                    stops: [0, 100, 100, 100]
+                                },
+                            },
+                            markers: {
+                                size: 4,
+                                colors: ["#8833ff"],
+                                strokeColors: "#fff",
+                                strokeWidth: 2,
+                                hover: {
+                                    size: 7,
+                                }
+                            },
+                            colors: ["#8833ff"],
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: "16px"
+                                },
+                                formatter: function (val, opts) {
+                                    return numberWithCommas(val) + ' تومان';
+                                }
+                            },
+                            title: {
+                                text: _title,
+                                align: 'right',
+                                margin: 10,
+                                offsetX: 0,
+                                offsetY: 0,
+                                floating: false,
+                                style: {
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    color: '#263238'
+                                }
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector("#c7"), options);
+                        chart.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+        var options2 = null;
+        var chart2 = null;
+
+        function C500() {
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Default/ReloadCC56',
+                timeout: 1000000,
+                data: { index: 220, IdShip: $('#IdShip22').val() },
+                success: function (data) {
+                    console.log(data, 'C5');
+                    if (data.length == 0 || data.A.length == 0) {
+                        $("#cc501").hide();
+                    }
+                    else {
+                        $("#cc501").show();
+
+                        options2 = {
+                            series: [{
+                                name: 'سود - زیان',
+                                type: 'column',
+                                data: data.C
+
+                            }, {
+                                name: 'درآمد',
+                                type: 'area',
+                                data: data.A
+                            }, {
+                                name: 'هزینه',
+                                type: 'line',
+                                data: data.B
+                            }],
+                            chart: {
+                                foreColor: '#9ba7b2',
+                                height: 350,
+                                type: 'line',
+                                stacked: false,
+                                zoom: {
+                                    enabled: false
+                                },
+                                toolbar: {
+                                    show: false
+                                }
+                            },
+                            colors: ["#8833ff", "#17a00e", "#f41127"],
+                            stroke: {
+                                width: [0, 2, 5],
+                                curve: 'smooth'
+                            },
+                            plotOptions: {
+                                bar: {
+                                    columnWidth: '50%'
+                                }
+                            },
+                            fill: {
+                                opacity: [0.85, 0.25, 1],
+                                gradient: {
+                                    inverseColors: false,
+                                    shade: 'light',
+                                    type: "vertical",
+                                    opacityFrom: 0.85,
+                                    opacityTo: 0.55,
+                                    stops: [0, 100, 100, 100]
+                                }
+                            },
+                            labels: data.D,
+                            markers: {
+                                size: 0
+                            },
+                            yaxis: {
+                                labels: {
+                                    formatter: function (value) {
+                                        return numberWithCommas(parseInt(value));
+                                    }
+                                },
+                                title: {
+                                    text: 'تومان',
+                                },
+                                min: data.MinPrice
+                            },
+                            tooltip: {
+                                shared: true,
+                                intersect: false,
+                                y: {
+                                    formatter: function (y) {
+                                        if (typeof y !== "undefined") {
+                                            return numberWithCommas(y.toFixed(0)) + " تومان";
+                                        }
+                                        return y;
+                                    }
+                                }
+                            }
+                        };
+
+                        chart2 = new ApexCharts(document.querySelector("#cc50"), options2);
+                        chart2.render();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+        function ReloadCC5(item) {
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/Default/ReloadCC56',
+                timeout: 1000000,
+                data: { index: item, IdShip: $('#IdShip22').val() },
+                success: function (data) {
+                    if (data.length == 0 || data.A.length == 0) {
+                        $("#cc501").hide();
+                    }
+                    else {
+                        $("#cc501").show();
+                        chart2.updateOptions({
+                            yaxis: {
+                                min: data.MinPrice
+                            },
+                            labels: data.D,
+                            series: [{
+                                name: 'سود - زیان',
+                                type: 'column',
+                                data: data.C
+
+                            }, {
+                                name: 'درآمد',
+                                type: 'area',
+                                data: data.A
+                            }, {
+                                name: 'هزینه',
+                                type: 'line',
+                                data: data.B
+                            }],
+                        });
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+
+
+        }
+    </script>
+}
+
+
+
+
+
+<div class="row">
+    <div class="card border-top border-0 border-4 border-primary">
+        <div class="card-body" style="padding: 0px !important; margin-top: 20px;">
+
+            <div class="row">
+                <div class="col-md-12 p-4 border rounded bg-light">
+                    <div style="text-align: left; margin: auto; direction: ltr;">
+                        <select style="width:150px;" class="contact-form ooo" onchange="ReloadCC5(this.value)">
+                            <option value="200">سالیانه</option>
+                            <option value="210">صوم بسته شده</option>
+                            <option selected="selected" value="220">سفر بسته شده</option>
+                        </select>
+                    </div>
+                    <div id="cc501">
+                        <div id="cc50"></div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+
+
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-lg-6" style="margin-bottom: 10px">
+                    <div id="c1" class="p-4 border text-center rounded bg-light">
+                        <div style="text-align: center;">
+                            <span id="TotaliC1" style="font-weight: bold"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" style="margin-bottom: 10px">
+                    <div id="c2" class="p-4 border text-center rounded bg-light">
+                        <div style="text-align: center;">
+                            <span id="TotaliC2" style="font-weight: bold"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" style="margin-bottom: 10px">
+                    <div id="c4" class="p-4 border text-center rounded bg-light"></div>
+                </div>
+                <div class="col-lg-6" style="margin-bottom: 10px">
+                    <div id="c5" class="p-4 border text-center rounded bg-light"></div>
+                </div>
+                <div class="col-lg-6" style="margin-bottom: 10px">
+                    <div id="c6" class="p-4 border text-center rounded bg-light">
+                        <div style="text-align: center;">
+                            <span id="TotaliC6" style="font-weight: bold"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" style="margin-bottom: 10px">
+                    <div id="c3" class="p-4 border text-center rounded bg-light">
+                        <div style="text-align: center;">
+                            <span id="TotaliC3" style="font-weight: bold"></span>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-lg-6" style="margin-bottom: 10px">
+                        <div id="c7" class="p-4 border text-center rounded bg-light">
+
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>

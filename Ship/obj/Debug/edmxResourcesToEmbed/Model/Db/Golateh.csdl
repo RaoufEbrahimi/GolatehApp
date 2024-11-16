@@ -1,0 +1,1512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GolatehModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="GolatehEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bank" EntityType="GolatehModel.Bank" />
+    <EntitySet Name="BankFileDeteil" EntityType="GolatehModel.BankFileDeteil" />
+    <EntitySet Name="BankFileMster" EntityType="GolatehModel.BankFileMster" />
+    <EntitySet Name="Bimeh" EntityType="GolatehModel.Bimeh" />
+    <EntitySet Name="BimehAfrad" EntityType="GolatehModel.BimehAfrad" />
+    <EntitySet Name="BimehDeteil" EntityType="GolatehModel.BimehDeteil" />
+    <EntitySet Name="BimehMaster" EntityType="GolatehModel.BimehMaster" />
+    <EntitySet Name="Contact" EntityType="GolatehModel.Contact" />
+    <EntitySet Name="ContactUs" EntityType="GolatehModel.ContactUs" />
+    <EntitySet Name="DebtHistory" EntityType="GolatehModel.DebtHistory" />
+    <EntitySet Name="JoinIt" EntityType="GolatehModel.JoinIt" />
+    <EntitySet Name="Kala" EntityType="GolatehModel.Kala" />
+    <EntitySet Name="Note" EntityType="GolatehModel.Note" />
+    <EntitySet Name="Option" EntityType="GolatehModel.Option" />
+    <EntitySet Name="OptionParameter" EntityType="GolatehModel.OptionParameter" />
+    <EntitySet Name="Order" EntityType="GolatehModel.Order" />
+    <EntitySet Name="Package" EntityType="GolatehModel.Package" />
+    <EntitySet Name="PackageToShip" EntityType="GolatehModel.PackageToShip" />
+    <EntitySet Name="Personnel" EntityType="GolatehModel.Personnel" />
+    <EntitySet Name="Role" EntityType="GolatehModel.Role" />
+    <EntitySet Name="RolePernonnel" EntityType="GolatehModel.RolePernonnel" />
+    <EntitySet Name="Safar" EntityType="GolatehModel.Safar" />
+    <EntitySet Name="SafarToAfrad" EntityType="GolatehModel.SafarToAfrad" />
+    <EntitySet Name="SafarToFactor" EntityType="GolatehModel.SafarToFactor" />
+    <EntitySet Name="SafarToHandMoney" EntityType="GolatehModel.SafarToHandMoney" />
+    <EntitySet Name="SafarToSahamDar" EntityType="GolatehModel.SafarToSahamDar" />
+    <EntitySet Name="Semat" EntityType="GolatehModel.Semat" />
+    <EntitySet Name="Ship" EntityType="GolatehModel.Ship" />
+    <EntitySet Name="ShipToPay" EntityType="GolatehModel.ShipToPay" />
+    <EntitySet Name="ShipToSahamDar" EntityType="GolatehModel.ShipToSahamDar" />
+    <EntitySet Name="ShomareOrder" EntityType="GolatehModel.ShomareOrder" />
+    <EntitySet Name="SiteSetting" EntityType="GolatehModel.SiteSetting" />
+    <EntitySet Name="Soom" EntityType="GolatehModel.Soom" />
+    <EntitySet Name="Subscribe" EntityType="GolatehModel.Subscribe" />
+    <EntitySet Name="TankhaGardan" EntityType="GolatehModel.TankhaGardan" />
+    <EntitySet Name="TankhaGardanToShip" EntityType="GolatehModel.TankhaGardanToShip" />
+    <EntitySet Name="Unit" EntityType="GolatehModel.Unit" />
+    <AssociationSet Name="FK_Personnel_IdBank" Association="GolatehModel.FK_Personnel_IdBank">
+      <End Role="Bank" EntitySet="Bank" />
+      <End Role="Personnel" EntitySet="Personnel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BankFileDeteil_IdBankFile" Association="GolatehModel.FK_BankFileDeteil_IdBankFile">
+      <End Role="BankFileMster" EntitySet="BankFileMster" />
+      <End Role="BankFileDeteil" EntitySet="BankFileDeteil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BimehAfrad_IdShip" Association="GolatehModel.FK_BimehAfrad_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="BimehAfrad" EntitySet="BimehAfrad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Personnel_IdPersonnel" Association="GolatehModel.FK_Personnel_IdPersonnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="BimehAfrad" EntitySet="BimehAfrad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BimehDeteil_IdBimehMaster" Association="GolatehModel.FK_BimehDeteil_IdBimehMaster">
+      <End Role="BimehMaster" EntitySet="BimehMaster" />
+      <End Role="BimehDeteil" EntitySet="BimehDeteil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebtHistory_IdNote" Association="GolatehModel.FK_DebtHistory_IdNote">
+      <End Role="Note" EntitySet="Note" />
+      <End Role="DebtHistory" EntitySet="DebtHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebtHistory_IdPersonnel" Association="GolatehModel.FK_DebtHistory_IdPersonnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="DebtHistory" EntitySet="DebtHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebtHistory_IdShip" Association="GolatehModel.FK_DebtHistory_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="DebtHistory" EntitySet="DebtHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToHandMoney_IdDebtHistory" Association="GolatehModel.FK_SafarToHandMoney_IdDebtHistory">
+      <End Role="DebtHistory" EntitySet="DebtHistory" />
+      <End Role="SafarToHandMoney" EntitySet="SafarToHandMoney" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kala_IdPersonnel" Association="GolatehModel.FK_Kala_IdPersonnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Kala" EntitySet="Kala" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kala_OptionParameter" Association="GolatehModel.FK_Kala_OptionParameter">
+      <End Role="OptionParameter" EntitySet="OptionParameter" />
+      <End Role="Kala" EntitySet="Kala" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kala_Unit" Association="GolatehModel.FK_Kala_Unit">
+      <End Role="Unit" EntitySet="Unit" />
+      <End Role="Kala" EntitySet="Kala" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToHandMoney_Kala" Association="GolatehModel.FK_SafarToHandMoney_Kala">
+      <End Role="Kala" EntitySet="Kala" />
+      <End Role="SafarToHandMoney" EntitySet="SafarToHandMoney" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToMachele_Kala" Association="GolatehModel.FK_SafarToMachele_Kala">
+      <End Role="Kala" EntitySet="Kala" />
+      <End Role="SafarToFactor" EntitySet="SafarToFactor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HandMoneyIsPay_Personnel" Association="GolatehModel.FK_HandMoneyIsPay_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Note" EntitySet="Note" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HandMoneyIsPay_Ship" Association="GolatehModel.FK_HandMoneyIsPay_Ship">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="Note" EntitySet="Note" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OptionParameter_Option" Association="GolatehModel.FK_OptionParameter_Option">
+      <End Role="Option" EntitySet="Option" />
+      <End Role="OptionParameter" EntitySet="OptionParameter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToFactor_OptionParameter" Association="GolatehModel.FK_SafarToFactor_OptionParameter">
+      <End Role="OptionParameter" EntitySet="OptionParameter" />
+      <End Role="SafarToFactor" EntitySet="SafarToFactor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Package" Association="GolatehModel.FK_Order_Package">
+      <End Role="Package" EntitySet="Package" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Personnel" Association="GolatehModel.FK_Order_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Ship" Association="GolatehModel.FK_Order_Ship">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_ShomareOrder" Association="GolatehModel.FK_Order_ShomareOrder">
+      <End Role="ShomareOrder" EntitySet="ShomareOrder" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PackageToShip_Order" Association="GolatehModel.FK_PackageToShip_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="PackageToShip" EntitySet="PackageToShip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PackageToShip_IdPackage" Association="GolatehModel.FK_PackageToShip_IdPackage">
+      <End Role="Package" EntitySet="Package" />
+      <End Role="PackageToShip" EntitySet="PackageToShip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ship_IdPackage" Association="GolatehModel.FK_Ship_IdPackage">
+      <End Role="Package" EntitySet="Package" />
+      <End Role="ShipToPay" EntitySet="ShipToPay" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PackageToShip_IdShip" Association="GolatehModel.FK_PackageToShip_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="PackageToShip" EntitySet="PackageToShip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Personnel_IdShip" Association="GolatehModel.FK_Personnel_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="Personnel" EntitySet="Personnel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolePernonnel_Personnel" Association="GolatehModel.FK_RolePernonnel_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="RolePernonnel" EntitySet="RolePernonnel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Safar_Personnel" Association="GolatehModel.FK_Safar_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Safar" EntitySet="Safar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToAfrad_Personnel" Association="GolatehModel.FK_SafarToAfrad_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="SafarToAfrad" EntitySet="SafarToAfrad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToHandMoney_Personnel" Association="GolatehModel.FK_SafarToHandMoney_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="SafarToHandMoney" EntitySet="SafarToHandMoney" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToSahamDar_Personnel" Association="GolatehModel.FK_SafarToSahamDar_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="SafarToSahamDar" EntitySet="SafarToSahamDar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ship_Personnel" Association="GolatehModel.FK_Ship_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Ship" EntitySet="Ship" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShipToSahamDar_Personnel" Association="GolatehModel.FK_ShipToSahamDar_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="ShipToSahamDar" EntitySet="ShipToSahamDar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Soom_Personnel" Association="GolatehModel.FK_Soom_Personnel">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="Soom" EntitySet="Soom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TankhaGardan_IdUser" Association="GolatehModel.FK_TankhaGardan_IdUser">
+      <End Role="Personnel" EntitySet="Personnel" />
+      <End Role="TankhaGardan" EntitySet="TankhaGardan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_Role" Association="GolatehModel.FK_Role_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Role1" EntitySet="Role" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolePernonnel_Role" Association="GolatehModel.FK_RolePernonnel_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="RolePernonnel" EntitySet="RolePernonnel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Safar2_IdSoom" Association="GolatehModel.FK_Safar2_IdSoom">
+      <End Role="Soom" EntitySet="Soom" />
+      <End Role="Safar" EntitySet="Safar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToAfrad_Safar" Association="GolatehModel.FK_SafarToAfrad_Safar">
+      <End Role="Safar" EntitySet="Safar" />
+      <End Role="SafarToAfrad" EntitySet="SafarToAfrad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToHandMoney_Safar" Association="GolatehModel.FK_SafarToHandMoney_Safar">
+      <End Role="Safar" EntitySet="Safar" />
+      <End Role="SafarToHandMoney" EntitySet="SafarToHandMoney" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToMachele_Safar" Association="GolatehModel.FK_SafarToMachele_Safar">
+      <End Role="Safar" EntitySet="Safar" />
+      <End Role="SafarToFactor" EntitySet="SafarToFactor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToSahamDar_Safar" Association="GolatehModel.FK_SafarToSahamDar_Safar">
+      <End Role="Safar" EntitySet="Safar" />
+      <End Role="SafarToSahamDar" EntitySet="SafarToSahamDar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToAfrad_Semat" Association="GolatehModel.FK_SafarToAfrad_Semat">
+      <End Role="Semat" EntitySet="Semat" />
+      <End Role="SafarToAfrad" EntitySet="SafarToAfrad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToFactor_IdTankhaGardan" Association="GolatehModel.FK_SafarToFactor_IdTankhaGardan">
+      <End Role="TankhaGardan" EntitySet="TankhaGardan" />
+      <End Role="SafarToFactor" EntitySet="SafarToFactor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToFactor_IdUnit" Association="GolatehModel.FK_SafarToFactor_IdUnit">
+      <End Role="Unit" EntitySet="Unit" />
+      <End Role="SafarToFactor" EntitySet="SafarToFactor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SafarToHandMoney_IdUnit" Association="GolatehModel.FK_SafarToHandMoney_IdUnit">
+      <End Role="Unit" EntitySet="Unit" />
+      <End Role="SafarToHandMoney" EntitySet="SafarToHandMoney" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ship_IdShip" Association="GolatehModel.FK_Ship_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="ShipToPay" EntitySet="ShipToPay" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShipToSahamDar_IdShip" Association="GolatehModel.FK_ShipToSahamDar_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="ShipToSahamDar" EntitySet="ShipToSahamDar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Soom_Ship" Association="GolatehModel.FK_Soom_Ship">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="Soom" EntitySet="Soom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TankhaGardanToShip_IdShip" Association="GolatehModel.FK_TankhaGardanToShip_IdShip">
+      <End Role="Ship" EntitySet="Ship" />
+      <End Role="TankhaGardanToShip" EntitySet="TankhaGardanToShip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ship_IdShomareOrder" Association="GolatehModel.FK_Ship_IdShomareOrder">
+      <End Role="ShomareOrder" EntitySet="ShomareOrder" />
+      <End Role="ShipToPay" EntitySet="ShipToPay" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TankhaGardanToShip_IdTankhaGardan" Association="GolatehModel.FK_TankhaGardanToShip_IdTankhaGardan">
+      <End Role="TankhaGardan" EntitySet="TankhaGardan" />
+      <End Role="TankhaGardanToShip" EntitySet="TankhaGardanToShip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Note_Safar" Association="GolatehModel.FK_Note_Safar">
+      <End Role="Safar" EntitySet="Safar" />
+      <End Role="Note" EntitySet="Note" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Bank">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_Personnel_IdBank" FromRole="Bank" ToRole="Personnel" />
+  </EntityType>
+  <EntityType Name="BankFileDeteil">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="30" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdBankFile" Type="Decimal" Nullable="false" Precision="30" Scale="0" />
+    <Property Name="IdPersonnel" Type="Int64" />
+    <Property Name="TotalCost" Type="Int64" />
+    <NavigationProperty Name="BankFileMster" Relationship="GolatehModel.FK_BankFileDeteil_IdBankFile" FromRole="BankFileDeteil" ToRole="BankFileMster" />
+  </EntityType>
+  <EntityType Name="BankFileMster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="30" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IdShip" Type="Int32" Nullable="false" />
+    <Property Name="IdPersonnel" Type="Int64" />
+    <Property Name="TotalCost" Type="Int64" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BankFileDeteil" Relationship="GolatehModel.FK_BankFileDeteil_IdBankFile" FromRole="BankFileMster" ToRole="BankFileDeteil" />
+  </EntityType>
+  <EntityType Name="Bimeh">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Year" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BimehAfrad">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdShip" Type="Int32" Nullable="false" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="Year" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="Month" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Ship" Relationship="GolatehModel.FK_BimehAfrad_IdShip" FromRole="BimehAfrad" ToRole="Ship" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_Personnel_IdPersonnel" FromRole="BimehAfrad" ToRole="Personnel" />
+  </EntityType>
+  <EntityType Name="BimehDeteil">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="30" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdBimehMaster" Type="Decimal" Nullable="false" Precision="30" Scale="0" />
+    <Property Name="DSW_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_YY" Type="Decimal" Precision="2" Scale="0" />
+    <Property Name="DSW_MM" Type="Decimal" Precision="2" Scale="0" />
+    <Property Name="DSW_LISTNO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_ID1" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_FNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_LNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_DNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_IDNO" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_IDPLC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_IDATE" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_BDATE" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_SEX" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_NAT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_OCP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_SDATE" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_EDATE" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="DSW_DD" Type="Decimal" Precision="2" Scale="0" />
+    <Property Name="DSW_ROOZ" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSW_MAH" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSW_MAZ" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSW_MASH" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSW_TOTL" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSW_BIME" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSW_PRATE" Type="Decimal" Precision="2" Scale="0" />
+    <Property Name="DSW_JOB" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="PER_NATCOD" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BimehMaster" Relationship="GolatehModel.FK_BimehDeteil_IdBimehMaster" FromRole="BimehDeteil" ToRole="BimehMaster" />
+  </EntityType>
+  <EntityType Name="BimehMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="30" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DSK_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DSK_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DSK_FARM" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DSK_ADRS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DSK_KIND" Type="Decimal" Precision="1" Scale="0" />
+    <Property Name="DSK_YY" Type="Decimal" Precision="2" Scale="0" />
+    <Property Name="DSK_MM" Type="Decimal" Precision="2" Scale="0" />
+    <Property Name="DSK_LISTNO" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="DSK_DISC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DSK_NUM" Type="Decimal" Precision="5" Scale="0" />
+    <Property Name="DSK_TDD" Type="Decimal" Precision="6" Scale="0" />
+    <Property Name="DSK_TROOZ" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSK_TMAH" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSK_TMAZ" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSK_TMASH" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSK_TTOTL" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSK_TBIME" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSK_TKOSO" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSK_BIC" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="DSK_RATE" Type="Decimal" Precision="5" Scale="0" />
+    <Property Name="DSK_PRATE" Type="Decimal" Precision="2" Scale="0" />
+    <Property Name="DSK_BIMH" Type="Decimal" Precision="12" Scale="0" />
+    <Property Name="MON_PYM" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BimehDeteil" Relationship="GolatehModel.FK_BimehDeteil_IdBimehMaster" FromRole="BimehMaster" ToRole="BimehDeteil" />
+  </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Subject" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Body" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="See" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="ContactUs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="FullName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsSee" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="DebtHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IdShip" Type="Int32" Nullable="false" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int64" Nullable="false" />
+    <Property Name="IdNote" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Note" Relationship="GolatehModel.FK_DebtHistory_IdNote" FromRole="DebtHistory" ToRole="Note" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_DebtHistory_IdPersonnel" FromRole="DebtHistory" ToRole="Personnel" />
+    <NavigationProperty Name="Ship" Relationship="GolatehModel.FK_DebtHistory_IdShip" FromRole="DebtHistory" ToRole="Ship" />
+    <NavigationProperty Name="SafarToHandMoney" Relationship="GolatehModel.FK_SafarToHandMoney_IdDebtHistory" FromRole="DebtHistory" ToRole="SafarToHandMoney" />
+  </EntityType>
+  <EntityType Name="JoinIt">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Kala">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="IdTypeKala" Type="Int64" Nullable="false" />
+    <Property Name="IdUnit" Type="Int32" Nullable="false" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="Sort" Type="Int32" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_Kala_IdPersonnel" FromRole="Kala" ToRole="Personnel" />
+    <NavigationProperty Name="OptionParameter" Relationship="GolatehModel.FK_Kala_OptionParameter" FromRole="Kala" ToRole="OptionParameter" />
+    <NavigationProperty Name="Unit" Relationship="GolatehModel.FK_Kala_Unit" FromRole="Kala" ToRole="Unit" />
+    <NavigationProperty Name="SafarToHandMoney" Relationship="GolatehModel.FK_SafarToHandMoney_Kala" FromRole="Kala" ToRole="SafarToHandMoney" />
+    <NavigationProperty Name="SafarToFactor" Relationship="GolatehModel.FK_SafarToMachele_Kala" FromRole="Kala" ToRole="SafarToFactor" />
+  </EntityType>
+  <EntityType Name="Note">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="IdShip" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="DebtHistory" Relationship="GolatehModel.FK_DebtHistory_IdNote" FromRole="Note" ToRole="DebtHistory" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_HandMoneyIsPay_Personnel" FromRole="Note" ToRole="Personnel" />
+    <NavigationProperty Name="Ship" Relationship="GolatehModel.FK_HandMoneyIsPay_Ship" FromRole="Note" ToRole="Ship" />
+    <Property Name="IdSafar" Type="Int64" />
+    <NavigationProperty Name="Safar" Relationship="GolatehModel.FK_Note_Safar" FromRole="Note" ToRole="Safar" />
+  </EntityType>
+  <EntityType Name="Option">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="OptionParameter" Relationship="GolatehModel.FK_OptionParameter_Option" FromRole="Option" ToRole="OptionParameter" />
+  </EntityType>
+  <EntityType Name="OptionParameter">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdOption" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Val" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Kala" Relationship="GolatehModel.FK_Kala_OptionParameter" FromRole="OptionParameter" ToRole="Kala" />
+    <NavigationProperty Name="Option" Relationship="GolatehModel.FK_OptionParameter_Option" FromRole="OptionParameter" ToRole="Option" />
+    <NavigationProperty Name="SafarToFactor" Relationship="GolatehModel.FK_SafarToFactor_OptionParameter" FromRole="OptionParameter" ToRole="SafarToFactor" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="Price" Type="Int64" Nullable="false" />
+    <Property Name="IdPackage" Type="Int32" Nullable="false" />
+    <Property Name="IdShip" Type="Int32" Nullable="false" />
+    <Property Name="IdShomareOrder" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Ref" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Package" Relationship="GolatehModel.FK_Order_Package" FromRole="Order" ToRole="Package" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_Order_Personnel" FromRole="Order" ToRole="Personnel" />
+    <NavigationProperty Name="Ship" Relationship="GolatehModel.FK_Order_Ship" FromRole="Order" ToRole="Ship" />
+    <NavigationProperty Name="ShomareOrder" Relationship="GolatehModel.FK_Order_ShomareOrder" FromRole="Order" ToRole="ShomareOrder" />
+    <NavigationProperty Name="PackageToShip" Relationship="GolatehModel.FK_PackageToShip_Order" FromRole="Order" ToRole="PackageToShip" />
+  </EntityType>
+  <EntityType Name="Package">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Tozihat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DayActive" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="GolatehModel.FK_Order_Package" FromRole="Package" ToRole="Order" />
+    <NavigationProperty Name="PackageToShip" Relationship="GolatehModel.FK_PackageToShip_IdPackage" FromRole="Package" ToRole="PackageToShip" />
+    <NavigationProperty Name="ShipToPay" Relationship="GolatehModel.FK_Ship_IdPackage" FromRole="Package" ToRole="ShipToPay" />
+  </EntityType>
+  <EntityType Name="PackageToShip">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdPackage" Type="Int32" />
+    <Property Name="IdShip" Type="Int32" Nullable="false" />
+    <Property Name="TotalPrice" Type="Int64" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsPay" Type="Boolean" Nullable="false" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="ExpireDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="IdOrder" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="Order" Relationship="GolatehModel.FK_PackageToShip_Order" FromRole="PackageToShip" ToRole="Order" />
+    <NavigationProperty Name="Package" Relationship="GolatehModel.FK_PackageToShip_IdPackage" FromRole="PackageToShip" ToRole="Package" />
+    <NavigationProperty Name="Ship" Relationship="GolatehModel.FK_PackageToShip_IdShip" FromRole="PackageToShip" ToRole="Ship" />
+  </EntityType>
+  <EntityType Name="Personnel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="NationalCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="Phone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ShebaNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ShomareCart14" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IdParent" Type="Int64" />
+    <Property Name="IdShip" Type="Int32" />
+    <Property Name="FatherName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Adress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BimehNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="EstekhdamDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyAdress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SmsActive" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IdBank" Type="Int32" />
+    <Property Name="ShomareHesab" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Bank" Relationship="GolatehModel.FK_Personnel_IdBank" FromRole="Personnel" ToRole="Bank" />
+    <NavigationProperty Name="BimehAfrad" Relationship="GolatehModel.FK_Personnel_IdPersonnel" FromRole="Personnel" ToRole="BimehAfrad" />
+    <NavigationProperty Name="DebtHistory" Relationship="GolatehModel.FK_DebtHistory_IdPersonnel" FromRole="Personnel" ToRole="DebtHistory" />
+    <NavigationProperty Name="Kala" Relationship="GolatehModel.FK_Kala_IdPersonnel" FromRole="Personnel" ToRole="Kala" />
+    <NavigationProperty Name="Note" Relationship="GolatehModel.FK_HandMoneyIsPay_Personnel" FromRole="Personnel" ToRole="Note" />
+    <NavigationProperty Name="Order" Relationship="GolatehModel.FK_Order_Personnel" FromRole="Personnel" ToRole="Order" />
+    <NavigationProperty Name="Ship" Relationship="GolatehModel.FK_Personnel_IdShip" FromRole="Personnel" ToRole="Ship" />
+    <NavigationProperty Name="RolePernonnel" Relationship="GolatehModel.FK_RolePernonnel_Personnel" FromRole="Personnel" ToRole="RolePernonnel" />
+    <NavigationProperty Name="Safar" Relationship="GolatehModel.FK_Safar_Personnel" FromRole="Personnel" ToRole="Safar" />
+    <NavigationProperty Name="SafarToAfrad" Relationship="GolatehModel.FK_SafarToAfrad_Personnel" FromRole="Personnel" ToRole="SafarToAfrad" />
+    <NavigationProperty Name="SafarToHandMoney" Relationship="GolatehModel.FK_SafarToHandMoney_Personnel" FromRole="Personnel" ToRole="SafarToHandMoney" />
+    <NavigationProperty Name="SafarToSahamDar" Relationship="GolatehModel.FK_SafarToSahamDar_Personnel" FromRole="Personnel" ToRole="SafarToSahamDar" />
+    <NavigationProperty Name="Ship1" Relationship="GolatehModel.FK_Ship_Personnel" FromRole="Personnel" ToRole="Ship" />
+    <NavigationProperty Name="ShipToSahamDar" Relationship="GolatehModel.FK_ShipToSahamDar_Personnel" FromRole="Personnel" ToRole="ShipToSahamDar" />
+    <NavigationProperty Name="Soom" Relationship="GolatehModel.FK_Soom_Personnel" FromRole="Personnel" ToRole="Soom" />
+    <NavigationProperty Name="TankhaGardan" Relationship="GolatehModel.FK_TankhaGardan_IdUser" FromRole="Personnel" ToRole="TankhaGardan" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdParent" Type="Int32" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TitleEn" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Role1" Relationship="GolatehModel.FK_Role_Role" FromRole="Role" ToRole="Role1" />
+    <NavigationProperty Name="Role2" Relationship="GolatehModel.FK_Role_Role" FromRole="Role1" ToRole="Role" />
+    <NavigationProperty Name="RolePernonnel" Relationship="GolatehModel.FK_RolePernonnel_Role" FromRole="Role" ToRole="RolePernonnel" />
+  </EntityType>
+  <EntityType Name="RolePernonnel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdRole" Type="Int32" Nullable="false" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_RolePernonnel_Personnel" FromRole="RolePernonnel" ToRole="Personnel" />
+    <NavigationProperty Name="Role" Relationship="GolatehModel.FK_RolePernonnel_Role" FromRole="RolePernonnel" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="Safar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="IdSoom" Type="Int64" Nullable="false" />
+    <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ToDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PriceKharid" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="PriceMahtaiaj" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="PriceForosh" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="PriceTamirat" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="FactorMosaede" Type="Int64" Nullable="false" />
+    <Property Name="Tozihat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="PriceFood" Type="Int32" Nullable="false" />
+    <Property Name="TamiratGolate" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="GolateBase" Type="Int64" Nullable="false" />
+    <Property Name="GolateTedadKol" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="SafarCount" Type="Int32" Nullable="false" />
+    <Property Name="JamKolSoodAzSafar" Type="Int64" Nullable="false" />
+    <Property Name="DaramadSafarFrosh_Machele" Type="Int64" />
+    <Property Name="IsCheckout" Type="Boolean" Nullable="false" />
+    <Property Name="IsOne" Type="Boolean" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_Safar_Personnel" FromRole="Safar" ToRole="Personnel" />
+    <NavigationProperty Name="Soom" Relationship="GolatehModel.FK_Safar2_IdSoom" FromRole="Safar" ToRole="Soom" />
+    <NavigationProperty Name="SafarToAfrad" Relationship="GolatehModel.FK_SafarToAfrad_Safar" FromRole="Safar" ToRole="SafarToAfrad" />
+    <NavigationProperty Name="SafarToHandMoney" Relationship="GolatehModel.FK_SafarToHandMoney_Safar" FromRole="Safar" ToRole="SafarToHandMoney" />
+    <NavigationProperty Name="SafarToFactor" Relationship="GolatehModel.FK_SafarToMachele_Safar" FromRole="Safar" ToRole="SafarToFactor" />
+    <NavigationProperty Name="SafarToSahamDar" Relationship="GolatehModel.FK_SafarToSahamDar_Safar" FromRole="Safar" ToRole="SafarToSahamDar" />
+    <NavigationProperty Name="Note" Relationship="GolatehModel.FK_Note_Safar" FromRole="Safar" ToRole="Note" />
+  </EntityType>
+  <EntityType Name="SafarToAfrad">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdSafar" Type="Int64" Nullable="false" />
+    <Property Name="IdPernonnel" Type="Int64" Nullable="false" />
+    <Property Name="IdSemat" Type="Int32" Nullable="false" />
+    <Property Name="Ratio" Type="Decimal" Nullable="false" Precision="10" Scale="1" />
+    <Property Name="TotalPrice" Type="Int64" />
+    <Property Name="IsBimeh" Type="Boolean" Nullable="false" />
+    <Property Name="PriceBimeh" Type="Int32" Nullable="false" />
+    <Property Name="Nakhales" Type="Int64" />
+    <Property Name="KasriTabakhi" Type="Int64" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_SafarToAfrad_Personnel" FromRole="SafarToAfrad" ToRole="Personnel" />
+    <NavigationProperty Name="Safar" Relationship="GolatehModel.FK_SafarToAfrad_Safar" FromRole="SafarToAfrad" ToRole="Safar" />
+    <NavigationProperty Name="Semat" Relationship="GolatehModel.FK_SafarToAfrad_Semat" FromRole="SafarToAfrad" ToRole="Semat" />
+  </EntityType>
+  <EntityType Name="SafarToFactor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdSafar" Type="Int64" Nullable="false" />
+    <Property Name="IdKala" Type="Int32" Nullable="false" />
+    <Property Name="IdTypeFactor" Type="Int64" Nullable="false" />
+    <Property Name="Tedad" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="Price" Type="Int64" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ShomareFactor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DateFactor" Type="DateTime" Precision="0" />
+    <Property Name="TaminKhonanade" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Moshtari" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Tozihat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Weight" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="TotalPrice" Type="Int64" Nullable="false" />
+    <Property Name="IdUnit" Type="Int32" />
+    <Property Name="IdTankhaGardan" Type="Int64" />
+    <NavigationProperty Name="Kala" Relationship="GolatehModel.FK_SafarToMachele_Kala" FromRole="SafarToFactor" ToRole="Kala" />
+    <NavigationProperty Name="OptionParameter" Relationship="GolatehModel.FK_SafarToFactor_OptionParameter" FromRole="SafarToFactor" ToRole="OptionParameter" />
+    <NavigationProperty Name="Safar" Relationship="GolatehModel.FK_SafarToMachele_Safar" FromRole="SafarToFactor" ToRole="Safar" />
+    <NavigationProperty Name="TankhaGardan" Relationship="GolatehModel.FK_SafarToFactor_IdTankhaGardan" FromRole="SafarToFactor" ToRole="TankhaGardan" />
+    <NavigationProperty Name="Unit" Relationship="GolatehModel.FK_SafarToFactor_IdUnit" FromRole="SafarToFactor" ToRole="Unit" />
+  </EntityType>
+  <EntityType Name="SafarToHandMoney">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdSafar" Type="Int64" Nullable="false" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="IdKala" Type="Int32" />
+    <Property Name="Weight" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="Price" Type="Int64" />
+    <Property Name="CreateDateMoney" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Tozihat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TotalPrice" Type="Int64" />
+    <Property Name="IdUnit" Type="Int32" />
+    <Property Name="IsPay" Type="Boolean" Nullable="false" />
+    <Property Name="IdDebtHistory" Type="Int64" />
+    <NavigationProperty Name="DebtHistory" Relationship="GolatehModel.FK_SafarToHandMoney_IdDebtHistory" FromRole="SafarToHandMoney" ToRole="DebtHistory" />
+    <NavigationProperty Name="Kala" Relationship="GolatehModel.FK_SafarToHandMoney_Kala" FromRole="SafarToHandMoney" ToRole="Kala" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_SafarToHandMoney_Personnel" FromRole="SafarToHandMoney" ToRole="Personnel" />
+    <NavigationProperty Name="Safar" Relationship="GolatehModel.FK_SafarToHandMoney_Safar" FromRole="SafarToHandMoney" ToRole="Safar" />
+    <NavigationProperty Name="Unit" Relationship="GolatehModel.FK_SafarToHandMoney_IdUnit" FromRole="SafarToHandMoney" ToRole="Unit" />
+  </EntityType>
+  <EntityType Name="SafarToSahamDar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdSafar" Type="Int64" Nullable="false" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="Rate" Type="Int32" Nullable="false" />
+    <Property Name="TotalPrice" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_SafarToSahamDar_Personnel" FromRole="SafarToSahamDar" ToRole="Personnel" />
+    <NavigationProperty Name="Safar" Relationship="GolatehModel.FK_SafarToSahamDar_Safar" FromRole="SafarToSahamDar" ToRole="Safar" />
+  </EntityType>
+  <EntityType Name="Semat">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Ratio" Type="Decimal" Nullable="false" Precision="10" Scale="1" />
+    <NavigationProperty Name="SafarToAfrad" Relationship="GolatehModel.FK_SafarToAfrad_Semat" FromRole="Semat" ToRole="SafarToAfrad" />
+  </EntityType>
+  <EntityType Name="Ship">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Number" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="YearProduction" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Tul" Type="Int32" />
+    <Property Name="Arz" Type="Int32" />
+    <Property Name="NameMotor" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="HajMotor" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ShomareBime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="BimehAfrad" Relationship="GolatehModel.FK_BimehAfrad_IdShip" FromRole="Ship" ToRole="BimehAfrad" />
+    <NavigationProperty Name="DebtHistory" Relationship="GolatehModel.FK_DebtHistory_IdShip" FromRole="Ship" ToRole="DebtHistory" />
+    <NavigationProperty Name="Note" Relationship="GolatehModel.FK_HandMoneyIsPay_Ship" FromRole="Ship" ToRole="Note" />
+    <NavigationProperty Name="Order" Relationship="GolatehModel.FK_Order_Ship" FromRole="Ship" ToRole="Order" />
+    <NavigationProperty Name="PackageToShip" Relationship="GolatehModel.FK_PackageToShip_IdShip" FromRole="Ship" ToRole="PackageToShip" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_Personnel_IdShip" FromRole="Ship" ToRole="Personnel" />
+    <NavigationProperty Name="Personnel1" Relationship="GolatehModel.FK_Ship_Personnel" FromRole="Ship" ToRole="Personnel" />
+    <NavigationProperty Name="ShipToPay" Relationship="GolatehModel.FK_Ship_IdShip" FromRole="Ship" ToRole="ShipToPay" />
+    <NavigationProperty Name="ShipToSahamDar" Relationship="GolatehModel.FK_ShipToSahamDar_IdShip" FromRole="Ship" ToRole="ShipToSahamDar" />
+    <NavigationProperty Name="Soom" Relationship="GolatehModel.FK_Soom_Ship" FromRole="Ship" ToRole="Soom" />
+    <NavigationProperty Name="TankhaGardanToShip" Relationship="GolatehModel.FK_TankhaGardanToShip_IdShip" FromRole="Ship" ToRole="TankhaGardanToShip" />
+  </EntityType>
+  <EntityType Name="ShipToPay">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdShip" Type="Int32" Nullable="false" />
+    <Property Name="IdPackage" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="IdShomareOrder" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="IsPay" Type="Boolean" Nullable="false" />
+    <Property Name="BankReferenceKey" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="BankReceiptNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ExpiryDatePackage" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Package" Relationship="GolatehModel.FK_Ship_IdPackage" FromRole="ShipToPay" ToRole="Package" />
+    <NavigationProperty Name="Ship" Relationship="GolatehModel.FK_Ship_IdShip" FromRole="ShipToPay" ToRole="Ship" />
+    <NavigationProperty Name="ShomareOrder" Relationship="GolatehModel.FK_Ship_IdShomareOrder" FromRole="ShipToPay" ToRole="ShomareOrder" />
+  </EntityType>
+  <EntityType Name="ShipToSahamDar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdShip" Type="Int32" Nullable="false" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="Rate" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="Dong" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_ShipToSahamDar_Personnel" FromRole="ShipToSahamDar" ToRole="Personnel" />
+    <NavigationProperty Name="Ship" Relationship="GolatehModel.FK_ShipToSahamDar_IdShip" FromRole="ShipToSahamDar" ToRole="Ship" />
+  </EntityType>
+  <EntityType Name="ShomareOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Order" Relationship="GolatehModel.FK_Order_ShomareOrder" FromRole="ShomareOrder" ToRole="Order" />
+    <NavigationProperty Name="ShipToPay" Relationship="GolatehModel.FK_Ship_IdShomareOrder" FromRole="ShomareOrder" ToRole="ShipToPay" />
+  </EntityType>
+  <EntityType Name="SiteSetting">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Keywords" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Author" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactUs" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Logo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Facebook" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Twitter" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Linkedin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Dribbble" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Inestagram" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PlacementPrice" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Soom">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdPersonnel" Type="Int64" Nullable="false" />
+    <Property Name="IdShip" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ToDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Tozihat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SommConter" Type="Int32" Nullable="false" />
+    <Property Name="SafarCounter" Type="Int32" Nullable="false" />
+    <Property Name="TiTle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IsCheckout" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_Soom_Personnel" FromRole="Soom" ToRole="Personnel" />
+    <NavigationProperty Name="Safar" Relationship="GolatehModel.FK_Safar2_IdSoom" FromRole="Soom" ToRole="Safar" />
+    <NavigationProperty Name="Ship" Relationship="GolatehModel.FK_Soom_Ship" FromRole="Soom" ToRole="Ship" />
+  </EntityType>
+  <EntityType Name="Subscribe">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="TankhaGardan">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PassWord" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IdUser" Type="Int64" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="FullName" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Personnel" Relationship="GolatehModel.FK_TankhaGardan_IdUser" FromRole="TankhaGardan" ToRole="Personnel" />
+    <NavigationProperty Name="SafarToFactor" Relationship="GolatehModel.FK_SafarToFactor_IdTankhaGardan" FromRole="TankhaGardan" ToRole="SafarToFactor" />
+    <NavigationProperty Name="TankhaGardanToShip" Relationship="GolatehModel.FK_TankhaGardanToShip_IdTankhaGardan" FromRole="TankhaGardan" ToRole="TankhaGardanToShip" />
+  </EntityType>
+  <EntityType Name="TankhaGardanToShip">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdTankhaGardan" Type="Int64" Nullable="false" />
+    <Property Name="IdShip" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Ship" Relationship="GolatehModel.FK_TankhaGardanToShip_IdShip" FromRole="TankhaGardanToShip" ToRole="Ship" />
+    <NavigationProperty Name="TankhaGardan" Relationship="GolatehModel.FK_TankhaGardanToShip_IdTankhaGardan" FromRole="TankhaGardanToShip" ToRole="TankhaGardan" />
+  </EntityType>
+  <EntityType Name="Unit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Kala" Relationship="GolatehModel.FK_Kala_Unit" FromRole="Unit" ToRole="Kala" />
+    <NavigationProperty Name="SafarToFactor" Relationship="GolatehModel.FK_SafarToFactor_IdUnit" FromRole="Unit" ToRole="SafarToFactor" />
+    <NavigationProperty Name="SafarToHandMoney" Relationship="GolatehModel.FK_SafarToHandMoney_IdUnit" FromRole="Unit" ToRole="SafarToHandMoney" />
+  </EntityType>
+  <Association Name="FK_Personnel_IdBank">
+    <End Type="GolatehModel.Bank" Role="Bank" Multiplicity="0..1" />
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bank">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Personnel">
+        <PropertyRef Name="IdBank" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BankFileDeteil_IdBankFile">
+    <End Type="GolatehModel.BankFileMster" Role="BankFileMster" Multiplicity="1" />
+    <End Type="GolatehModel.BankFileDeteil" Role="BankFileDeteil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BankFileMster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BankFileDeteil">
+        <PropertyRef Name="IdBankFile" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BimehAfrad_IdShip">
+    <End Type="GolatehModel.Ship" Role="Ship" Multiplicity="1" />
+    <End Type="GolatehModel.BimehAfrad" Role="BimehAfrad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BimehAfrad">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Personnel_IdPersonnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.BimehAfrad" Role="BimehAfrad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BimehAfrad">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BimehDeteil_IdBimehMaster">
+    <End Type="GolatehModel.BimehMaster" Role="BimehMaster" Multiplicity="1" />
+    <End Type="GolatehModel.BimehDeteil" Role="BimehDeteil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BimehMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BimehDeteil">
+        <PropertyRef Name="IdBimehMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebtHistory_IdNote">
+    <End Type="GolatehModel.Note" Role="Note" Multiplicity="0..1" />
+    <End Type="GolatehModel.DebtHistory" Role="DebtHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Note">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DebtHistory">
+        <PropertyRef Name="IdNote" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebtHistory_IdPersonnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.DebtHistory" Role="DebtHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DebtHistory">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebtHistory_IdShip">
+    <End Type="GolatehModel.Ship" Role="Ship" Multiplicity="1" />
+    <End Type="GolatehModel.DebtHistory" Role="DebtHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DebtHistory">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToHandMoney_IdDebtHistory">
+    <End Type="GolatehModel.DebtHistory" Role="DebtHistory" Multiplicity="0..1" />
+    <End Type="GolatehModel.SafarToHandMoney" Role="SafarToHandMoney" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DebtHistory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToHandMoney">
+        <PropertyRef Name="IdDebtHistory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kala_IdPersonnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.Kala" Role="Kala" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Kala">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kala_OptionParameter">
+    <End Type="GolatehModel.OptionParameter" Role="OptionParameter" Multiplicity="1" />
+    <End Type="GolatehModel.Kala" Role="Kala" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OptionParameter">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Kala">
+        <PropertyRef Name="IdTypeKala" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kala_Unit">
+    <End Type="GolatehModel.Unit" Role="Unit" Multiplicity="1" />
+    <End Type="GolatehModel.Kala" Role="Kala" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Kala">
+        <PropertyRef Name="IdUnit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToHandMoney_Kala">
+    <End Type="GolatehModel.Kala" Role="Kala" Multiplicity="0..1" />
+    <End Type="GolatehModel.SafarToHandMoney" Role="SafarToHandMoney" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kala">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToHandMoney">
+        <PropertyRef Name="IdKala" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToMachele_Kala">
+    <End Type="GolatehModel.Kala" Role="Kala" Multiplicity="1" />
+    <End Type="GolatehModel.SafarToFactor" Role="SafarToFactor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kala">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToFactor">
+        <PropertyRef Name="IdKala" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HandMoneyIsPay_Personnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.Note" Role="Note" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Note">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HandMoneyIsPay_Ship">
+    <End Type="GolatehModel.Ship" Role="Ship" Multiplicity="1" />
+    <End Type="GolatehModel.Note" Role="Note" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Note">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OptionParameter_Option">
+    <End Type="GolatehModel.Option" Role="Option" Multiplicity="1" />
+    <End Type="GolatehModel.OptionParameter" Role="OptionParameter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Option">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OptionParameter">
+        <PropertyRef Name="IdOption" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToFactor_OptionParameter">
+    <End Type="GolatehModel.OptionParameter" Role="OptionParameter" Multiplicity="1" />
+    <End Type="GolatehModel.SafarToFactor" Role="SafarToFactor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OptionParameter">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToFactor">
+        <PropertyRef Name="IdTypeFactor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Package">
+    <End Type="GolatehModel.Package" Role="Package" Multiplicity="1" />
+    <End Type="GolatehModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="IdPackage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Personnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Ship">
+    <End Type="GolatehModel.Ship" Role="Ship" Multiplicity="1" />
+    <End Type="GolatehModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_ShomareOrder">
+    <End Type="GolatehModel.ShomareOrder" Role="ShomareOrder" Multiplicity="1" />
+    <End Type="GolatehModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShomareOrder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="IdShomareOrder" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PackageToShip_Order">
+    <End Type="GolatehModel.Order" Role="Order" Multiplicity="0..1" />
+    <End Type="GolatehModel.PackageToShip" Role="PackageToShip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PackageToShip">
+        <PropertyRef Name="IdOrder" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PackageToShip_IdPackage">
+    <End Type="GolatehModel.Package" Role="Package" Multiplicity="0..1" />
+    <End Type="GolatehModel.PackageToShip" Role="PackageToShip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PackageToShip">
+        <PropertyRef Name="IdPackage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ship_IdPackage">
+    <End Type="GolatehModel.Package" Role="Package" Multiplicity="1" />
+    <End Type="GolatehModel.ShipToPay" Role="ShipToPay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShipToPay">
+        <PropertyRef Name="IdPackage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PackageToShip_IdShip">
+    <End Type="GolatehModel.Ship" Role="Ship" Multiplicity="1" />
+    <End Type="GolatehModel.PackageToShip" Role="PackageToShip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PackageToShip">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Personnel_IdShip">
+    <End Type="GolatehModel.Ship" Role="Ship" Multiplicity="0..1" />
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Personnel">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolePernonnel_Personnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.RolePernonnel" Role="RolePernonnel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RolePernonnel">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Safar_Personnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.Safar" Role="Safar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Safar">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToAfrad_Personnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.SafarToAfrad" Role="SafarToAfrad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToAfrad">
+        <PropertyRef Name="IdPernonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToHandMoney_Personnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.SafarToHandMoney" Role="SafarToHandMoney" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToHandMoney">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToSahamDar_Personnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.SafarToSahamDar" Role="SafarToSahamDar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToSahamDar">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ship_Personnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.Ship" Role="Ship" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Ship">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShipToSahamDar_Personnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.ShipToSahamDar" Role="ShipToSahamDar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShipToSahamDar">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Soom_Personnel">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.Soom" Role="Soom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Soom">
+        <PropertyRef Name="IdPersonnel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TankhaGardan_IdUser">
+    <End Type="GolatehModel.Personnel" Role="Personnel" Multiplicity="1" />
+    <End Type="GolatehModel.TankhaGardan" Role="TankhaGardan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personnel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TankhaGardan">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_Role">
+    <End Type="GolatehModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="GolatehModel.Role" Role="Role1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Role1">
+        <PropertyRef Name="IdParent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolePernonnel_Role">
+    <End Type="GolatehModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="GolatehModel.RolePernonnel" Role="RolePernonnel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RolePernonnel">
+        <PropertyRef Name="IdRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Safar2_IdSoom">
+    <End Type="GolatehModel.Soom" Role="Soom" Multiplicity="1" />
+    <End Type="GolatehModel.Safar" Role="Safar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Soom">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Safar">
+        <PropertyRef Name="IdSoom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToAfrad_Safar">
+    <End Type="GolatehModel.Safar" Role="Safar" Multiplicity="1" />
+    <End Type="GolatehModel.SafarToAfrad" Role="SafarToAfrad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Safar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToAfrad">
+        <PropertyRef Name="IdSafar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToHandMoney_Safar">
+    <End Type="GolatehModel.Safar" Role="Safar" Multiplicity="1" />
+    <End Type="GolatehModel.SafarToHandMoney" Role="SafarToHandMoney" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Safar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToHandMoney">
+        <PropertyRef Name="IdSafar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToMachele_Safar">
+    <End Type="GolatehModel.Safar" Role="Safar" Multiplicity="1" />
+    <End Type="GolatehModel.SafarToFactor" Role="SafarToFactor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Safar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToFactor">
+        <PropertyRef Name="IdSafar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToSahamDar_Safar">
+    <End Type="GolatehModel.Safar" Role="Safar" Multiplicity="1" />
+    <End Type="GolatehModel.SafarToSahamDar" Role="SafarToSahamDar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Safar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToSahamDar">
+        <PropertyRef Name="IdSafar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToAfrad_Semat">
+    <End Type="GolatehModel.Semat" Role="Semat" Multiplicity="1" />
+    <End Type="GolatehModel.SafarToAfrad" Role="SafarToAfrad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Semat">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToAfrad">
+        <PropertyRef Name="IdSemat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToFactor_IdTankhaGardan">
+    <End Type="GolatehModel.TankhaGardan" Role="TankhaGardan" Multiplicity="0..1" />
+    <End Type="GolatehModel.SafarToFactor" Role="SafarToFactor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TankhaGardan">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToFactor">
+        <PropertyRef Name="IdTankhaGardan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToFactor_IdUnit">
+    <End Type="GolatehModel.Unit" Role="Unit" Multiplicity="0..1" />
+    <End Type="GolatehModel.SafarToFactor" Role="SafarToFactor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToFactor">
+        <PropertyRef Name="IdUnit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SafarToHandMoney_IdUnit">
+    <End Type="GolatehModel.Unit" Role="Unit" Multiplicity="0..1" />
+    <End Type="GolatehModel.SafarToHandMoney" Role="SafarToHandMoney" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SafarToHandMoney">
+        <PropertyRef Name="IdUnit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ship_IdShip">
+    <End Type="GolatehModel.Ship" Role="Ship" Multiplicity="1" />
+    <End Type="GolatehModel.ShipToPay" Role="ShipToPay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShipToPay">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShipToSahamDar_IdShip">
+    <End Type="GolatehModel.Ship" Role="Ship" Multiplicity="1" />
+    <End Type="GolatehModel.ShipToSahamDar" Role="ShipToSahamDar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShipToSahamDar">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Soom_Ship">
+    <End Type="GolatehModel.Ship" Role="Ship" Multiplicity="1" />
+    <End Type="GolatehModel.Soom" Role="Soom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Soom">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TankhaGardanToShip_IdShip">
+    <End Type="GolatehModel.Ship" Role="Ship" Multiplicity="1" />
+    <End Type="GolatehModel.TankhaGardanToShip" Role="TankhaGardanToShip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ship">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TankhaGardanToShip">
+        <PropertyRef Name="IdShip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ship_IdShomareOrder">
+    <End Type="GolatehModel.ShomareOrder" Role="ShomareOrder" Multiplicity="0..1" />
+    <End Type="GolatehModel.ShipToPay" Role="ShipToPay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShomareOrder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShipToPay">
+        <PropertyRef Name="IdShomareOrder" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TankhaGardanToShip_IdTankhaGardan">
+    <End Type="GolatehModel.TankhaGardan" Role="TankhaGardan" Multiplicity="1" />
+    <End Type="GolatehModel.TankhaGardanToShip" Role="TankhaGardanToShip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TankhaGardan">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TankhaGardanToShip">
+        <PropertyRef Name="IdTankhaGardan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Note_Safar">
+    <End Type="GolatehModel.Safar" Role="Safar" Multiplicity="0..1" />
+    <End Type="GolatehModel.Note" Role="Note" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Safar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Note">
+        <PropertyRef Name="IdSafar" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

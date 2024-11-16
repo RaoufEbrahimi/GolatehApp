@@ -1,0 +1,449 @@
+﻿
+@{
+    ViewBag.Title = "تنخواه گردان";
+
+    int IdUser = int.Parse(User.Identity.Name);
+}
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/admin"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">تنخواه گردان</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<form class="row g-3">
+    <div class="col-md-2">
+        <label for="FullName" class="form-label">نام و نام خانوادگی</label>
+        <input type="text" class="form-control" id="FullName" value="">
+    </div>
+    <div class="col-md-2">
+        <label for="UserName" class="form-label">کد ملی</label>
+        <input type="text" class="form-control" id="UserName" value="">
+    </div>
+    <div class="col-md-2">
+        <label for="Password" class="form-label">رمز عبور</label>
+        <input type="text" class="form-control" id="Password" value="">
+    </div>
+    <div class="col-md-3">
+        <label for="IdShip" class="form-label">لنج</label>
+        <select multiple id="IdShip" data-placeholder=".. انتخاب کنید ..">
+            @foreach (var item in SiteSettingBLL.GetListShip(IdUser))
+            {
+                <option value="@item.Id">@item.Title</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-12">
+        <br />
+       <button type="button" class="btn btn-primary" onclick="Addtankha()">ذخیره تغییرات</button>
+    </div>
+</form>
+
+
+
+
+<div id="DivListSoom"></div>
+<div id="DivModalIUSoom"></div>
+
+
+<input type="hidden" id="IdShipSelected" value="0" />
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/multiple-select-js/dist/css/multiple-select.css">
+<script src="https://cdn.jsdelivr.net/npm/multiple-select-js/dist/js/multiple-select.js"></script>
+
+
+
+@section js_down{
+    <script>
+        function ToEdit(Id) {
+            $.ajax({
+                url: "/Admin/TankhaGardan/ToEdit",
+                method: "POST",
+                data: { Id: Id },
+                success: function (data) {
+                    $('#DivModalIUSoom').html('');
+                    $('#DivModalIUSoom').html(data);
+
+                    $('#ModalIUSoom').modal('show');
+                    // new MultipleSelect('#IdShip2', { placeholder: 'انتخاب کنید' });
+                    $('#IdShip2').select2({ width: '100%' });
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+        function GetListTankhagardan() {
+            $.ajax({
+                url: "/Admin/TankhaGardan/GetListTankhagardan",
+                method: "POST",
+                success: function (data) {
+
+                    $('#DivListSoom').html('');
+                    $('#DivListSoom').html(data);
+
+                    var table = $('#TableSoom').DataTable({
+                        lengthChange: false,
+                        "order": [[1, "desc"]]
+                    });
+                },
+                error: function () {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function DeleteBimeh(itm) {
+
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا از حذف اطمینان دارید ؟ !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/tankhagardan/Delete',
+                                data: { Id: itm },
+                                success: function (dataa) {
+
+                                    if (parseInt(dataa) == 1) {
+                                        GetListTankhagardan();
+                                    } else {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                            });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+
+
+
+        }
+
+
+        function Addtankha2() {
+
+            if ($('#IdShip2').val().length == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'لنج را انتخاب کنید'
+                    });
+                return false;
+            }
+
+            if ($('#UserName2').val().length == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'کد ملی را وارد کنید'
+                    });
+                return false;
+            }
+            if ($('#Password2').val().length == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'رمز را وارد کنید'
+                    });
+                return false;
+            }
+            if ($('#FullName2').val().length == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'نام و نام خانوادگی را وارد کنید'
+                    });
+                return false;
+            }
+
+
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به ثبت هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/tankhagardan/Add2',
+                                data: {
+                                    IdShip: $('#IdShip2').val(),
+                                    U: $('#UserName2').val(),
+                                    P: $('#Password2').val(),
+                                    Id: $('#Id2').val(),
+                                    FullName: $('#FullName2').val()
+                                },
+                                success: function (dataa) {
+                                    if (parseInt(dataa) == 1) {
+                                        GetListTankhagardan();
+                                        $('#UserName2').val('');
+                                        $('#Password2').val('');
+                                        $('#FullName2').val('');
+                                        $('#ModalIUSoom').modal('hide');
+                                    } else if (parseInt(dataa) == -1) {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: 'کد ملی تکراری است'
+                                            });
+                                    }
+                                    else {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                            });
+                                    }
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+
+
+
+
+
+        }
+
+        function Addtankha() {
+
+            if ($('#IdShip').val().length == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'لنج را انتخاب کنید'
+                    });
+                return false;
+            }
+
+            if ($('#UserName').val().length == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'کد ملی را وارد کنید'
+                    });
+                return false;
+            }
+            if ($('#Password').val().length == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'رمز را وارد کنید'
+                    });
+                return false;
+            }
+            if ($('#FullName').val().length == 0) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'نام و نام خانوادگی را وارد کنید'
+                    });
+                return false;
+            }
+
+
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به ثبت هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/tankhagardan/Add',
+                                data: {
+                                    IdShip: $('#IdShip').val(),
+                                    U: $('#UserName').val(),
+                                    P: $('#Password').val(),
+                                    FullName: $('#FullName').val()
+                                },
+                                success: function (dataa) {
+
+                                    if (parseInt(dataa) == 1) {
+                                        GetListTankhagardan();
+                                        $('#UserName').val('');
+                                        $('#Password').val('');
+                                        $('#FullName').val('');
+                                    } else if (parseInt(dataa) == -1) {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: 'کد ملی تکراری است'
+                                            });
+                                    }
+                                    else {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                            });
+                                    }
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+
+
+
+
+
+        }
+        function ExportBimeh() {
+
+        }
+
+        $(document).ready(function () {
+            GetListTankhagardan();
+            // new MultipleSelect('#IdShip', { placeholder: 'انتخاب کنید' });
+            $('#IdShip').select2({ width: '100%' });
+
+        });
+    </script>
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        $('input').keyup(function () {
+            this.value = fixPersianNumber(this.value);
+        });
+    });
+</script>

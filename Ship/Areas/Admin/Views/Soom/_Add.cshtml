@@ -1,0 +1,51 @@
+﻿@model Ship.Model.ViewModel.Admin.GetListSoomViewModel
+
+
+<div class="modal fade" id="ModalIUSoom" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @if (Model.Id == 0)
+                    {
+                        <text>افزودن صوم</text>
+                    }
+                    else
+                    {
+                        <text>ویرایش صوم</text>
+                    }
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form class="row g-3">
+                    <input type="hidden" id="Id" value="@Model.Id" />
+                    <div class="col-md-3">
+                        <label for="TxtFromDate" class="form-label">تاریخ شروع</label>
+                        <input type="text" class="form-control datepicker2" id="TxtFromDate" value="@Model.FromDate">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="TxtToDate" class="form-label">تاریخ پایان</label>
+                        <input type="text" class="form-control datepicker2" id="TxtToDate" value="@Model.ToDate">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="TxtSoomName" class="form-label">عنوان</label>
+                        <input type="text" class="form-control" id="TxtSoomName" value="@Model.SoomName">
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="TxtTozihat" class="form-label">توضیحات</label>
+                        <textarea id="TxtTozihat" class="form-control" rows="4" cols="50" style="margin: 0px; height: 150px; width: 100%;">@Model.Tozihat</textarea>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-primary" onclick="AddSave()">ذخیره تغییرات</button>
+            </div>
+        </div>
+    </div>
+</div>

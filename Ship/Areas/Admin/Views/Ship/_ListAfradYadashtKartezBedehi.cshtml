@@ -1,0 +1,59 @@
+﻿@model string
+@{
+    var idShip = Model.Split(';')[0];
+    var IdUser = Model.Split(';')[1];
+    var Id = Model.Split(';')[2];
+
+    // string dd = IdShip.ToString() + ";" + IdPersonnel.ToString() + ";" + Id.ToString();
+
+    var rttt = SiteSettingBLL.GetListYadasht(int.Parse(idShip)).Where(v => v.IdPersonnel == long.Parse(IdUser) && v.Id.ToString() == Id).OrderBy(v => v.Id).ToList();
+}
+
+<div class="modal fade" id="IdModalListAfradYadashtKartezBedehi" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    کارتکس بدهی
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                @*<div class="row">
+                        <div class="col-md-3">
+                            <label class="form-label">یاداشت</label>
+                            <select class="multiple-select" id="IdPersonnel333" data-placeholder=".. انتخاب کنید ..">
+                                <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                                @foreach (var t in rttt)
+                                {
+                                    <option value="@t.Id">@t.Desc</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label">یاداشت</label>
+                            <input type="text" id="IdYadasht2" style="width: 100%" class="form-control" />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">مبلغ - تومان</label>
+                            <input type="text" id="IdYadashtPrice2" style="width: 100%" class="form-control" value="" onkeyup="FormatCurrency(this)" />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">تاریخ</label>
+                            <input type="text" class="form-control datepicker22" id="Date52" value="">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <br />
+                        <center>
+                            <button type="button" onclick="AfradYadashtKartexSave()" class="btn btn-success" style="width: 80%; padding: 5px; text-align: center;">ثبت</button>
+                        </center>
+                        <br />
+                    </div>*@
+                <div id="ListAfradRefresh22" style="padding: 5px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+

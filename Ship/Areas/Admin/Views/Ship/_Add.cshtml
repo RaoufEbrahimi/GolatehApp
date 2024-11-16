@@ -1,0 +1,90 @@
+﻿@model Ship.Model.ViewModel.Admin.GetListShipViewModel
+
+
+<div class="modal fade" id="ModalIUShip" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @if (Model.Id == 0)
+                    {
+                        <text>افزودن لنج</text>
+                    }
+                    else
+                    {
+                        <text>ویرایش لنج : @Model.Title</text>
+                    }
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning border-0 bg-warning alert-dismissible fade show py-2">
+                    <div class="d-flex align-items-center">
+                        <div class="font-35 text-dark">
+                            <i class='bx bx-info-circle'></i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0 text-dark">توجه!</h6>
+                            <div class="text-dark">تمامی اعداد را با کیبرد انگلیسی وارد نمایید !</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                </div>
+                <form class="row g-3" id="F1">
+                    <input type="hidden" id="Id2" value="@Model.Id" />
+
+                    <div class="col-md-8">
+                        <label for="TxtTitle2" class="form-label">نام لنج</label>
+                        <input type="text" class="form-control" id="TxtTitle2" value="@Model.Title">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="TxtNumber2" class="form-label">شماره لنج</label>
+                        <input type="text" class="form-control" id="TxtNumber2" value="@Model.Number">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="TxtYearProduction2" class="form-label">تاریخ تولید</label>
+                        <input type="text" class="form-control datepicker2" id="TxtYearProduction2" value="@Model.YearProduction">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="TxtTul2" class="form-label">طول</label>
+                        <input type="number" class="form-control" id="TxtTul2" value="@Model.Tul">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="TxtArz2" class="form-label">عرض</label>
+                        <input type="number" class="form-control" id="TxtArz2" value="@Model.Arz">
+                    </div>
+                    <div class="col-md-8">
+                        <label for="TxtNameMotor2" class="form-label">نام موتور</label>
+                        <input type="text" class="form-control" id="TxtNameMotor2" value="@Model.NameMotor">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="TxtHajMotor2" class="form-label">حجم موتور</label>
+                        <input type="number" class="form-control" id="TxtHajMotor2" value="@Model.HajMotor">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="TxtHajMotor2" class="form-label">شماره بیمه</label>
+                        <input type="text" class="form-control" id="TxtShomareBime" value="@Model.ShomareBime">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="imageUploadForm" class="form-label">عکس لنج</label>
+                        <input type="file" class="form-control" id="imageUploadForm" />
+                        @if (string.IsNullOrWhiteSpace(Model.Image) == false)
+                        {
+                            <a target="_blank" href="@Model.Image"><img width="100" height="100" src="@Model.Image" accept="image/x-png,image/gif,image/jpeg" /></a>
+                        }
+                    </div>
+
+
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-primary" onclick="AddSave2()">ذخیره تغییرات</button>
+            </div>
+        </div>
+    </div>
+</div>

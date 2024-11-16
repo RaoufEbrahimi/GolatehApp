@@ -1,0 +1,540 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="golatehModelStoreContainer" CdmEntityContainer="GolatehEntities">
+    <EntitySetMapping Name="Bank">
+      <EntityTypeMapping TypeName="GolatehModel.Bank">
+        <MappingFragment StoreEntitySet="Bank">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BankFileDeteil">
+      <EntityTypeMapping TypeName="GolatehModel.BankFileDeteil">
+        <MappingFragment StoreEntitySet="BankFileDeteil">
+          <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="IdBankFile" ColumnName="IdBankFile" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BankFileMster">
+      <EntityTypeMapping TypeName="GolatehModel.BankFileMster">
+        <MappingFragment StoreEntitySet="BankFileMster">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="IdShip" ColumnName="IdShip" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bimeh">
+      <EntityTypeMapping TypeName="GolatehModel.Bimeh">
+        <MappingFragment StoreEntitySet="Bimeh">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BimehAfrad">
+      <EntityTypeMapping TypeName="GolatehModel.BimehAfrad">
+        <MappingFragment StoreEntitySet="BimehAfrad">
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="IdShip" ColumnName="IdShip" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BimehDeteil">
+      <EntityTypeMapping TypeName="GolatehModel.BimehDeteil">
+        <MappingFragment StoreEntitySet="BimehDeteil">
+          <ScalarProperty Name="PER_NATCOD" ColumnName="PER_NATCOD" />
+          <ScalarProperty Name="DSW_JOB" ColumnName="DSW_JOB" />
+          <ScalarProperty Name="DSW_PRATE" ColumnName="DSW_PRATE" />
+          <ScalarProperty Name="DSW_BIME" ColumnName="DSW_BIME" />
+          <ScalarProperty Name="DSW_TOTL" ColumnName="DSW_TOTL" />
+          <ScalarProperty Name="DSW_MASH" ColumnName="DSW_MASH" />
+          <ScalarProperty Name="DSW_MAZ" ColumnName="DSW_MAZ" />
+          <ScalarProperty Name="DSW_MAH" ColumnName="DSW_MAH" />
+          <ScalarProperty Name="DSW_ROOZ" ColumnName="DSW_ROOZ" />
+          <ScalarProperty Name="DSW_DD" ColumnName="DSW_DD" />
+          <ScalarProperty Name="DSW_EDATE" ColumnName="DSW_EDATE" />
+          <ScalarProperty Name="DSW_SDATE" ColumnName="DSW_SDATE" />
+          <ScalarProperty Name="DSW_OCP" ColumnName="DSW_OCP" />
+          <ScalarProperty Name="DSW_NAT" ColumnName="DSW_NAT" />
+          <ScalarProperty Name="DSW_SEX" ColumnName="DSW_SEX" />
+          <ScalarProperty Name="DSW_BDATE" ColumnName="DSW_BDATE" />
+          <ScalarProperty Name="DSW_IDATE" ColumnName="DSW_IDATE" />
+          <ScalarProperty Name="DSW_IDPLC" ColumnName="DSW_IDPLC" />
+          <ScalarProperty Name="DSW_IDNO" ColumnName="DSW_IDNO" />
+          <ScalarProperty Name="DSW_DNAME" ColumnName="DSW_DNAME" />
+          <ScalarProperty Name="DSW_LNAME" ColumnName="DSW_LNAME" />
+          <ScalarProperty Name="DSW_FNAME" ColumnName="DSW_FNAME" />
+          <ScalarProperty Name="DSW_ID1" ColumnName="DSW_ID1" />
+          <ScalarProperty Name="DSW_LISTNO" ColumnName="DSW_LISTNO" />
+          <ScalarProperty Name="DSW_MM" ColumnName="DSW_MM" />
+          <ScalarProperty Name="DSW_YY" ColumnName="DSW_YY" />
+          <ScalarProperty Name="DSW_ID" ColumnName="DSW_ID" />
+          <ScalarProperty Name="IdBimehMaster" ColumnName="IdBimehMaster" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BimehMaster">
+      <EntityTypeMapping TypeName="GolatehModel.BimehMaster">
+        <MappingFragment StoreEntitySet="BimehMaster">
+          <ScalarProperty Name="MON_PYM" ColumnName="MON_PYM" />
+          <ScalarProperty Name="DSK_BIMH" ColumnName="DSK_BIMH" />
+          <ScalarProperty Name="DSK_PRATE" ColumnName="DSK_PRATE" />
+          <ScalarProperty Name="DSK_RATE" ColumnName="DSK_RATE" />
+          <ScalarProperty Name="DSK_BIC" ColumnName="DSK_BIC" />
+          <ScalarProperty Name="DSK_TKOSO" ColumnName="DSK_TKOSO" />
+          <ScalarProperty Name="DSK_TBIME" ColumnName="DSK_TBIME" />
+          <ScalarProperty Name="DSK_TTOTL" ColumnName="DSK_TTOTL" />
+          <ScalarProperty Name="DSK_TMASH" ColumnName="DSK_TMASH" />
+          <ScalarProperty Name="DSK_TMAZ" ColumnName="DSK_TMAZ" />
+          <ScalarProperty Name="DSK_TMAH" ColumnName="DSK_TMAH" />
+          <ScalarProperty Name="DSK_TROOZ" ColumnName="DSK_TROOZ" />
+          <ScalarProperty Name="DSK_TDD" ColumnName="DSK_TDD" />
+          <ScalarProperty Name="DSK_NUM" ColumnName="DSK_NUM" />
+          <ScalarProperty Name="DSK_DISC" ColumnName="DSK_DISC" />
+          <ScalarProperty Name="DSK_LISTNO" ColumnName="DSK_LISTNO" />
+          <ScalarProperty Name="DSK_MM" ColumnName="DSK_MM" />
+          <ScalarProperty Name="DSK_YY" ColumnName="DSK_YY" />
+          <ScalarProperty Name="DSK_KIND" ColumnName="DSK_KIND" />
+          <ScalarProperty Name="DSK_ADRS" ColumnName="DSK_ADRS" />
+          <ScalarProperty Name="DSK_FARM" ColumnName="DSK_FARM" />
+          <ScalarProperty Name="DSK_NAME" ColumnName="DSK_NAME" />
+          <ScalarProperty Name="DSK_ID" ColumnName="DSK_ID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contact">
+      <EntityTypeMapping TypeName="GolatehModel.Contact">
+        <MappingFragment StoreEntitySet="Contact">
+          <ScalarProperty Name="See" ColumnName="See" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContactUs">
+      <EntityTypeMapping TypeName="GolatehModel.ContactUs">
+        <MappingFragment StoreEntitySet="ContactUs">
+          <ScalarProperty Name="IsSee" ColumnName="IsSee" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DebtHistory">
+      <EntityTypeMapping TypeName="GolatehModel.DebtHistory">
+        <MappingFragment StoreEntitySet="DebtHistory">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IdNote" ColumnName="IdNote" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="IdShip" ColumnName="IdShip" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JoinIt">
+      <EntityTypeMapping TypeName="GolatehModel.JoinIt">
+        <MappingFragment StoreEntitySet="JoinIt">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kala">
+      <EntityTypeMapping TypeName="GolatehModel.Kala">
+        <MappingFragment StoreEntitySet="Kala">
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="IdUnit" ColumnName="IdUnit" />
+          <ScalarProperty Name="IdTypeKala" ColumnName="IdTypeKala" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Note">
+      <EntityTypeMapping TypeName="GolatehModel.Note">
+        <MappingFragment StoreEntitySet="Note">
+          <ScalarProperty Name="IdSafar" ColumnName="IdSafar" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IdShip" ColumnName="IdShip" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Option">
+      <EntityTypeMapping TypeName="GolatehModel.Option">
+        <MappingFragment StoreEntitySet="Option">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OptionParameter">
+      <EntityTypeMapping TypeName="GolatehModel.OptionParameter">
+        <MappingFragment StoreEntitySet="OptionParameter">
+          <ScalarProperty Name="Val" ColumnName="Val" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="IdOption" ColumnName="IdOption" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order">
+      <EntityTypeMapping TypeName="GolatehModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Ref" ColumnName="Ref" />
+          <ScalarProperty Name="IdShomareOrder" ColumnName="IdShomareOrder" />
+          <ScalarProperty Name="IdShip" ColumnName="IdShip" />
+          <ScalarProperty Name="IdPackage" ColumnName="IdPackage" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Package">
+      <EntityTypeMapping TypeName="GolatehModel.Package">
+        <MappingFragment StoreEntitySet="Package">
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="DayActive" ColumnName="DayActive" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Tozihat" ColumnName="Tozihat" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PackageToShip">
+      <EntityTypeMapping TypeName="GolatehModel.PackageToShip">
+        <MappingFragment StoreEntitySet="PackageToShip">
+          <ScalarProperty Name="IdOrder" ColumnName="IdOrder" />
+          <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="IsPay" ColumnName="IsPay" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="IdShip" ColumnName="IdShip" />
+          <ScalarProperty Name="IdPackage" ColumnName="IdPackage" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Personnel">
+      <EntityTypeMapping TypeName="GolatehModel.Personnel">
+        <MappingFragment StoreEntitySet="Personnel">
+          <ScalarProperty Name="ShomareHesab" ColumnName="ShomareHesab" />
+          <ScalarProperty Name="IdBank" ColumnName="IdBank" />
+          <ScalarProperty Name="SmsActive" ColumnName="SmsActive" />
+          <ScalarProperty Name="CompanyAdress" ColumnName="CompanyAdress" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="EstekhdamDate" ColumnName="EstekhdamDate" />
+          <ScalarProperty Name="BimehNumber" ColumnName="BimehNumber" />
+          <ScalarProperty Name="Adress" ColumnName="Adress" />
+          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+          <ScalarProperty Name="IdShip" ColumnName="IdShip" />
+          <ScalarProperty Name="IdParent" ColumnName="IdParent" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="ShomareCart14" ColumnName="ShomareCart14" />
+          <ScalarProperty Name="ShebaNumber" ColumnName="ShebaNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Role">
+      <EntityTypeMapping TypeName="GolatehModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="TitleEn" ColumnName="TitleEn" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="IdParent" ColumnName="IdParent" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RolePernonnel">
+      <EntityTypeMapping TypeName="GolatehModel.RolePernonnel">
+        <MappingFragment StoreEntitySet="RolePernonnel">
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Safar">
+      <EntityTypeMapping TypeName="GolatehModel.Safar">
+        <MappingFragment StoreEntitySet="Safar">
+          <ScalarProperty Name="IsOne" ColumnName="IsOne" />
+          <ScalarProperty Name="IsCheckout" ColumnName="IsCheckout" />
+          <ScalarProperty Name="DaramadSafarFrosh_Machele" ColumnName="DaramadSafarFrosh_Machele" />
+          <ScalarProperty Name="JamKolSoodAzSafar" ColumnName="JamKolSoodAzSafar" />
+          <ScalarProperty Name="SafarCount" ColumnName="SafarCount" />
+          <ScalarProperty Name="GolateTedadKol" ColumnName="GolateTedadKol" />
+          <ScalarProperty Name="GolateBase" ColumnName="GolateBase" />
+          <ScalarProperty Name="TamiratGolate" ColumnName="TamiratGolate" />
+          <ScalarProperty Name="PriceFood" ColumnName="PriceFood" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Tozihat" ColumnName="Tozihat" />
+          <ScalarProperty Name="FactorMosaede" ColumnName="FactorMosaede" />
+          <ScalarProperty Name="PriceTamirat" ColumnName="PriceTamirat" />
+          <ScalarProperty Name="PriceForosh" ColumnName="PriceForosh" />
+          <ScalarProperty Name="PriceMahtaiaj" ColumnName="PriceMahtaiaj" />
+          <ScalarProperty Name="PriceKharid" ColumnName="PriceKharid" />
+          <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+          <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+          <ScalarProperty Name="IdSoom" ColumnName="IdSoom" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SafarToAfrad">
+      <EntityTypeMapping TypeName="GolatehModel.SafarToAfrad">
+        <MappingFragment StoreEntitySet="SafarToAfrad">
+          <ScalarProperty Name="KasriTabakhi" ColumnName="KasriTabakhi" />
+          <ScalarProperty Name="Nakhales" ColumnName="Nakhales" />
+          <ScalarProperty Name="PriceBimeh" ColumnName="PriceBimeh" />
+          <ScalarProperty Name="IsBimeh" ColumnName="IsBimeh" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="Ratio" ColumnName="Ratio" />
+          <ScalarProperty Name="IdSemat" ColumnName="IdSemat" />
+          <ScalarProperty Name="IdPernonnel" ColumnName="IdPernonnel" />
+          <ScalarProperty Name="IdSafar" ColumnName="IdSafar" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SafarToFactor">
+      <EntityTypeMapping TypeName="GolatehModel.SafarToFactor">
+        <MappingFragment StoreEntitySet="SafarToFactor">
+          <ScalarProperty Name="IdTankhaGardan" ColumnName="IdTankhaGardan" />
+          <ScalarProperty Name="IdUnit" ColumnName="IdUnit" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Tozihat" ColumnName="Tozihat" />
+          <ScalarProperty Name="Moshtari" ColumnName="Moshtari" />
+          <ScalarProperty Name="TaminKhonanade" ColumnName="TaminKhonanade" />
+          <ScalarProperty Name="DateFactor" ColumnName="DateFactor" />
+          <ScalarProperty Name="ShomareFactor" ColumnName="ShomareFactor" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Tedad" ColumnName="Tedad" />
+          <ScalarProperty Name="IdTypeFactor" ColumnName="IdTypeFactor" />
+          <ScalarProperty Name="IdKala" ColumnName="IdKala" />
+          <ScalarProperty Name="IdSafar" ColumnName="IdSafar" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SafarToHandMoney">
+      <EntityTypeMapping TypeName="GolatehModel.SafarToHandMoney">
+        <MappingFragment StoreEntitySet="SafarToHandMoney">
+          <ScalarProperty Name="IdDebtHistory" ColumnName="IdDebtHistory" />
+          <ScalarProperty Name="IsPay" ColumnName="IsPay" />
+          <ScalarProperty Name="IdUnit" ColumnName="IdUnit" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Tozihat" ColumnName="Tozihat" />
+          <ScalarProperty Name="CreateDateMoney" ColumnName="CreateDateMoney" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="IdKala" ColumnName="IdKala" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="IdSafar" ColumnName="IdSafar" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SafarToSahamDar">
+      <EntityTypeMapping TypeName="GolatehModel.SafarToSahamDar">
+        <MappingFragment StoreEntitySet="SafarToSahamDar">
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="IdSafar" ColumnName="IdSafar" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Semat">
+      <EntityTypeMapping TypeName="GolatehModel.Semat">
+        <MappingFragment StoreEntitySet="Semat">
+          <ScalarProperty Name="Ratio" ColumnName="Ratio" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ship">
+      <EntityTypeMapping TypeName="GolatehModel.Ship">
+        <MappingFragment StoreEntitySet="Ship">
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="ShomareBime" ColumnName="ShomareBime" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="HajMotor" ColumnName="HajMotor" />
+          <ScalarProperty Name="NameMotor" ColumnName="NameMotor" />
+          <ScalarProperty Name="Arz" ColumnName="Arz" />
+          <ScalarProperty Name="Tul" ColumnName="Tul" />
+          <ScalarProperty Name="YearProduction" ColumnName="YearProduction" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShipToPay">
+      <EntityTypeMapping TypeName="GolatehModel.ShipToPay">
+        <MappingFragment StoreEntitySet="ShipToPay">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ExpiryDatePackage" ColumnName="ExpiryDatePackage" />
+          <ScalarProperty Name="BankReceiptNumber" ColumnName="BankReceiptNumber" />
+          <ScalarProperty Name="BankReferenceKey" ColumnName="BankReferenceKey" />
+          <ScalarProperty Name="IsPay" ColumnName="IsPay" />
+          <ScalarProperty Name="IdShomareOrder" ColumnName="IdShomareOrder" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="IdPackage" ColumnName="IdPackage" />
+          <ScalarProperty Name="IdShip" ColumnName="IdShip" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShipToSahamDar">
+      <EntityTypeMapping TypeName="GolatehModel.ShipToSahamDar">
+        <MappingFragment StoreEntitySet="ShipToSahamDar">
+          <ScalarProperty Name="Dong" ColumnName="Dong" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="IdShip" ColumnName="IdShip" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShomareOrder">
+      <EntityTypeMapping TypeName="GolatehModel.ShomareOrder">
+        <MappingFragment StoreEntitySet="ShomareOrder">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SiteSetting">
+      <EntityTypeMapping TypeName="GolatehModel.SiteSetting">
+        <MappingFragment StoreEntitySet="SiteSetting">
+          <ScalarProperty Name="PlacementPrice" ColumnName="PlacementPrice" />
+          <ScalarProperty Name="Inestagram" ColumnName="Inestagram" />
+          <ScalarProperty Name="Dribbble" ColumnName="Dribbble" />
+          <ScalarProperty Name="Linkedin" ColumnName="Linkedin" />
+          <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+          <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Logo" ColumnName="Logo" />
+          <ScalarProperty Name="ContactUs" ColumnName="ContactUs" />
+          <ScalarProperty Name="Author" ColumnName="Author" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Soom">
+      <EntityTypeMapping TypeName="GolatehModel.Soom">
+        <MappingFragment StoreEntitySet="Soom">
+          <ScalarProperty Name="IsCheckout" ColumnName="IsCheckout" />
+          <ScalarProperty Name="TiTle" ColumnName="TiTle" />
+          <ScalarProperty Name="SafarCounter" ColumnName="SafarCounter" />
+          <ScalarProperty Name="SommConter" ColumnName="SommConter" />
+          <ScalarProperty Name="Tozihat" ColumnName="Tozihat" />
+          <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+          <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IdShip" ColumnName="IdShip" />
+          <ScalarProperty Name="IdPersonnel" ColumnName="IdPersonnel" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Subscribe">
+      <EntityTypeMapping TypeName="GolatehModel.Subscribe">
+        <MappingFragment StoreEntitySet="Subscribe">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TankhaGardan">
+      <EntityTypeMapping TypeName="GolatehModel.TankhaGardan">
+        <MappingFragment StoreEntitySet="TankhaGardan">
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TankhaGardanToShip">
+      <EntityTypeMapping TypeName="GolatehModel.TankhaGardanToShip">
+        <MappingFragment StoreEntitySet="TankhaGardanToShip">
+          <ScalarProperty Name="IdShip" ColumnName="IdShip" />
+          <ScalarProperty Name="IdTankhaGardan" ColumnName="IdTankhaGardan" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Unit">
+      <EntityTypeMapping TypeName="GolatehModel.Unit">
+        <MappingFragment StoreEntitySet="Unit">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

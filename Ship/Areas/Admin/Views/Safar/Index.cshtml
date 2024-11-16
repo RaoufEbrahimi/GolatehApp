@@ -1,0 +1,971 @@
+﻿@{
+    ViewBag.Title = "سفر";
+
+    int IdUser = int.Parse(User.Identity.Name);
+
+
+    string referer = Request.ServerVariables["http_referer"];
+
+    if (string.IsNullOrWhiteSpace(referer))
+    {
+        referer = @"/Admin/Default";
+    }
+
+    if (Request.QueryString["Id"] != null)
+    {
+
+        try
+        {
+            int.Parse(Request.QueryString["Id"].ToString());
+        }
+        catch (Exception e)
+        {
+            Response.Redirect(referer, false);
+            return;
+        }
+    }
+    else
+    {
+        Response.Redirect(referer, false);
+        return;
+    }
+
+
+    int IdSoom = int.Parse(Request.QueryString["id"].ToString());
+
+    var itm = SiteSettingBLL.GetInfohHeaderSafar(IdUser, IdSoom);
+
+    if (itm.IdShip == null)
+    {
+        Response.Redirect(referer, false);
+        return;
+    }
+}
+
+<input type="hidden" id="IdShip" value="@itm.IdShip" />
+<input type="hidden" id="IdSoom" value="@itm.IdSoom" />
+
+<style>
+    hr {
+        margin: 0;
+    }
+</style>
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a title="داشبورد" href="/admin"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <a title="لنج (@itm.Ship)" href="/admin">لنج (@itm.Ship)</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <a title="صوم (@itm.Soom)" href="/admin/soom?id=@itm.IdShip">صوم (@itm.Soom)</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">سفر</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <button onclick="_Open()" id="BtnAddSafar" type="button" class="btn btn-outline-success position-relative">
+            <i class="lni lni-circle-plus"></i> افزودن سفر <span class="position-absolute top-0 start-100">
+            </span>
+        </button>
+
+        <div id="DivListSafar"></div>
+    </div>
+</div>
+
+<div id="DivModalIUSoom"></div>
+
+
+@section js_down{
+    <script>
+        function ToPrintSafar(Id) {
+            $.ajax({
+                url: "/Admin/Safar/ChekerOpenSafar",
+                method: "POST",
+                data: { IdSafar: Id, IdSoom: $('#IdSoom').val() },
+                success: function (data) {
+                    if (Boolean(data.status) === true) {
+                        window.location.href = '/admin/safar/PrintPdf?id=' + Id;
+                    } else {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: data.msg
+                        });
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function ToPrintSafar2(Id) {
+            $.ajax({
+                url: "/Admin/Safar/ChekerOpenSafar",
+                method: "POST",
+                data: { IdSafar: Id, IdSoom: $('#IdSoom').val() },
+                success: function (data) {
+                    if (Boolean(data.status) === true) {
+                        window.location.href = '/admin/safar/PrintPdf2?id=' + Id;
+                    } else {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: data.msg
+                        });
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function _Open() {
+
+
+            Open2();
+
+
+
+        }
+        function Open2() {
+            $.ajax({
+                url: "/Admin/Safar/_Add",
+                method: "POST",
+                data: { Id: $('#IdSoom').val() },
+                success: function (data) {
+                    $('#DivModalIUSoom').html('');
+                    $('#DivModalIUSoom').html(data);
+
+                    $('#ModalIUSafar').modal('show');
+
+                    $('.datepicker2').persianDatepicker({
+                        observer: true,
+                        format: 'YYYY/MM/DD',
+                        initialValueType: 'persian'
+                    });
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function ToEditSafar(Id) {
+            $.ajax({
+                url: "/Admin/Safar/ChekerOpenSafar",
+                method: "POST",
+                data: { IdSafar: Id, IdSoom: $('#IdSoom').val() },
+                success: function (data) {
+                    if (Boolean(data.status) === true) {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'برای ویرایش ابتدا سفر را باز کنید'
+                        });
+                    } else {
+                        openedit2(Id);
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function openedit2(Id) {
+            $.ajax({
+                url: "/Admin/Safar/EditSafarMaster",
+                method: "POST",
+                data: { Id: Id, IdSoom: $('#IdSoom').val() },
+                success: function (data) {
+                    $('#DivModalIUSoom').html('');
+                    $('#DivModalIUSoom').html(data);
+
+                    $('#ModalIUEditSafar').modal('show');
+
+                    $('.datepicker2').persianDatepicker({
+                        observer: true,
+                        format: 'YYYY/MM/DD',
+                        initialValueType: 'persian'
+                    });
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function EditSaveSafarMaster() {
+
+            $.alert({
+                title: 'توجه!',
+                content: 'آیا مایل به ویرایش سفر هستید !',
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/Safar/EditSaveSafarMaster',
+                                data: {
+                                    IdSoom: $('#IdSoom').val(),
+                                    FromDate: $('#TxtFromDate').val(),
+                                    ToDate: $('#TxtToDate').val(),
+                                    Tozihat: $('#TxtTozihat').val(),
+                                    Title: $('#TxtTitle').val(),
+                                    Id: $('#Id5').val(),
+                                    PriceFood: $('#TxtTabakh').val(),
+                                    TamiratGolate: $('#TxtGolatetamirat').val()
+                                },
+                                success: function (dataa) {
+
+                                    if (parseInt(dataa) == 1) {
+                                        GetListSafar();
+                                        $('#ModalIUEditSafar').modal('hide');
+                                    } else if (parseInt(dataa) == -1) {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: 'تاریخ پایان نمی تواند بزرگتر از تاریخ شروع باشد'
+                                            });
+                                    }
+                                    else if (parseInt(dataa) == -5) {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: 'تاریخ های شروع و پایان وارد شده با دیگر سفر ها تداخل دارند'
+                                            });
+                                    }
+                                    else {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: 'لطفا تاریخ های شروع و پایان سفر در بازه صوم تعریف شوند'
+                                            });
+                                    }
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+        function EditSaveSafarMaster2() {
+
+
+
+            $('#TxtFromDate,#TxtToDate,#TxtTitle,#TxtTabakh,#TxtGolatetamirat').removeClass('inputerror');
+
+            var eror = false;
+
+            if ($('#TxtFromDate').val().trim().length === 0) {
+                $('#TxtFromDate').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtToDate').val().trim().length === 0) {
+                $('#TxtToDate').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtTitle').val().trim().length === 0) {
+                $('#TxtTitle').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtTabakh').val().trim().length === 0) {
+                $('#TxtTabakh').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtGolatetamirat').val().trim().length === 0) {
+                $('#TxtGolatetamirat').addClass('inputerror');
+                eror = true;
+            }
+
+            if (eror) {
+                return false;
+            }
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Safar/EditSaveSafarMaster',
+                data: {
+                    IdSoom: $('#IdSoom').val(),
+                    FromDate: $('#TxtFromDate').val(),
+                    ToDate: $('#TxtToDate').val(),
+                    Tozihat: $('#TxtTozihat').val(),
+                    Title: $('#TxtTitle').val(),
+                    Id: $('#Id5').val(),
+                    PriceFood: $('#TxtTabakh').val().replace(',', '').replace(',', '').replace(',', '').replace(',', ''),
+                    TamiratGolate: $('#TxtGolatetamirat').val()
+                },
+                success: function (dataa) {
+
+                    if (parseInt(dataa) == 1) {
+                        GetListSafar();
+
+                        Lobibox.notify('success',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'عملیات انجام شد'
+                            });
+
+                    } else if (parseInt(dataa) == -1) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'تاریخ پایان نمی تواند بزرگتر از تاریخ شروع باشد'
+                            });
+                    }
+                    else if (parseInt(dataa) == -5) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'لطفا تاریخ های شروع و پایان سفر در بازه صوم تعریف شوند'
+                            });
+                    }
+                    else if (parseInt(dataa) == -6) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'تاریخ های شروع و پایان وارد شده با دیگر سفر ها تداخل دارد'
+                            });
+                    }
+                    else {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                            });
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+            });
+        }
+        function GetListSafar() {
+            $.ajax({
+                url: "/Admin/Safar/GetListSafar",
+                method: "POST",
+                data: { IdSoom: $('#IdSoom').val() },
+                success: function (data) {
+
+                    $('#DivListSafar').html('');
+                    $('#DivListSafar').html(data);
+
+                    var table = $('#TableSafar').DataTable({
+                        lengthChange: false,
+                        "order": [[1, "asc"]]
+                    });
+
+                    CheckerSoomOpen($('#IdSoom').val());
+                },
+                error: function () {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+        function ToDeleteSafar(Id) {
+
+
+
+
+
+            $.ajax({
+                url: "/Admin/Safar/ChekerOpenSafar",
+                method: "POST",
+                data: { IdSafar: Id, IdSoom: $('#IdSoom').val() },
+                success: function (data) {
+                    if (Boolean(data.status) === true) {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'برای حذف سفر ابتدا سفر را باز کنید'
+                        });
+                    } else {
+                        $.alert({
+                            title: 'توجه!',
+                            content: 'آیا مایل به حذف سفر هستید !',
+                            rtl: true,
+                            closeIcon: true,
+                            buttons: {
+                                confirm: {
+                                    text: 'تایید',
+                                    btnClass: 'btn-danger',
+                                    action: function () {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/Admin/Safar/DeleteSafar',
+                                            data: { Id: Id },
+                                            success: function (dataa) {
+
+                                                if (Boolean(dataa) == true) {
+                                                    GetListSafar();
+                                                } else {
+                                                    Lobibox.notify('error',
+                                                        {
+                                                            pauseDelayOnHover: true,
+                                                            continueDelayOnInactiveTab: false,
+                                                            position: 'top right',
+                                                            icon: 'bx bx-x-circle',
+                                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                                        });
+                                                }
+
+                                            },
+                                            error: function (jqXHR, textStatus, errorThrown) {
+                                                Lobibox.notify('error',
+                                                    {
+                                                        pauseDelayOnHover: true,
+                                                        continueDelayOnInactiveTab: false,
+                                                        position: 'top right',
+                                                        icon: 'bx bx-x-circle',
+                                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                                    });
+                                            }
+                                        });
+                                    }
+                                },
+                                cancel: {
+                                    text: 'انصراف',
+                                    action: function () { }
+                                }
+                            }
+                        });
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+
+
+
+
+        }
+        function AddSaveSafar() {
+
+            $('#TxtFromDate,#TxtToDate,#TxtTitle,#TxtTabakh,#TxtGolatetamirat').removeClass('inputerror');
+
+            var eror = false;
+
+            if ($('#TxtFromDate').val().trim().length !== 10) {
+                $('#TxtFromDate').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtToDate').val().trim().length !== 10) {
+                $('#TxtToDate').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtTitle').val().trim().length === 0) {
+                $('#TxtTitle').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtTabakh').val().trim().length === 0) {
+                $('#TxtTabakh').addClass('inputerror');
+                eror = true;
+            }
+            if ($('#TxtGolatetamirat').val().trim().length === 0) {
+                $('#TxtGolatetamirat').addClass('inputerror');
+                eror = true;
+            }
+
+            if (eror) {
+                return false;
+            }
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Safar/AddSaveSafar',
+                data: {
+                    IdSoom: $('#IdSoom').val(),
+                    FromDate: $('#TxtFromDate').val(),
+                    ToDate: $('#TxtToDate').val(),
+                    Tozihat: $('#TxtTozihat').val(),
+                    Title: $('#TxtTitle').val(),
+                    PriceFood: $('#TxtTabakh').val(),
+                    TamiratGolate: $('#TxtGolatetamirat').val()
+                },
+                success: function (dataa) {
+
+                    if (parseInt(dataa) == 1) {
+                        GetListSafar();
+                        $('#ModalIUSafar').modal('hide');
+                    } else if (parseInt(dataa) == -1) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'سفر قبل بسته نشده است'
+                            });
+                    }
+                    else if (parseInt(dataa) == -11) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'اشتراک تهیه کنید'
+                            });
+                    }
+                    else if (parseInt(dataa) == -2) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'تاریخ پایان نمی تواند بزرگتر از تاریخ شروع باشد'
+                            });
+                    }
+                    else if (parseInt(dataa) == -5) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'تاریخ های وارد شده تداخل دارد با تاریخ شروع و پایان صوم'
+                            });
+                    }
+                    else if (parseInt(dataa) == -6) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'تاریخ های وارد شده تداخل دارد با تاریخ سفرهای خود'
+                            });
+                    }
+                    else if (parseInt(dataa) == -3) {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                            });
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+            });
+
+        }
+        function CloseSafar(Itm, Id) {
+
+            var OldStatus = $(Itm).data('openclose');
+            var content = '';
+            var content2 = '';
+            if (OldStatus == false) {
+                content = 'آیا مایل به بستن سفر هستید !';
+                content2 = 'محاسبات انجام شد';
+            } else {
+                content = 'آیا مایل به باز کردن سفر هستید !';
+                content2 = 'حذف محاسبات انجام شد';
+            }
+
+            $.alert({
+                title: 'توجه!',
+                content: content,
+                rtl: true,
+                closeIcon: true,
+                buttons: {
+                    confirm: {
+                        text: 'تایید',
+                        btnClass: 'btn-danger',
+                        action: function () {
+                            $.ajax({
+                                url: "/Admin/Safar/CloseSafar",
+                                method: "POST",
+                                data: { Id: Id, Status: OldStatus },
+                                success: function (data) {
+                                    if (Boolean(data.status) == true) {
+                                        Lobibox.notify('success',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: content2
+                                            });
+
+                                        GetListSafar();
+                                    } else {
+                                        Lobibox.notify('error',
+                                            {
+                                                pauseDelayOnHover: true,
+                                                continueDelayOnInactiveTab: false,
+                                                position: 'top right',
+                                                icon: 'bx bx-x-circle',
+                                                msg: data.msg
+                                            });
+                                    }
+                                },
+                                error: function () {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                },
+                                beforeSend: function () {
+
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: 'انصراف',
+                        action: function () {
+                            $(Itm).prop("checked", !OldStatus);
+                        }
+                    }
+                }
+            });
+        }
+        $(document).ready(function () {
+            GetListSafar();
+        });
+        function ToDeteilSafar(Id) {
+
+
+            $.ajax({
+                url: "/Admin/Safar/ChekerOpenSafar",
+                method: "POST",
+                data: { IdSafar: Id, IdSoom: $('#IdSoom').val() },
+                success: function (data) {
+                    if (Boolean(data.status) === true) {
+                        Lobibox.notify('error', {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'برای ویرایش ابتدا سفر را باز کنید'
+                        });
+                    } else {
+                        $.ajax({
+                            url: "/Admin/Safar/GetDeteilSafar",
+                            method: "POST",
+                            data: { Id: Id, IdSoom: $('#IdSoom').val() },
+                            success: function (data) {
+                                $('#DivModalIUSoom').html('');
+                                $('#DivModalIUSoom').html(data);
+
+                                $('#ModalIUEditDeteilSafar').modal('show');
+
+                                $('.datepicker2').persianDatepicker({
+                                    observer: true,
+                                    format: 'YYYY/MM/DD',
+                                    initialValueType: 'persian'
+                                });
+
+                                ToShowPage(7);
+                            },
+                            error: function () {
+                                Lobibox.notify('error', {
+                                    pauseDelayOnHover: true,
+                                    continueDelayOnInactiveTab: false,
+                                    position: 'top right',
+                                    icon: 'bx bx-x-circle',
+                                    msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                });
+                            },
+                            beforeSend: function () {
+
+                            }
+                        });
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+
+
+        }
+        function ToCopy(Id) {
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Safar/CopySafar',
+                data: {
+                    IdSoom: $('#IdSoom').val(),
+                    IdSafar: Id
+                },
+                success: function (dataa) {
+
+                    if (parseFloat(dataa) > 0) {
+                        GetListSafar();
+                        $('#ModalIUSafar').modal('hide');
+
+                        ToEditSafar(dataa);
+                    } else {
+                        Lobibox.notify('error',
+                            {
+                                pauseDelayOnHover: true,
+                                continueDelayOnInactiveTab: false,
+                                position: 'top right',
+                                icon: 'bx bx-x-circle',
+                                msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                            });
+                    }
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+            });
+
+
+
+
+            //$.alert({
+            //    title: 'توجه!',
+            //    content: 'آیا مایل به کپی سفر هستید !',
+            //    rtl: true,
+            //    closeIcon: true,
+            //    buttons: {
+            //        confirm: {
+            //            text: 'تایید',
+            //            btnClass: 'btn-blue',
+            //            action: function () {
+
+            //            }
+            //        },
+            //        cancel: {
+            //            text: 'انصراف',
+            //            action: function () { }
+            //        }
+            //    }
+            //});
+        }
+        function ToShowPage(Id) {
+            $.ajax({
+                url: "/Admin/Safar/ToShowPage",
+                method: "POST",
+                data: { Id: Id, IdSafar: $('#IdSafar').val(), IdShip: $('#Id_Ship').val() },
+                success: function (data) {
+                    $('#tap' + Id).html('');
+                    $('#tap' + Id).html(data);
+
+
+                    if (Id == 7) {
+                        $('.datepicker2').persianDatepicker({
+                            observer: true,
+                            format: 'YYYY/MM/DD',
+                            initialValueType: 'persian'
+                        });
+                    }
+
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+
+        function CheckerSoomOpen(Id) {
+            $.ajax({
+                url: "/Admin/Safar/CheckerSoomOpen",
+                method: "POST",
+                data: { IdSoom: Id },
+                success: function (data) {
+                    if (Boolean(data) === false) {
+                        $('#BtnAddSafar').remove();
+                    }
+                },
+                error: function () {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                },
+                beforeSend: function () {
+
+                }
+            });
+        }
+
+
+        $(document).ready(function () {
+            $('input').keyup(function () {
+                this.value = fixPersianNumber(this.value);
+            });
+        });
+    </script>
+}

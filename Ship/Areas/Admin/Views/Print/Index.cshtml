@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "گزارشات";
+    int IdUser = int.Parse(User.Identity.Name);
+}
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/admin"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-2">
+                <label for="TxtFromDate" class="form-label">از</label>
+                <input type="text" class="form-control datepicker2" id="TxtFromDate" value="@PersianCalander.ToShamsi(DateTime.Now.AddMonths(-1))">
+            </div>
+            <div class="col-md-2">
+                <label for="TxtToDate" class="form-label">تا</label>
+                <input type="text" class="form-control datepicker2" id="TxtToDate" value="@PersianCalander.ToShamsi(DateTime.Now)">
+            </div>
+
+            <div class="col-md-2">
+                <label for="TxtToDate" class="form-label">لنج</label>
+                <select class="multiple-select" id="IdShip" data-placeholder=".. انتخاب کنید ..">
+                    <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                    @foreach (var t in SiteSettingBLL.GetListShip(IdUser))
+                    {
+                        <option value="@t.Id">@t.Title</option>
+                    }
+                </select>
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<div class="row row-cols-1 row-cols-md-4 row-cols-xl-4">
+    <div class="col">
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center" onclick="print(1)" style="cursor:pointer">
+                    <div>
+                        <h5 class="my-1">حجم صید و نوع صید</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-4 row-cols-xl-4">
+    <div class="col">
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center" onclick="print(2)" style="cursor:pointer">
+                    <div>
+                        <h5 class="my-1">هزینه های خرید و تعمیرات</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-4 row-cols-xl-4">
+    <div class="col">
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center" onclick="print(3)" style="cursor:pointer">
+                    <div>
+                        <h5 class="my-1">ماچله</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row row-cols-1 row-cols-md-4 row-cols-xl-4">
+    <div class="col">
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center" onclick="print(4)" style="cursor:pointer">
+                    <div>
+                        <h5 class="my-1">نوسان قیمت ماهی ها</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row row-cols-1 row-cols-md-4 row-cols-xl-4">
+    <div class="col">
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center" onclick="print(5)" style="cursor:pointer">
+                    <div>
+                        <h5 class="my-1">مساعده های پرداختی</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row row-cols-1 row-cols-md-4 row-cols-xl-4">
+    <div class="col">
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center" onclick="print(6)" style="cursor:pointer">
+                    <div>
+                        <h5 class="my-1">دریافتی جاشوها</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row row-cols-1 row-cols-md-4 row-cols-xl-4">
+    <div class="col">
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="d-flex align-items-center" onclick="print(7)" style="cursor:pointer">
+                    <div>
+                        <h5 class="my-1">سود و زیان</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section js_down{
+    <script>
+        $(document).ready(function () {
+            $('.datepicker2').persianDatepicker({
+                observer: true,
+                format: 'YYYY/MM/DD',
+                initialValueType: 'persian'
+            });
+
+            $('#IdShip').select2({
+                theme: 'bootstrap4',
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: $(this).data('placeholder'),
+                allowClear: Boolean($(this).data('allow-clear')),
+                closeOnSelect: true
+            });
+        });
+
+        function print(type) {
+
+            if ($('#IdShip').val() == '0') {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'لنج را انتخاب کنید'
+                });
+                return;
+            }
+
+            if ($('#TxtToDate').val().length != 10 || $('#TxtFromDate').val().length != 10) {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'تاریخ را انتخاب کنید'
+                });
+                return;
+            }
+
+            window.location.href = '/admin/print/export?from=' + $('#TxtFromDate').val() + '&to=' + $('#TxtToDate').val() + '&type=' + type + '&ship=' + $('#IdShip').val();
+        }
+
+
+        $(document).ready(function () {
+            $('input').keyup(function () {
+                this.value = fixPersianNumber(this.value);
+            });
+        });
+    </script>
+}

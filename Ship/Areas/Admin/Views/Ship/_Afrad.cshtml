@@ -1,0 +1,90 @@
+﻿@model Ship.Model.ViewModel.Admin.GetListShipViewModel
+
+<input type="hidden" id="IdShip55" value="@Model.Id"/>
+
+<div class="modal fade" id="ModalIUOpenAfrad" tabindex="-1" style="z-index: 2000!important" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    افزودن افراد به لنج : @Model.Title
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning border-0 bg-warning alert-dismissible fade show py-2">
+                    <div class="d-flex align-items-center">
+                        <div class="font-35 text-dark">
+                            <i class='bx bx-info-circle'></i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0 text-dark">توجه!</h6>
+                            <div class="text-dark">تمامی اعداد را با کیبرد انگلیسی وارد نمایید !</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                </div>
+                <form class="row g-3" id="F13">
+                    <input type="hidden" id="Id10" value="@Model.Id" />
+
+                    <div class="col-md-3">
+                        <label for="FirstName" class="form-label">نام</label>
+                        <input type="text" style="text-align: center" class="form-control" id="FirstName" value="" autocomplete="off">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="LastName" class="form-label">نام خانوادگی</label>
+                        <input type="text" style="text-align: center" class="form-control" id="LastName" value="" autocomplete="off">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="NationalCode" class="form-label">کد ملی</label>
+                        <input type="number" style="text-align: center" class="form-control" id="NationalCode" value="" autocomplete="off">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="Phone" class="form-label">شماره موبایل</label>
+                        <input type="number" style="text-align: center" class="form-control" id="Phone" value="" autocomplete="off">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">بانک</label>
+                        <select id="IdBank" data-placeholder=".. انتخاب کنید .." class="form-control">
+                            <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                            @foreach (var t in SiteSettingBLL.GetListBank())
+                            {
+                                <option value="@t.Id">@t.Title</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="ShomareHesab" class="form-label">شماره حساب</label>
+                        <input type="text" onblur="ToUperCase(this)" onkeyup="ToUperCase(this)" style="text-align: center" class="form-control" id="ShomareHesab" value="" autocomplete="off">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="ShebaNumber" class="form-label">شماره شبا</label>
+                        <input type="text" onblur="ToUperCase(this)" onkeyup="ToUperCase(this)" style="text-align: center" class="form-control" id="ShebaNumber" value="" autocomplete="off">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="ShomareCart14" class="form-label">شماره 16 رقمی</label>
+                        <input type="number" style="text-align: center" class="form-control" id="ShomareCart14" value="" autocomplete="off">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="Logo" class="form-label">عکس</label>
+                        <input type="file" class="form-control" id="Logo" />
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="AddAfrad()">ثبت</button>
+                </form>
+            </div>
+            
+            <div style="text-align: right; margin-right: 7px;">
+                <select class="contact-form" onchange="GetListAfrad(0, this.value);">
+                    <option selected="selected" value="1">فعال</option>
+                    <option value="0">غیر فعال</option>
+                </select>
+            </div>
+            <div id="ListAfradRefresh" style="padding: 5px;"></div>
+        </div>
+    </div>
+</div>
+ 

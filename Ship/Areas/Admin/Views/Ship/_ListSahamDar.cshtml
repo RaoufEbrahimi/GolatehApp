@@ -1,0 +1,28 @@
+﻿@model List<Ship.Model.ViewModel.Admin.SahamDarViewModel>
+
+<div class="table-responsive" style="margin-top: 20px;">
+    <table id="TableSoom" class="table table-bordered table-responsive" style="width: 100%">
+        <thead>
+            <tr style="background-color: #dee2e6b3">
+                <th style="text-align: center">نام و نام خانوادگی</th>
+                <th style="text-align: center">درصد سهام</th>
+                <th style="text-align: center">دنگ</th>
+                <th style="text-align: center">عملیات</th>
+            </tr>
+        </thead>
+        @foreach (var cc in Model)
+        {
+            <tr>
+                <td style="text-align: center">@cc.Title</td>
+                <td style="text-align: center">@cc.Rate</td>
+                <td style="text-align: center">@cc.Dong</td>
+
+                <td style="text-align: center">
+                    <button onclick="ToDeleteSahamDar(@cc.Id)" type="button" class="btn btn-outline"><i class="fadeIn animated bx bx-x-circle"></i></button>
+                </td>
+            </tr>
+        }
+        <tbody>
+        </tbody>
+    </table>
+</div>

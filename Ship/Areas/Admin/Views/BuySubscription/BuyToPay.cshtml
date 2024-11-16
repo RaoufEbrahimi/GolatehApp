@@ -1,0 +1,139 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "پیش فاکتور اشتراک";
+
+    var x = new Ship.Model.Db.GolatehEntities();
+
+    var itmship = x.Ship.AsNoTracking().First(v => v.Id == Model);
+    var itmpak = x.Package.AsNoTracking().First(v => v.IsActive);
+    int IdUser = int.Parse(User.Identity.Name);
+    var dd = x.Personnel.First(v => v.Id == IdUser);
+
+
+    decimal Ids = SiteSettingBLL.InsertOrder(IdUser, int.Parse(itmpak.Price.ToString()), itmpak.Id, itmship.Id);
+}
+
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/admin"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<script>
+    function PayOnline() {
+
+
+        $.ajax({
+            url: "/Admin/BuySubscription/PayOnline",
+            method: "POST",
+            data: { OrderID: '@Ids' },
+            success: function (data) {
+                if (data.Status) {
+                    window.location.href = data.Adress;
+                }
+                else {
+                    Lobibox.notify('error', {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+                }
+            },
+            error: function () {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                });
+            },
+            beforeSend: function () {
+
+            }
+        });
+    }
+</script>
+
+<div class="card">
+    <div class="card-body">
+        <div id="invoice">
+            <div class="invoice overflow-auto">
+                <div style="width: 70%; margin: auto;text-align:center">
+                    <main>
+                        <div class="row contacts">
+                            <div class="col invoice-to">
+                                <div class="text-gray-light">فاکتور به : </div>
+                                <h2 class="to">@dd.FirstName @dd.LastName</h2>
+                                <div class="address">@*تهران، میدان آزادی، خیابان آزادی، پلاک 7*@</div>
+                                <div class="email">
+                                    <a href="mailto:@dd.Email">@dd.Email</a>
+                                </div>
+                            </div>
+                            <div class="col invoice-details">
+                                <h1 class="invoice-id">فاکتور @Ids</h1>
+                                <div class="date">تاریخ ایجاد فاکتور : @PersianCalander.ToShamsiTime(DateTime.Now)</div>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th class="text-left">توضیحات</th>
+                                    <th class="text-right">جمع کل</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="no">1</td>
+                                    <td class="text-left">
+                                        اشتراک 1 ساله لنج @itmship.Title
+                                    </td>
+                                    <td class="total">@itmpak.Price.ToString("N0") تومان</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>جمع فاکتور</td>
+                                    <td>@itmpak.Price.ToString("N0") تومان</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>0% مالیات</td>
+                                    <td>0 تومان</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>مبلغ قابل پرداخت</td>
+                                    <td>@itmpak.Price.ToString("N0") تومان</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <br />
+                        <center>
+                            <button style="width:80%" type="button" onclick="PayOnline()" class="btn btn-success px-5">پرداخت</button>
+                        </center>
+                    </main>
+                    <footer>فاکتور در رایانه ایجاد شده است و بدون امضا و مهر معتبر است.</footer>
+                </div>
+                <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>

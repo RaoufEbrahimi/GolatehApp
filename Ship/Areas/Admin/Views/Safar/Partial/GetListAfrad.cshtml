@@ -1,0 +1,40 @@
+﻿@model List<Ship.Model.ViewModel.Admin.SafarAfradRelationViewModel>
+
+@{
+    int a = 1;
+}
+
+<div class="table-responsive" style="margin-top: 20px;">
+    <table id="TableSafar" class="table table-bordered mb-0" style="width: 100%">
+        <thead>
+            <tr style="background-color: #dee2e6b3">
+                <th style="text-align: center">#</th>
+                <th style="text-align: center">نام و نام خانوادگی</th>
+                <th style="text-align: center">سمت</th>
+                <th style="text-align: center">تعداد گلاته</th>
+                <th style="text-align: center">بیمه</th>
+                <th style="text-align: center">عملیات</th>
+            </tr>
+        </thead>
+        @foreach (var cc in Model.Where(v => v.IdPersonnel != 78).ToList())
+        {
+            <tr>
+                <td style="text-align: center">@(a++)</td>
+                <td style="text-align: center">@cc.FirstName @cc.LastName</td>
+                <td style="text-align: center">@cc.SematName</td>
+                <td style="text-align: center">@cc.Rate.ToString().Replace("/", ".")</td>
+                <td style="text-align: center">
+                    @(cc.IsBimeh?"دارد":"ندارد")
+                    <hr style="margin-bottom: 5px;" />
+                    <input type="checkbox" id="ChekBimehRow_@cc.Id" @(cc.IsBimeh?"checked='checked'":"")  onchange="RowBime(@cc.Id)" />
+                </td>
+
+                <td style="text-align: center">
+                    <button onclick="ToDeleteSafarAfradRelation(@cc.Id)" type="button" class="btn btn-outline"><i class="fadeIn animated bx bx-x-circle"></i></button>
+                </td>
+            </tr>
+        }
+        <tbody>
+        </tbody>
+    </table>
+</div>

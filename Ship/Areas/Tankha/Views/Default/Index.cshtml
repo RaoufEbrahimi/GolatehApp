@@ -1,0 +1,82 @@
+﻿@using Ship.Model.Extension
+
+@{
+    ViewBag.Title = "داشبورد";
+
+    int IdUser = int.Parse(User.Identity.Name.Replace("TankhaGardan", ""));
+
+    var db = new GolatehEntities();
+
+    long Id = long.Parse(User.Identity.Name.Replace("TankhaGardan", ""));
+    var Ids = db.TankhaGardanToShip.Where(b => b.IdTankhaGardan == Id).Select(v => v.IdShip).ToList();
+    var Model = db.Ship.Where(v => Ids.Contains(v.Id)).ToList();
+}
+
+<div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">داشبورد</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/tankha"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">داشبورد</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="card border-top border-0 border-4 border-primary">
+        <div class="card-body" style="padding: 0px !important; margin-top: 20px;">
+
+
+            <div class="row">
+                @foreach (var cc in Model)
+                {
+                    <div class="col-lg-3" onclick="window.location.href = '/tankha/safar/index?id=@cc.Id'" style="cursor:pointer">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <div class="mt-3">
+                                        <h4>@cc.Title</h4>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0">شماره لنج</h6>
+                                        <span class="text-secondary">@cc.Number</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model.Any() == false)
+                {
+                    <br />
+                    <h5 style="text-align: center; font-size: 16px;">موردی یافت نشد</h5>
+                }
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<div id="DivModalIUShip"></div>
+
+
+@section js_down{
+
+    <script>
+
+
+        $(document).ready(function () {
+
+        });
+
+    </script>
+}

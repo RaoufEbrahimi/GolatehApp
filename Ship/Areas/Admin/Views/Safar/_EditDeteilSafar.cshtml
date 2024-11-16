@@ -1,0 +1,137 @@
+﻿@model Ship.Model.ViewModel.Admin.GetListSafarViewModel
+
+
+<input type="hidden" id="IdSafar" value="@Model.Id" />
+<input type="hidden" id="Id_Ship" value="@Model.IdShip" />
+
+<div class="modal fade" id="ModalIUEditDeteilSafar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    اطلاعات سفر : @Model.Title
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning border-0 bg-warning alert-dismissible fade show py-2">
+                    <div class="d-flex align-items-center">
+                        <div class="font-35 text-dark">
+                            <i class='bx bx-info-circle'></i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0 text-dark">توجه!</h6>
+                            <div class="text-dark">تمامی اعداد را با کیبرد انگلیسی وارد نمایید !</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="nav nav-tabs nav-primary" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a onclick="ToShowPage(7)" class="nav-link active" data-bs-toggle="tab" href="#tap7" role="tab" aria-selected="true">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                            <i class="lni lni-control-panel font-18 me-1" style="font-size:22px"></i>
+                                        </div>
+                                        <div class="tab-title">مشخصات سفر</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a onclick="ToShowPage(1)" class="nav-link" data-bs-toggle="tab" href="#tap1" role="tab" aria-selected="true">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                            <i class="lni lni-users font-18 me-1" style="font-size:22px"></i>
+                                        </div>
+                                        <div class="tab-title">صیادان</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a onclick="ToShowPage(6)" class="nav-link" data-bs-toggle="tab" href="#tap6" role="tab" aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                            <i class="lni lni-life-ring font-18 me-1" style="font-size:18px"></i>
+                                        </div>
+                                        <div class="tab-title">فاکتور ماچله</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a onclick="ToShowPage(4)" class="nav-link" data-bs-toggle="tab" href="#tap4" role="tab" aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                            <i class="lni lni-docker font-18 me-1" style="font-size:22px"></i>
+                                        </div>
+                                        <div class="tab-title">فاکتور صید</div>
+                                    </div>
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item" role="presentation">
+                                <a onclick="ToShowPage(2)" class="nav-link" data-bs-toggle="tab" href="#tap2" role="tab" aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                            <i class="lni lni-coin me-1" style="font-size:18px"></i>
+                                        </div>
+                                        <div class="tab-title">مساعده</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a onclick="ToShowPage(5)" class="nav-link" data-bs-toggle="tab" href="#tap5" role="tab" aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                            <i class="lni lni-cogs font-18 me-1" style="font-size:22px"></i>
+                                        </div>
+                                        <div class="tab-title">فاکتور تعمیرات و دیگر هزینه ها</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a onclick="ToShowPage(3)" class="nav-link" data-bs-toggle="tab" href="#tap3" role="tab" aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                            <i class="lni lni-anchor font-18 me-1" style="font-size:22px"></i>
+
+                                        </div>
+                                        <div class="tab-title">فاکتور خرید</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content py-3">
+                            <div class="tab-pane fade" id="tap1" role="tabpanel">
+                                @*@Html.Partial("~/Areas/Admin/Views/Safar/Partial/ListAfrad.cshtml", Model.IdShip)*@
+                            </div>
+                            <div class="tab-pane fade" id="tap2" role="tabpanel">
+                                @*@Html.Partial("~/Areas/Admin/Views/Safar/Partial/HandMoney.cshtml", Model.Id)*@
+                            </div>
+                            <div class="tab-pane fade" id="tap3" role="tabpanel">
+                                @*@Html.Partial("~/Areas/Admin/Views/Safar/Partial/FactorKharid.cshtml", Model.Id)*@
+                            </div>
+                            <div class="tab-pane fade" id="tap4" role="tabpanel">
+                                @*@Html.Partial("~/Areas/Admin/Views/Safar/Partial/FactorForosh.cshtml", Model.Id)*@
+                            </div>
+                            <div class="tab-pane fade" id="tap5" role="tabpanel">
+                                @*@Html.Partial("~/Areas/Admin/Views/Safar/Partial/FactorTamirat.cshtml", Model.Id)*@
+                            </div>
+                            <div class="tab-pane fade" id="tap6" role="tabpanel">
+                                @*@Html.Partial("~/Areas/Admin/Views/Safar/Partial/FactorMahtaiaj.cshtml", Model.Id)*@
+                            </div>
+                            <div class="tab-pane fade show active" id="tap7" role="tabpanel">
+                                @*@Html.Partial("~/Areas/Admin/Views/Safar/Partial/FactorMahtaiaj.cshtml", Model.Id)*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

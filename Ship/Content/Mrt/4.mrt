@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="0" />
+    <DataSources isList="true" count="1">
+      <dt Ref="2" type="DataTableSource" isKey="true">
+        <Alias>dt</Alias>
+        <Columns isList="true" count="9">
+          <value>Tedad,System.String</value>
+          <value>Kala,System.String</value>
+          <value>Unit,System.String</value>
+          <value>Safar,System.String</value>
+          <value>SafarCount,System.Int32</value>
+          <value>SommConter,System.Int32</value>
+          <value>Price,System.String</value>
+          <value>TotalPrice,System.String</value>
+          <value>Soom_Safar,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <IsCloud>False</IsCloud>
+        <Name>dt</Name>
+        <NameInSource>dt</NameInSource>
+      </dt>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Variables isList="true" count="4">
+      <value>,fromdate,fromdate,System.String,,False,False</value>
+      <value>,todate,todate,System.String,,False,False</value>
+      <value>,ship,ship,System.String,,False,False</value>
+      <value>,Date_Today,Date_Today,System.String,,False,False</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="3" type="Page" isKey="true">
+      <Border>All;Black;1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="1">
+        <PageHeaderBand1 Ref="4" type="PageHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,27.7,1.8</ClientRectangle>
+          <Components isList="true" count="4">
+            <Text1 Ref="5" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6.4,0.4,15.4,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Titr,14,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="3" />
+              <Parent isRef="4" />
+              <Text>نوسان قیمت صید  {fromdate} - {todate} | {ship}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=True, Trimming=None, WordWrap=False, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+            <Text105 Ref="6" type="Text" isKey="true">
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>3,0,3.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Titr,10,Bold</Font>
+              <Guid>7950836ce98e4e5f8e154254c37d353e</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text105</Name>
+              <Page isRef="3" />
+              <Parent isRef="4" />
+              <ShrinkFontToFit>True</ShrinkFontToFit>
+              <Text>{PageNofMThrough}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=True, Trimming=None, WordWrap=False, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>SystemVariables</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text105>
+            <Text16 Ref="7" type="Text" isKey="true">
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>3,0.8,3.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>B Titr,10,Bold</Font>
+              <Guid>cf6c907688bd490ca42c9bf17338eb26</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="3" />
+              <Parent isRef="4" />
+              <ShrinkFontToFit>True</ShrinkFontToFit>
+              <Text>{Date_Today}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text16>
+            <CrossTab1 Ref="8" type="Stimulsoft.Report.CrossTab.StiCrossTab" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanShrink>True</CanShrink>
+              <ClientRectangle>0,1.6,27.7,16.8</ClientRectangle>
+              <Components isList="true" count="8">
+                <CrossTab1_RowTotal1 Ref="9" type="CrossRowTotal" isKey="true">
+                  <Border>All;[155:155:155];1;Solid;False;4;Black</Border>
+                  <Brush>[255:255:255]</Brush>
+                  <ClientRectangle>0,2.5,1.6,0</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Enabled>False</Enabled>
+                  <Font>B Nazanin,14</Font>
+                  <Guid>1540797a3528499b9bebce3102fed5f7</Guid>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>CrossTab1_RowTotal1</Name>
+                  <Page isRef="3" />
+                  <Parent isRef="8" />
+                  <Restrictions>AllowMove, AllowResize, AllowSelect, AllowChange</Restrictions>
+                  <Text>میانگین</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+                  <Type>Expression</Type>
+                </CrossTab1_RowTotal1>
+                <CrossTab1_Row1_Title Ref="10" type="CrossTitle" isKey="true">
+                  <Border>All;[155:155:155];1;Solid;False;4;Black</Border>
+                  <Brush>White</Brush>
+                  <ClientRectangle>0,0.85,1.6,0.8</ClientRectangle>
+                  <Font>Arial,14</Font>
+                  <Guid>08a33fdfedcb4c1abef5cc0dfa0684da</Guid>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>CrossTab1_Row1_Title</Name>
+                  <Page isRef="3" />
+                  <Parent isRef="8" />
+                  <Restrictions>AllowMove, AllowResize, AllowSelect, AllowChange</Restrictions>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <TypeOfComponent>Row:CrossTab1_Row1</TypeOfComponent>
+                </CrossTab1_Row1_Title>
+                <CrossTab1_ColTotal1 Ref="11" type="CrossColumnTotal" isKey="true">
+                  <Border>All;[155:155:155];1;Solid;False;4;Black</Border>
+                  <Brush>[255:255:255]</Brush>
+                  <ClientRectangle>4.85,0.85,0,0.8</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Enabled>False</Enabled>
+                  <Font>B Nazanin,14</Font>
+                  <Guid>bb93fb9e06a14274a3772adccb97a446</Guid>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>CrossTab1_ColTotal1</Name>
+                  <Page isRef="3" />
+                  <Parent isRef="8" />
+                  <Restrictions>AllowMove, AllowResize, AllowSelect, AllowChange</Restrictions>
+                  <Text>Total</Text>
+                  <TextBrush>Black</TextBrush>
+                </CrossTab1_ColTotal1>
+                <CrossTab1_LeftTitle Ref="12" type="CrossTitle" isKey="true">
+                  <Border>All;[155:155:155];1;Solid;False;4;Black</Border>
+                  <Brush>White</Brush>
+                  <ClientRectangle>0,0,1.6,0.8</ClientRectangle>
+                  <Font>B Nazanin,14</Font>
+                  <Guid>30e6302283db4bbd93aa5dda1fdae3af</Guid>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>CrossTab1_LeftTitle</Name>
+                  <Page isRef="3" />
+                  <Parent isRef="8" />
+                  <Restrictions>AllowMove, AllowResize, AllowSelect, AllowChange</Restrictions>
+                  <Text>نام صید</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <TypeOfComponent>LeftTitle</TypeOfComponent>
+                </CrossTab1_LeftTitle>
+                <CrossTab1_RightTitle Ref="13" type="CrossTitle" isKey="true">
+                  <Border>All;[155:155:155];1;Solid;False;4;Black</Border>
+                  <Brush>White</Brush>
+                  <ClientRectangle>1.65,0,3.2,0.8</ClientRectangle>
+                  <Font>B Nazanin,14</Font>
+                  <Guid>3175bbdac8f544aab75925beec17cc11</Guid>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>CrossTab1_RightTitle</Name>
+                  <Page isRef="3" />
+                  <Parent isRef="8" />
+                  <Restrictions>AllowMove, AllowResize, AllowSelect, AllowChange</Restrictions>
+                  <Text>صوم - سفر</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TypeOfComponent>RightTitle</TypeOfComponent>
+                </CrossTab1_RightTitle>
+                <CrossTab1_Row1 Ref="14" type="CrossRow" isKey="true">
+                  <Alias>Kala</Alias>
+                  <Border>All;[155:155:155];1;Solid;False;4;Black</Border>
+                  <Brush>White</Brush>
+                  <ClientRectangle>0,1.7,1.6,0.8</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DisplayValue>{dt.Kala}</DisplayValue>
+                  <Font>B Nazanin,14</Font>
+                  <Guid>778d898bf9f343f4a336f34a3e2326b2</Guid>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>CrossTab1_Row1</Name>
+                  <Page isRef="3" />
+                  <Parent isRef="8" />
+                  <Restrictions>AllowMove, AllowResize, AllowSelect, AllowChange</Restrictions>
+                  <ShowTotal>False</ShowTotal>
+                  <Text>Kala</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TotalGuid>1540797a3528499b9bebce3102fed5f7</TotalGuid>
+                  <Value>{dt.Kala}</Value>
+                </CrossTab1_Row1>
+                <CrossTab1_Column1 Ref="15" type="CrossColumn" isKey="true">
+                  <Alias>Soom_Safar</Alias>
+                  <Border>All;[155:155:155];1;Solid;False;4;Black</Border>
+                  <Brush>White</Brush>
+                  <ClientRectangle>1.65,0.85,3.2,0.8</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <DisplayValue>{dt.Soom_Safar}</DisplayValue>
+                  <Font>B Nazanin,14</Font>
+                  <Guid>8cadbb567daa4af79b6cbde7d84d1bbb</Guid>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>CrossTab1_Column1</Name>
+                  <Page isRef="3" />
+                  <Parent isRef="8" />
+                  <Restrictions>AllowMove, AllowResize, AllowSelect, AllowChange</Restrictions>
+                  <ShowTotal>False</ShowTotal>
+                  <Text>Soom_Safar</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TotalGuid>bb93fb9e06a14274a3772adccb97a446</TotalGuid>
+                  <Type>Expression</Type>
+                  <Value>{dt.Soom_Safar}</Value>
+                </CrossTab1_Column1>
+                <CrossTab1_Sum1 Ref="16" type="CrossSummary" isKey="true">
+                  <Alias>Price</Alias>
+                  <Border>All;[155:155:155];1;Solid;False;4;Black</Border>
+                  <Brush>[255:255:255]</Brush>
+                  <ClientRectangle>1.65,1.7,3.2,0.8</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Font>B Nazanin,12</Font>
+                  <Guid>666bc9a521a34081b2aaee448f70d1be</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>CrossTab1_Sum1</Name>
+                  <Page isRef="3" />
+                  <Parent isRef="8" />
+                  <Restrictions>AllowMove, AllowResize, AllowSelect, AllowChange</Restrictions>
+                  <Summary>Average</Summary>
+                  <Text>0</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Value>{dt.Price}</Value>
+                </CrossTab1_Sum1>
+              </Components>
+              <Conditions isList="true" count="0" />
+              <DataRelationName />
+              <DataSourceName>dt</DataSourceName>
+              <EmptyValue />
+              <Filters isList="true" count="0" />
+              <GrowToHeight>True</GrowToHeight>
+              <Name>CrossTab1</Name>
+              <Page isRef="3" />
+              <Parent isRef="4" />
+              <RightToLeft>True</RightToLeft>
+              <Sort isList="true" count="0" />
+              <Wrap>True</Wrap>
+            </CrossTab1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>PageHeaderBand1</Name>
+          <Page isRef="3" />
+          <Parent isRef="3" />
+          <PrintOn>OnlyFirstPage</PrintOn>
+        </PageHeaderBand1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Guid>c1b06494163c414989e4f104e58503ad</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <Orientation>Landscape</Orientation>
+      <PageHeight>21</PageHeight>
+      <PageWidth>29.7</PageWidth>
+      <PaperSize>A4</PaperSize>
+      <Report isRef="0" />
+      <RightToLeft>True</RightToLeft>
+      <Watermark Ref="17" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+        <Font>Arial,100</Font>
+        <TextBrush>[50:0:0:0]</TextBrush>
+      </Watermark>
+    </Page1>
+  </Pages>
+  <PrinterSettings Ref="18" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>4/7/2022 4:41:09 AM</ReportChanged>
+  <ReportCreated>11/19/2021 8:28:47 PM</ReportCreated>
+  <ReportFile>D:\ship\Ship\Ship\Content\Mrt\4.mrt</ReportFile>
+  <ReportGuid>1876574825ad466080723feabc81d4b8</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2014.3.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+		
+		
+		public string Digit(decimal val)
+		{
+			return val.ToString().Replace(".000","").Replace("/000","");			
+		}
+		
+		
+		public string repp(string val)
+		{
+			return val.Replace(",","");		
+		}
+		
+		
+		public string Digit3(decimal val)
+		{
+			return val.ToString().Replace(".0","").Replace("/0","");			
+		}		
+		
+		public string Digit2(decimal val)
+		{
+			return val.ToString("N0").Replace(".000","").Replace("/000","");			
+		}
+		
+		
+		
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

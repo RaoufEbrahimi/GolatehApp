@@ -1,0 +1,44 @@
+﻿@model List<Ship.Model.ViewModel.Admin.GetListBimehAfradViewModel>
+
+<br />
+
+<div class="col-md-2">
+    <button onclick="Open2(0,0)" type="button" class="btn btn-outline-success position-relative">
+        <i class="lni lni-circle-plus"></i> ایجاد <span class="position-absolute top-0 start-100">
+        </span>
+    </button>
+</div>
+
+
+
+
+<div class="table-responsive" style="margin-top: 20px;">
+    <table id="TableSafar" class="table table-bordered mb-0" style="width: 100%">
+        <thead>
+            <tr style="background-color: #dee2e6b3">
+                <th style="text-align: center">سال</th>
+                <th style="text-align: center">ماه</th>
+                <th style="text-align: center">تعداد افراد</th>
+                <th style="text-align: center">لیست افراد</th>
+                <th style="text-align: center">عملیات</th>
+
+            </tr>
+        </thead>
+        @foreach (var cc in Model)
+        {
+            <tr>
+                <td style="text-align: center">@cc.Year</td>
+                <td style="text-align: center">@cc.Month</td>
+                <td style="text-align: center">@cc.Tedad</td>
+                <td style="text-align: center">@cc.Name</td>
+                <td style="text-align: center">
+                    <a class="btn btn-warning radius-30" style="cursor: pointer" onclick="Open2('@cc.Year|@cc.Month|@cc.IdShip',@cc.IdShip)"><i class="lni lni-save"></i>ویرایش</a>
+                    <a class="btn btn-warning radius-30" style="cursor: pointer" onclick="ExportBimeh('@cc.Year|@cc.Month|@cc.IdShip')"><i class="lni lni-files"></i> خروجی بانک</a>
+                    <a class="btn btn-danger radius-30" style="cursor: pointer" onclick="DeleteBimeh('@cc.Year|@cc.Month|@cc.IdShip')"><i class="lni lni-trash"></i> حذف</a>
+                </td>
+            </tr>
+        }
+        <tbody>
+        </tbody>
+    </table>
+</div>

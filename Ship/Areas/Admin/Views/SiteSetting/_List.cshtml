@@ -1,0 +1,85 @@
+﻿@model Ship.Model.ViewModel.Admin.SiteSettingViewModel
+
+
+@{
+    string Direction = (Model.Id == 1 ? "rtl" : "ltr");
+}
+
+
+
+    <form dir="@Direction">
+
+        <input type="hidden" value="@Model.Id" id="Id" name="Id">
+        <input type="hidden" value="@Model.Logo" id="Logo" name="Logo">
+
+        <div class="form-group">
+            <label>عنوان</label>
+            <input type="text" class="form-control" value="@Model.Title" id="Title" name="Title" />
+        </div>
+
+        <div class="form-group">
+            <label>شرح</label>
+            <textarea id="Description" name="Description" style="height: 100px;" class="form-control">@Model.Description</textarea>
+        </div>
+
+
+        <div class="form-group">
+            <label>نویسنده</label>
+            <input class="form-control" type="text" id="Author" name="Author" value="@Model.Author" />
+        </div>
+
+        <div class="form-group">
+            <label>کلید واژه ها</label>
+            <input class="form-control" id="Keywords" name="Keywords" type="text" value="@Model.Keywords" />
+        </div>
+
+        <div class="form-group">
+            <label>ارتباط با ما</label>
+            <textarea id="ContactUs" name="ContactUs" style="height: 100px;" class="form-control">@Model.ContactUs</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>تلفن</label>
+            <input class="form-control" id="Phone" name="Phone" type="text" value="@Model.Phone" />
+        </div>
+
+        <div class="form-group">
+            <label>ایمیل</label>
+            <input class="form-control" id="Email" name="Email" type="text" value="@Model.Email" />
+        </div>
+
+
+        <div class="form-group">
+            <label>Dribbble</label>
+            <input class="form-control" id="Dribbble" name="Dribbble" type="text" value="@Model.Dribbble" />
+        </div>
+        <div class="form-group">
+            <label>Facebook</label>
+            <input class="form-control" id="Facebook" name="Facebook" type="text" value="@Model.Facebook" />
+        </div>
+        <div class="form-group">
+            <label>Linkedin</label>
+            <input class="form-control" id="Linkedin" name="Linkedin" type="text" value="@Model.Linkedin" />
+        </div>
+        <div class="form-group">
+            <label>Twitter</label>
+            <input class="form-control" id="Twitter" name="Twitter" type="text" value="@Model.Twitter" />
+        </div>
+        <div class="form-group">
+            <label>Inestagram</label>
+            <input class="form-control" id="Inestagram" name="Inestagram" type="text" value="@Model.Inestagram" />
+        </div>
+        
+
+        <div class="form-group">
+            <label>لوگو</label>
+            <img width="100" height="100" src="@Model.Logo" />
+            <br />
+            <input type="file" id="Logo2" name="Logo2" />
+        </div>
+
+        <center>
+            <button type="button" class="btn btn-blue" onclick="SiteSettingSubmit()">ثبت</button>
+        </center>
+
+    </form>

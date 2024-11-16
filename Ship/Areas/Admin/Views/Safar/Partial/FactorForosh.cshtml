@@ -1,0 +1,278 @@
+﻿@model string
+
+<div class="row">
+
+    <div class="row">
+        <div class="col-md-2" style="margin-bottom: 10px">
+            <label for="TxtFromDate3" class="form-label">تاریخ</label>
+            <input type="text" class="form-control datepicker2" id="TxtFromDate3" value="@ViewBag.ToDate">
+        </div>
+
+        <div class="col-lg-3" style="margin-bottom: 10px">
+            <label class="form-label">صید</label>
+            <select class="multiple-select" id="IdHandMoneykalaList3" data-placeholder=".. صید را انتخاب کنید .." onchange="SetUnit(this)">
+                <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                @foreach (var t in SiteSettingBLL.GetListKala(new long[] { 9, 10040 }))
+                {
+                    <option Id2="@t.Id2" value="@t.Id">@t.Title</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-lg-2" style="margin-bottom: 10px">
+            <label class="form-label">واحد اندازه کیری</label>
+            <select class="multiple-select" id="Idunit3" data-placeholder=".. واحد را انتخاب کنید .." onchange="SetUnit2()">
+                <option value="0" selected="selected">.. انتخاب کنید ..</option>
+                @foreach (var t in SiteSettingBLL.GetListUnit())
+                {
+                    <option value="@t.Id">@t.Title</option>
+                }
+            </select>
+        </div>
+
+
+        <div class="col-md-2" style="margin-bottom: 10px">
+            <label for="TxtPrice3" class="form-label">فی (تومان)</label>
+            <input type="text" style="text-align: center" class="form-control" min="0" id="TxtPrice3" value="" onkeyup="FormatCurrency(this)">
+        </div>
+
+        <div class="col-md-2" style="margin-bottom: 10px">
+            <label for="TxtVazn3" class="form-label" id="LblTedad3">مقدار</label>
+            <input type="text" style="text-align: center" class="form-control" min="0" id="TxtVazn3" value="" onkeyup="FormatCurrency(this)">
+        </div>
+
+        <div class="col-md-12" style="margin-bottom: 10px">
+            <label for="Tozihat3" class="form-label">توضیحات</label>
+            <input type="text" class="form-control" id="Tozihat3" value="">
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-lg-2">
+            <button type="button" onclick="AddFactorForosh()" class="btn btn-primary">ثبت اطلاعات</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div id="DivListFactor"></div>
+</div>
+
+<script>
+
+    function SetUnit(itm) {
+        var idval = $("#IdHandMoneykalaList3").find(":selected").attr("Id2");
+        $("#Idunit3").select2('val', idval);
+        $('#LblTedad3').text('مقدار ' + $("#Idunit3").find(":selected").text());
+    }
+
+    function SetUnit2() {
+        $('#LblTedad3').text('مقدار ' + $("#Idunit3").find(":selected").text());
+    }
+
+
+    $(document).ready(function () {
+        $('#IdHandMoneykalaList3,#Idunit3').select2({
+            theme: 'bootstrap4',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
+            dropdownParent: $('#ModalIUEditDeteilSafar')
+            //closeOnSelect: false
+        });
+
+        $('.datepicker2').persianDatepicker({
+            observer: true,
+            format: 'YYYY/MM/DD',
+            initialValueType: 'persian'
+        });
+
+        ListFactorForoshRefresh();
+    });
+
+    function AddFactorForosh() {
+
+        $('#TxtVazn3,#TxtPrice3,#TxtFromDate3').removeClass('inputerror');
+        $($('#IdHandMoneykalaList3')).siblings(".select2-container").removeClass('inputerror');
+        $($('#Idunit3')).siblings(".select2-container").removeClass('inputerror');
+
+        var eror = false;
+
+        if ($('#TxtVazn3').val().trim().length === 0) {
+            $('#TxtVazn3').addClass('inputerror');
+            eror = true;
+        }
+        if ($('#TxtPrice3').val().trim().length === 0) {
+            $('#TxtPrice3').addClass('inputerror');
+            eror = true;
+        }
+        if ($('#TxtFromDate3').val().trim().length !== 10) {
+            $('#TxtFromDate3').addClass('inputerror');
+            eror = true;
+        }
+        if ($("#IdHandMoneykalaList3").select2("val") == '0') {
+            $('#IdHandMoneykalaList3').siblings(".select2-container").addClass('inputerror');
+            eror = true;
+        }
+        if ($("#Idunit3").select2("val") == '0') {
+            $('#Idunit3').siblings(".select2-container").addClass('inputerror');
+            eror = true;
+        }
+
+        if (eror) {
+            return false;
+        }
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/Safar/AddFactorForosh',
+            data: {
+                IdSoom: $('#IdSoom').val(),
+                IdSafar: $('#IdSafar').val(),
+                IdKala: $("#IdHandMoneykalaList3").select2('val'),
+                Idunit: $("#Idunit3").select2('val'),
+                Weight: $("#TxtVazn3").val().replace(',', '').replace(',', '').replace(',', '').replace(',', '').replace('.', '/'),
+                Tozihat: $("#Tozihat3").val(),
+                Price: $("#TxtPrice3").val().replace(',', '').replace(',', '').replace(',', '').replace(',', ''),
+                CreateDate: $("#TxtFromDate3").val()
+            },
+            success: function (dataa) {
+
+                if (-11 == dataa) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'اشتراک تهیه کنید'
+                        });
+                    return;
+                }
+
+                if (Boolean(dataa) == true) {
+                    $('#TxtPrice3').val('');
+                    $('#Tozihat3').val('');
+                    $('#TxtVazn3').val('');
+                    ListFactorForoshRefresh();
+                    GetListSafar();
+                    $("#IdHandMoneykalaList3").select2('val', '0');
+                    $("#Idunit3").select2('val', '0');
+                } else {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+            }
+        });
+    }
+    function ListFactorForoshRefresh() {
+        $.ajax({
+            url: "/Admin/Safar/GetListFactor",
+            method: "POST",
+            data: { IdSoom: $('#IdSoom').val(), IdSafar: $('#IdSafar').val() },
+            success: function (data) {
+                $('#DivListFactor').html('');
+                $('#DivListFactor').html(data);
+                GetListSafar();
+            },
+            error: function () {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                });
+            },
+            beforeSend: function () {
+
+            }
+        });
+    }
+    function ToDeleteDeleteFactor(Id) {
+        $.alert({
+            title: 'توجه!',
+            content: 'آیا مایل به حذف کالا از فاکتور هستید !',
+            rtl: true,
+            closeIcon: true,
+            buttons: {
+                confirm: {
+                    text: 'تایید',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Admin/Safar/DeleteFactor',
+                            data: {
+                                IdSoom: $('#IdSoom').val(),
+                                IdSafar: $('#IdSafar').val(),
+                                Id: Id,
+                                IdType: 14
+                            },
+                            success: function (dataa) {
+
+                                if (Boolean(dataa) == true) {
+                                    ListFactorForoshRefresh();
+                                    GetListSafar();
+                                } else {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                }
+
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                Lobibox.notify('error',
+                                    {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'انصراف',
+                    action: function () { }
+                }
+            }
+        });
+    }
+</script>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('input').keyup(function () {
+            this.value = fixPersianNumber(this.value);
+        });
+    });
+</script>

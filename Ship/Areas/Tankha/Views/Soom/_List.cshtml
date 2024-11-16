@@ -1,0 +1,29 @@
+﻿@model List<GetListSoomViewModel>
+
+
+
+
+
+<div class="table-responsive" style="margin-top: 20px;">
+    <table id="TableSoom" class="table table-striped table-bordered" style="width: 100%">
+        <thead>
+            <tr>
+                <th style="text-align: center">نام صوم</th>
+                <th style="text-align: center">تاریخ رفت</th>
+                <th style="text-align: center">تاریخ برگشت</th>
+                <th style="text-align: center">تعداد سفر</th>
+            </tr>
+        </thead>
+        @foreach (var cc in Model)
+        {
+            <tr>
+                <td style="text-align: center"><a href="/tankha/safar/index?Id=@cc.Id">@cc.SoomName</a></td>
+                <td style="text-align: center">@cc.FromDate</td>
+                <td style="text-align: center">@cc.ToDate</td>
+                <td style="text-align: center">@cc.TedadSafar</td>
+            </tr>
+        }
+        <tbody>
+        </tbody>
+    </table>
+</div>

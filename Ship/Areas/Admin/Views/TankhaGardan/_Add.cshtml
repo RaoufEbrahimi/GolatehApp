@@ -1,0 +1,57 @@
+﻿@model Ship.Model.ViewModel.Admin.TankhaGardanToShipViewModel
+@{
+    int IdUser = int.Parse(User.Identity.Name);
+}
+
+<div class="modal fade" id="ModalIUSoom" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form class="row g-3">
+
+                    <input type="hidden" id="Id2" value="@Model.Id" />
+
+
+                    
+                    <div class="col-md-12">
+                        <label for="FullName2" class="form-label">نام و نام خانوادگی</label>
+                        <input type="text" class="form-control" id="FullName2" value="@Model.FullName">
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="UserName2" class="form-label">کد ملی</label>
+                        <input type="text" class="form-control" id="UserName2" value="@Model.UserName">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="Password2" class="form-label">رمز عبور</label>
+                        <input type="text" class="form-control" id="Password2" value="@Model.Password">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="IdShip2" class="form-label">لنج</label>
+                        <select multiple id="IdShip2" data-placeholder=".. انتخاب کنید ..">
+                            @foreach (var item in SiteSettingBLL.GetListShip(IdUser))
+                            {
+                                if (Model.IdShipList.Contains(item.Id))
+                                {
+                                    <option selected="selected" value="@item.Id">@item.Title</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Id">@item.Title</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-primary" onclick="Addtankha2()">ذخیره</button>
+            </div>
+        </div>
+    </div>
+</div>

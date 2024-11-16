@@ -1,0 +1,294 @@
+﻿@model string
+@{
+    int IdUser = int.Parse(User.Identity.Name);
+}
+
+<div class="row">
+    <div class="col-lg-4" style="margin-bottom: 10px">
+        <select class="multiple-select" id="IdAfradList" data-placeholder="..صیاد را انتخاب کنید ..">
+            <option value="0" selected="selected">.. صیاد را انتخاب کنید ..</option>
+            @foreach (var t in SiteSettingBLL.GetListReletionPersenel(int.Parse(Model), IdUser))
+            {
+                <option value="@t.Id">@t.Title</option>
+            }
+        </select>
+    </div>
+    <div class="col-lg-2" style="margin-bottom: 10px">
+        <select class="multiple-select" id="IdSemat" data-placeholder="..سمت صیاد را انتخاب کنید .." onchange="SetValueRate()">
+            <option value="0" selected="selected">.. سمت صیاد را انتخاب کنید ..</option>
+            @foreach (var t in SiteSettingBLL.GetListSemat())
+            {
+                <option Rate="@t.Rate" value="@t.Id">@t.Title</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2" style="margin-bottom: 10px">
+        <input type="number" min="0" style="text-align: center" class="form-control" placeholder="تعداد گلاته" id="TxtDarsad" value="">
+    </div>
+    <div class="col-md-2" style="margin-bottom: 10px">
+        بیمه <input type="checkbox" id="ChekBimeh" />
+    </div>
+
+    <div class="col-lg-2">
+        <button type="button" onclick="AddAfradToSafar()" class="btn btn-primary">تخصیص صیاد به این سفر</button>
+    </div>
+</div>
+
+<div class="row">
+    <div id="DivListAfrad"></div>
+</div>
+
+<script>
+    function SetValueRate() {
+        var ids = $("#IdSemat").find(":selected").attr("rate");
+        if (ids != null) {
+            $('#TxtDarsad').val(ids.replace('/', '.'));
+        }
+    }
+    $(document).ready(function () {
+        $('#IdAfradList,#IdSemat').select2({
+            theme: 'bootstrap4',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
+            dropdownParent: $('#ModalIUEditDeteilSafar')
+            //closeOnSelect: false
+        });
+        ListAfradRefresh();
+    });
+
+    function AddAfradToSafar() {
+        $('#TxtDarsad').removeClass('inputerror');
+        $($('#IdAfradList')).siblings(".select2-container").removeClass('inputerror');
+        $($('#IdSemat')).siblings(".select2-container").removeClass('inputerror');
+
+        var eror = false;
+
+        if ($('#TxtDarsad').val().trim().length === 0) {
+            $('#TxtDarsad').addClass('inputerror');
+            eror = true;
+        }
+        if ($("#IdAfradList").select2("val") == '0') {
+            $('#IdAfradList').siblings(".select2-container").addClass('inputerror');
+            eror = true;
+        }
+        if ($("#IdSemat").select2("val") == '0') {
+            $('#IdSemat').siblings(".select2-container").addClass('inputerror');
+            eror = true;
+        }
+
+        if (eror) {
+            return false;
+        }
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/Safar/AddAfradToSafar',
+            data: {
+                IdSoom: $('#IdSoom').val(),
+                IdSafar: $('#IdSafar').val(),
+                IdAfrad: $('#IdAfradList').select2("val"),
+                Rate: $('#TxtDarsad').val(),
+                IdSemat: $("#IdSemat").select2("val"),
+                IsBimeh: $("#ChekBimeh").is(":checked")
+            },
+            success: function (dataa) {
+
+
+                if (-11 == dataa) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'اشتراک تهیه کنید'
+                        });
+                    return;
+                }
+
+
+                if (parseInt(dataa) === 1) {
+                    $('#TxtDarsad').val('');
+                    ListAfradRefresh();
+                    $("#IdSemat,#IdAfradList").select2('val', '0');
+                } else if (parseInt(dataa) === -1) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'این شخص در سفر قبلا وارد شده است'
+                        });
+                }
+                else if (parseInt(dataa) === -2) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'شخصی با سمت ناخدا در سفر موجود است'
+                        });
+                }
+                else if (parseInt(dataa) === -3) {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'شخصی با سمت طباخ در سفر موجود است'
+                        });
+                }
+                else {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                Lobibox.notify('error',
+                    {
+                        pauseDelayOnHover: true,
+                        continueDelayOnInactiveTab: false,
+                        position: 'top right',
+                        icon: 'bx bx-x-circle',
+                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                    });
+            }
+        });
+    }
+    function ListAfradRefresh() {
+        $.ajax({
+            url: "/Admin/Safar/GetListAfradRelation",
+            method: "POST",
+            data: { IdSoom: $('#IdSoom').val(), IdSafar: $('#IdSafar').val() },
+            success: function (data) {
+                $('#DivListAfrad').html('');
+                $('#DivListAfrad').html(data);
+            },
+            error: function () {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                });
+            },
+            beforeSend: function () {
+
+            }
+        });
+    }
+
+    function RowBime(Id) {
+
+        var Status = $('#ChekBimehRow_' + Id).is(':checked');
+
+        $.ajax({
+            url: "/Admin/Safar/RowBimeChange",
+            method: "POST",
+            data: { Id: Id, Status: Status },
+            success: function (data) {
+                if (data) {
+                    ToShowPage(1);
+                } else {
+                    Lobibox.notify('error',
+                        {
+                            pauseDelayOnHover: true,
+                            continueDelayOnInactiveTab: false,
+                            position: 'top right',
+                            icon: 'bx bx-x-circle',
+                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                        });
+                }
+            },
+            error: function () {
+                Lobibox.notify('error', {
+                    pauseDelayOnHover: true,
+                    continueDelayOnInactiveTab: false,
+                    position: 'top right',
+                    icon: 'bx bx-x-circle',
+                    msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                });
+            },
+            beforeSend: function () {
+
+            }
+        });
+    }
+
+
+    function ToDeleteSafarAfradRelation(Id) {
+        $.alert({
+            title: 'توجه!',
+            content: 'آیا مایل به حذف فرد از سفر هستید !',
+            rtl: true,
+            closeIcon: true,
+            buttons: {
+                confirm: {
+                    text: 'تایید',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Admin/Safar/DeleteSafarAfradRelation',
+                            data: {
+                                IdSoom: $('#IdSoom').val(),
+                                IdSafar: $('#IdSafar').val(),
+                                Id: Id
+                            },
+                            success: function (dataa) {
+
+                                if (Boolean(dataa) == true) {
+                                    ListAfradRefresh();
+                                } else {
+                                    Lobibox.notify('error',
+                                        {
+                                            pauseDelayOnHover: true,
+                                            continueDelayOnInactiveTab: false,
+                                            position: 'top right',
+                                            icon: 'bx bx-x-circle',
+                                            msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                        });
+                                }
+
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                Lobibox.notify('error',
+                                    {
+                                        pauseDelayOnHover: true,
+                                        continueDelayOnInactiveTab: false,
+                                        position: 'top right',
+                                        icon: 'bx bx-x-circle',
+                                        msg: 'خطا در عملکرد سرور، لطفا دقایقی دیگر دوباره تلاش کنید.'
+                                    });
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'انصراف',
+                    action: function () { }
+                }
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        $('input').keyup(function () {
+            this.value = fixPersianNumber(this.value);
+        });
+    });
+</script>

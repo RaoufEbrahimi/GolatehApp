@@ -1,0 +1,190 @@
+﻿@using Ship.Model.ViewModel
+
+
+@{
+    int IdUser = int.Parse(User.Identity.Name.Replace("TankhaGardan", ""));
+
+    var us = SiteSettingBLL.GetPersonnelLogin2(IdUser);
+    var ImageIcon = SiteSettings.CDN + "/Content/theme/admin/Syn/vertical/assets/images/Golateh-Logo100x45.png";
+}
+<!doctype html>
+<html lang="fa" class="color-sidebar sidebarcolor3">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="@ImageIcon" type="image/png" />
+
+    @Styles.Render("~/bundles/css/AdminGolatehCSS")
+    <style>
+        * {
+            font-family: 'iransans';
+        }
+
+        .inputerror {
+            border: red 1px solid;
+        }
+    </style>
+
+    <title>@ViewBag.Title</title>
+    @RenderSection("css", required: false)
+    @RenderSection("js_top", required: false)
+
+    <style type="text/css">
+        .loading {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: transparent;
+            z-index: 9999999999 !important;
+        }
+
+        .loader {
+            left: 50%;
+            margin-left: -4em;
+            font-size: 10px;
+            border: .8em solid rgba(218, 219, 223, 1);
+            border-left: .8em solid rgba(58, 166, 165, 1);
+            animation: spin 1.1s infinite linear;
+            z-index: 9999999999 !important;
+        }
+
+            .loader, .loader:after {
+                border-radius: 50%;
+                width: 8em;
+                height: 8em;
+                display: block;
+                position: absolute;
+                top: 50%;
+                margin-top: -4.05em;
+                z-index: 9999999999 !important;
+            }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(360deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+    </style>
+
+</head>
+
+<body class="rtl">
+
+    <div class="loading" id="divLoading" style="display:none">
+        <div class="loader"></div>
+    </div>
+
+
+    <div class="wrapper">
+        <header>
+            <div class="topbar d-flex align-items-center" style="position: initial;">
+                <nav class="navbar navbar-expand">
+                    <div class="top-menu-left d-none d-lg-block">
+                        <img src="@ImageIcon" />
+                    </div>
+                    <div class="top-menu ms-auto">
+                        <ul class="navbar-nav align-items-center">
+                            
+                        </ul>
+                    </div>
+                    <div class="user-box dropdown">
+                        <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img @(String.IsNullOrWhiteSpace(us.Logo) ? "src='https://golateh.com/Content/images.png'" : "") src="@us.Logo" class="user-img" alt="@us.NationalCode  @us.FirstName @us.LastName" onerror="this.onerror = null;this.src = 'https://golateh.com/Content/images.png';">
+                            <div class="user-info ps-3">
+                                <p class="user-name  mb-0">@us.FirstName</p>
+                                <p class="designattion mb-0">@us.NationalCode</p>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="/LoginAdmin/LogOut">
+                                    <i class='bx bx-log-out-circle'></i><span>خروج</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <div class="page-wrapper" style="height: 100%; margin-top: 0px; margin-bottom: 20px; margin-right: 0px;">
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="overlay toggle-icon"></div>
+        <a href="javaScript:;" class="back-to-top">
+            <i class='bx bxs-up-arrow-alt'></i>
+        </a>
+        <footer class="page-footer" style="position: initial;">
+            <p class="mb-0">  کلیه حقوق مادی و معنوی این وب سایت متعلق به شرکت هوی موی بوشهر است. (©  @DateTime.Now.Year)</p>
+        </footer>
+    </div>
+
+    @Html.Partial("~/Areas/Admin/Views/Shared/Switcher.cshtml")
+
+
+    @Scripts.Render("~/bundles/js/AdminGolatehJS")
+
+    @RenderSection("js_down", required: false)
+
+    <script>
+        $(document).on({
+            ajaxStart: function () {
+                $('#divLoading').show();
+            },
+            ajaxStop: function () {
+                $('#divLoading').hide();
+            }
+        });
+
+        function FormatCurrency(ctrl) {
+
+            var val = ctrl.value;
+            val = val.replace(/[^0-9\.]/g, '');
+
+            if (val != "") {
+                valArr = val.split('.');
+                valArr[0] = (parseInt(valArr[0], 10)).toLocaleString();
+                val = valArr.join('.');
+            }
+
+            ctrl.value = val;
+        }
+
+
+
+
+
+        (() => {
+            'use strict';
+
+            const
+                root = (() => {
+                    if (typeof self == 'object' && self.self === self) return self;
+                    else if (typeof global == 'object' && global.global === global) return global;
+                    else return this;
+                })(),
+
+                persianNumberArr = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+                arabicNumberArr = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+                fixPersianNumber = str => {
+                    if (typeof str === 'string') {
+                        let i = 0;
+                        for (; i < 10; i++) {
+                            str = str.replace(persianNumberArr[i], i).replace(arabicNumberArr[i], i);
+                        }
+                    }
+                    return str;
+                };
+
+            root.fixPersianNumber = fixPersianNumber;
+        })();
+    </script>
+</body>
+</html>
